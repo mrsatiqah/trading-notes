@@ -1,9 +1,456 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article 18: Understanding Trends and Ranges</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --light-bg-primary: #FFFFFF;
+            --light-bg-secondary: #F8FAFC;
+            --light-bg-tertiary: #F1F5F9;
+            --mint-bright: #34D399;
+            --mint-bright-hover: #10B981;
+            --baby-blue-bright: #60A5FA;
+            --baby-blue-bright-hover: #3B82F6;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+            --border-light: rgba(52, 211, 153, 0.3);
+            --border-subtle: rgba(15, 23, 42, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --shadow-light: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 40px rgba(52, 211, 153, 0.2);
+            --warning-bg: #FEF3C7;
+            --warning-border: #F59E0B;
+            --success-bg: #D1FAE5;
+            --success-border: #10B981;
+            --info-bg: #DBEAFE;
+            --info-border: #3B82F6;
+            --error-bg: #FEE2E2;
+            --error-border: #EF4444;
+            --purple-light: #E0E7FF;
+            --purple-border: #8B5CF6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); color: var(--text-primary); line-height: 1.7; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); z-index: 1000; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
+        .nav-links a:hover { color: var(--mint-bright); }
+        .nav-cta { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; color: var(--text-primary); cursor: pointer; }
+        .reading-progress { position: fixed; top: 4.5rem; left: 0; right: 0; height: 4px; background: var(--light-bg-tertiary); z-index: 999; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); width: 0%; }
+        .article-layout { display: grid; grid-template-columns: 250px 1fr 200px; gap: 3rem; padding-top: 6rem; max-width: 1400px; margin: 0 auto; }
+        .article-nav { position: sticky; top: 6rem; height: fit-content; background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .article-nav h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-list { list-style: none; }
+        .nav-list li { margin-bottom: 0.5rem; }
+        .nav-list a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; display: block; padding: 0.25rem 0; }
+        .nav-list a:hover, .nav-list a.active { color: var(--mint-bright); }
+        .article-content { background: var(--light-bg-primary); border-radius: 12px; overflow: hidden; }
+        .article-header { background: linear-gradient(135deg, var(--light-bg-secondary) 0%, var(--light-bg-tertiary) 100%); padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border-subtle); }
+        .article-meta { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .meta-item { background: var(--glass-bg); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 0.5rem; }
+        .article-number { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; font-weight: 600; }
+        .article-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
+        .gradient-text { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .article-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        .article-body { padding: 3rem 2rem; }
+        .article-section { margin-bottom: 3rem; }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+        .article-text { font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .article-text strong { font-weight: 600; }
+        .article-text em { color: var(--mint-bright); font-style: italic; font-weight: 500; }
+        .callout { background: var(--glass-bg); border-left: 4px solid var(--mint-bright); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .callout.warning { border-left-color: var(--warning-border); background: var(--warning-bg); }
+        .callout.success { border-left-color: var(--success-border); background: var(--success-bg); }
+        .callout.info { border-left-color: var(--info-border); background: var(--info-bg); }
+        .callout-title { font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .interactive-box { background: var(--glass-bg); border: 2px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .interactive-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .interactive-title i { color: var(--mint-bright); }
+        .trend-diagrams { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .trend-diagram-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; text-align: center; }
+        .trend-diagram-title { font-weight: 700; margin-bottom: 0.25rem; }
+        .trend-diagram-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 1rem; }
+        .trend-svg-wrap { background: var(--light-bg-secondary); border-radius: 8px; padding: 0.5rem; margin-bottom: 1rem; }
+        .trend-diagram-description { font-size: 0.9rem; color: var(--text-secondary); text-align: left; }
+        .structure-example { background: var(--light-bg-tertiary); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; margin-top: 0.75rem; text-align: left; }
+        .structure-example strong { color: var(--mint-bright); }
+        .method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .method-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .method-title { font-weight: 700; margin-bottom: 0.25rem; }
+        .method-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
+        .method-description { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+        .method-list { background: var(--light-bg-tertiary); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; }
+        .checklist-box { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+        .checklist-box ul { list-style: none; }
+        .checklist-box li { margin-bottom: 0.6rem; padding-left: 1.75rem; position: relative; font-size: 0.95rem; }
+        .checklist-box li::before { content: '\f0c8'; font-family: 'Font Awesome 6 Free'; font-weight: 400; position: absolute; left: 0; color: var(--mint-bright); }
+        .timeframe-pyramid { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin: 2rem 0; }
+        .pyramid-level { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem 2rem; text-align: center; }
+        .pyramid-level.level-1 { width: 90%; background: linear-gradient(135deg, var(--mint-bright), var(--mint-bright-hover)); color: white; border: none; }
+        .pyramid-level.level-2 { width: 72%; background: linear-gradient(135deg, var(--baby-blue-bright), var(--baby-blue-bright-hover)); color: white; border: none; }
+        .pyramid-level.level-3 { width: 54%; background: var(--light-bg-tertiary); }
+        .pyramid-level.level-4 { width: 36%; background: var(--light-bg-tertiary); }
+        .pyramid-title { font-weight: 700; font-size: 0.95rem; }
+        .pyramid-sub { font-size: 0.75rem; opacity: 0.9; }
+        .strategy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .strategy-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .strategy-title { font-weight: 700; margin-bottom: 0.25rem; }
+        .strategy-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
+        .strategy-rules { list-style: none; }
+        .strategy-rules li { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.4rem; padding-left: 1.25rem; position: relative; }
+        .strategy-rules li::before { content: '•'; position: absolute; left: 0; color: var(--mint-bright); }
+        .reversal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .reversal-card { background: var(--warning-bg); border: 1px solid var(--warning-border); border-radius: 12px; padding: 1.5rem; border-left: 4px solid var(--warning-border); }
+        .reversal-title { font-weight: 700; color: var(--warning-border); margin-bottom: 0.25rem; }
+        .reversal-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
+        .reversal-signs { list-style: none; }
+        .reversal-signs li { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.4rem; padding-left: 1.25rem; position: relative; }
+        .reversal-signs li::before { content: '⚠'; position: absolute; left: 0; color: var(--warning-border); }
+        .quote-box { background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%); border: 1px solid var(--purple-border); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .quote-text { font-size: 1.1rem; font-style: italic; margin-bottom: 1rem; }
+        .quote-author { font-size: 0.9rem; color: var(--purple-border); font-weight: 600; }
+        .takeaways { background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(96, 165, 250, 0.05) 100%); border: 1px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+        .takeaways-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .takeaways-title i { color: var(--mint-bright); }
+        .takeaways-list { list-style: none; }
+        .takeaways-list li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; }
+        .takeaways-list li::before { content: '✓'; position: absolute; left: 0; color: var(--mint-bright); }
+        .article-sidebar { position: sticky; top: 6rem; height: fit-content; }
+        .sidebar-widget { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .widget-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+        .progress-circle { width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(var(--mint-bright) 0deg 216deg, var(--light-bg-tertiary) 216deg 360deg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; position: relative; }
+        .progress-circle::after { content: '60%'; position: absolute; font-size: 0.875rem; font-weight: 600; }
+        .next-article, .prev-article { padding: 1rem; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: 600; margin-bottom: 1rem; }
+        .next-article { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; }
+        .prev-article { background: var(--glass-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem; opacity: 0; visibility: hidden; z-index: 1000; }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .article-navigation { display: flex; justify-content: space-between; padding: 2rem; border-top: 1px solid var(--border-subtle); gap: 1rem; }
+        .nav-btn { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem 1.5rem; text-decoration: none; color: var(--text-primary); font-weight: 500; flex: 1; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .nav-btn.next { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; }
+        @media (max-width: 1024px) {
+            .article-layout { grid-template-columns: 1fr; gap: 2rem; padding-top: 5rem; }
+            .article-nav, .article-sidebar { display: none; }
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: block; }
+            .nav-links, .nav-cta { display: none; }
+            .article-header { padding: 2rem 1.5rem; }
+            .article-title { font-size: 2.2rem; }
+            .article-body { padding: 2rem 1.5rem; }
+            .trend-diagrams, .method-grid, .strategy-grid, .reversal-grid { grid-template-columns: 1fr; }
+            .pyramid-level.level-1, .pyramid-level.level-2, .pyramid-level.level-3, .pyramid-level.level-4 { width: 100%; }
+            .article-navigation { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            .article-title { font-size: 1.8rem; }
+            .article-body { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
 <body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">Mrs Atiqah</div>
+                <ul class="nav-links"><li><a href="index.html">Home</a></li></ul>
+                <a href="index.html" class="nav-cta">Article Index</a>
+                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
 
-<h1>Coming Soon</h1>
+    <div class="reading-progress"><div class="progress-fill" id="progressBar"></div></div>
 
+    <div class="article-layout">
+        <aside class="article-nav">
+            <h4>In This Article</h4>
+            <ul class="nav-list">
+                <li><a href="#introduction" class="active">The River of Money</a></li>
+                <li><a href="#what-are-trends">What Are Trends?</a></li>
+                <li><a href="#trend-types">Three Types of Trends</a></li>
+                <li><a href="#identifying-trends">Identifying Trends</a></li>
+                <li><a href="#multiple-timeframes">Multiple Timeframes</a></li>
+                <li><a href="#trend-strategies">Trend Strategies</a></li>
+                <li><a href="#volume-confirmation">Volume Confirmation</a></li>
+                <li><a href="#trend-reversals">Spotting Reversals</a></li>
+                <li><a href="#key-takeaways">Key Takeaways</a></li>
+            </ul>
+        </aside>
 
+        <main class="article-content">
+            <header class="article-header">
+                <div class="article-meta">
+                    <div class="meta-item article-number">Article 18</div>
+                    <div class="meta-item"><i class="fas fa-book-open"></i> 14 min read</div>
+                    <div class="meta-item"><i class="fas fa-chart-line"></i> Technical Analysis</div>
+                </div>
+                <h1 class="article-title">Understanding <span class="gradient-text">Trends and Ranges</span></h1>
+                <p class="article-subtitle">Master the language of the market. When you understand trends, you understand where the smart money flows, and where opportunity hides.</p>
+            </header>
+
+            <div class="article-body">
+                <div class="article-section" id="introduction">
+                    <p class="article-text">Imagine trying to swim against a powerful river current. You can fight it, exhaust yourself, and barely move forward. Or you can turn around, flow with the current, and let the river carry you effortlessly downstream.</p>
+                    <p class="article-text">Trading against trends is exactly like swimming upstream. <strong>You're fighting the collective force of millions of traders, institutions, and algorithms all moving in the same direction.</strong></p>
+                    <p class="article-text">But when you learn to identify and trade with trends, something magical happens: the market starts working for you instead of against you.</p>
+                    <div class="interactive-box">
+                        <div class="interactive-title"><i class="fas fa-water"></i> The River of Money</div>
+                        <p>Trends are like rivers of money flowing through the market. Your job isn't to predict where the river will flow, it's to recognize the current direction and position yourself accordingly.</p>
+                        <p style="margin-top: 1rem; font-style: italic;">The trend is your friend... until it's not.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="what-are-trends">
+                    <h2 class="section-title">What Are Trends?</h2>
+                    <p class="article-text"><em>A trend is the general direction of price movement over time.</em> It's the market's way of telling you which side has control, buyers or sellers, and how strong that control is.</p>
+                    <p class="article-text">Think of trends as the market's personality in motion. Are we in a decisive, directional mood? Or are we confused and choppy? <strong>Understanding this personality is crucial because different market personalities require completely different trading approaches.</strong></p>
+                    <div class="callout info">
+                        <div class="callout-title"><i class="fas fa-lightbulb"></i> Key Insight</div>
+                        <p>Price doesn't move randomly, it moves in waves, and these waves create trends that smart traders can ride. Trends reflect the collective psychology of all market participants, from retail traders to massive institutions.</p>
+                    </div>
+                    <div class="quote-box">
+                        <div class="quote-text">The trend is your friend until the end when it bends.</div>
+                        <div class="quote-author">— Market Wisdom</div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="trend-types">
+                    <h2 class="section-title">The Three Types of Trends</h2>
+                    <p class="article-text">Markets move in one of three ways, and recognizing which one you're in determines your entire trading approach:</p>
+                    <div class="trend-diagrams">
+                        <div class="trend-diagram-card">
+                            <div class="trend-diagram-title">Uptrend</div>
+                            <div class="trend-diagram-subtitle">Bulls in Control</div>
+                            <div class="trend-svg-wrap">
+                                <svg width="100%" height="120" viewBox="0 0 220 120" preserveAspectRatio="xMidYMid meet">
+                                    <polyline points="10,100 50,70 60,80 100,45 115,55 160,20 175,30 210,5" fill="none" stroke="#10B981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="60" cy="80" r="4" fill="#10B981"/>
+                                    <circle cx="115" cy="55" r="4" fill="#10B981"/>
+                                    <circle cx="175" cy="30" r="4" fill="#10B981"/>
+                                </svg>
+                            </div>
+                            <div class="trend-diagram-description">Price makes <strong>higher highs and higher lows</strong>. Each pullback finds support above the previous low, showing buyers are stepping in.</div>
+                            <div class="structure-example"><strong>Structure:</strong> Prev low $45 → Current low $47 ✓<br>Prev high $50 → Current high $52 ✓<br><strong>Result:</strong> Uptrend confirmed. Buy pullbacks, ride the momentum up.</div>
+                        </div>
+                        <div class="trend-diagram-card">
+                            <div class="trend-diagram-title">Downtrend</div>
+                            <div class="trend-diagram-subtitle">Bears in Control</div>
+                            <div class="trend-svg-wrap">
+                                <svg width="100%" height="120" viewBox="0 0 220 120" preserveAspectRatio="xMidYMid meet">
+                                    <polyline points="10,10 50,40 60,30 100,65 115,55 160,90 175,80 210,110" fill="none" stroke="#EF4444" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="60" cy="30" r="4" fill="#EF4444"/>
+                                    <circle cx="115" cy="55" r="4" fill="#EF4444"/>
+                                    <circle cx="175" cy="80" r="4" fill="#EF4444"/>
+                                </svg>
+                            </div>
+                            <div class="trend-diagram-description">Price makes <strong>lower highs and lower lows</strong>. Each rally fails below the previous high, showing sellers are overwhelming buyers.</div>
+                            <div class="structure-example"><strong>Structure:</strong> Prev high $52 → Current high $50 ✓<br>Prev low $47 → Current low $45 ✓<br><strong>Result:</strong> Downtrend confirmed. Sell rallies, ride the momentum down.</div>
+                        </div>
+                        <div class="trend-diagram-card">
+                            <div class="trend-diagram-title">Sideways / Range</div>
+                            <div class="trend-diagram-subtitle">Balance Between Bulls and Bears</div>
+                            <div class="trend-svg-wrap">
+                                <svg width="100%" height="120" viewBox="0 0 220 120" preserveAspectRatio="xMidYMid meet">
+                                    <line x1="5" y1="20" x2="215" y2="20" stroke="#EF4444" stroke-width="2" stroke-dasharray="4,4"/>
+                                    <line x1="5" y1="100" x2="215" y2="100" stroke="#10B981" stroke-width="2" stroke-dasharray="4,4"/>
+                                    <polyline points="10,60 35,22 65,98 95,24 125,96 155,22 185,96 210,60" fill="none" stroke="#60A5FA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="trend-diagram-description">Price oscillates between defined <strong>support and resistance levels</strong>. Neither buyers nor sellers can establish control.</div>
+                            <div class="structure-example"><strong>Structure:</strong> Price bounces between $50–55 range, multiple touches of both levels.<br><strong>Result:</strong> Sideways trend confirmed. Buy near support, sell near resistance.</div>
+                        </div>
+                    </div>
+                    <div class="callout success">
+                        <div class="callout-title"><i class="fas fa-medal"></i> The Golden Rule</div>
+                        <p>In uptrends, buy dips. In downtrends, sell rips. In sideways markets, buy support and sell resistance. Fighting the current trend is the fastest way to lose money.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="identifying-trends">
+                    <h2 class="section-title">How to Identify Trends Like a Pro</h2>
+                    <p class="article-text">Identifying trends sounds simple, but doing it correctly requires a systematic approach. Here's how professional traders read market structure:</p>
+                    <div class="method-grid">
+                        <div class="method-card">
+                            <div class="method-title">Mark Swing Points</div>
+                            <div class="method-subtitle">The Building Blocks</div>
+                            <div class="method-description">Start by identifying significant peaks and valleys on your chart. These swing points form the skeleton of trend structure.</div>
+                            <div class="method-list">1. Mark significant highs and lows<br>2. Connect the peaks and valleys<br>3. Look for higher highs/lows or lower highs/lows<br>4. Confirm with volume and momentum</div>
+                        </div>
+                        <div class="method-card">
+                            <div class="method-title">Use Moving Averages</div>
+                            <div class="method-subtitle">Dynamic Support and Resistance</div>
+                            <div class="method-description">Moving averages smooth out price noise and clearly show trend direction through their slope and price position.</div>
+                            <div class="method-list">Price above rising MA = Uptrend<br>Price below falling MA = Downtrend<br>Price around flat MA = Sideways<br>MA slope confirms trend strength</div>
+                        </div>
+                        <div class="method-card">
+                            <div class="method-title">Draw Trend Lines</div>
+                            <div class="method-subtitle">Visual Confirmation</div>
+                            <div class="method-description">Trend lines connect swing points and create visual boundaries that help confirm trend direction and strength.</div>
+                            <div class="method-list">Connect at least 2 points<br>More touches = stronger line<br>Steeper lines break easier<br>Breaks often signal trend changes</div>
+                        </div>
+                    </div>
+                    <div class="checklist-box">
+                        <h3 style="margin-bottom: 1rem; color: var(--mint-bright);">Trend Identification Checklist</h3>
+                        <ul>
+                            <li><strong>Structure Check:</strong> Higher highs/higher lows (uptrend) or lower highs/lower lows (downtrend)?</li>
+                            <li><strong>Moving Average Position:</strong> Price above (bullish) or below (bearish) the key MAs?</li>
+                            <li><strong>Volume Confirmation:</strong> Is volume supporting the trend direction?</li>
+                            <li><strong>Momentum Check:</strong> Are momentum indicators aligned with price direction?</li>
+                            <li><strong>Time Factor:</strong> Has the trend been in place long enough to be reliable?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="article-section" id="multiple-timeframes">
+                    <h2 class="section-title">Multiple Timeframe Analysis: The Professional Edge</h2>
+                    <p class="article-text">Here's what separates amateur traders from professionals: <strong>amateurs look at one timeframe, pros analyze multiple timeframes simultaneously.</strong></p>
+                    <p class="article-text">A stock might be in a strong uptrend on the daily chart but pulling back on the hourly chart. This gives you the perfect setup: buy the hourly pullback within the daily uptrend.</p>
+                    <div class="timeframe-pyramid">
+                        <div class="pyramid-level level-1"><div class="pyramid-title">Monthly / Weekly</div><div class="pyramid-sub">Primary trend direction · Position traders</div></div>
+                        <div class="pyramid-level level-2"><div class="pyramid-title">Daily</div><div class="pyramid-sub">Intermediate trend · Swing traders</div></div>
+                        <div class="pyramid-level level-3"><div class="pyramid-title">4H / 1H</div><div class="pyramid-sub">Short-term structure · Entry timing</div></div>
+                        <div class="pyramid-level level-4"><div class="pyramid-title">15m / 5m</div><div class="pyramid-sub">Precise entries · Day traders</div></div>
+                    </div>
+                    <div class="callout success">
+                        <div class="callout-title"><i class="fas fa-layer-group"></i> Pro Tip: The 3-Timeframe Rule</div>
+                        <p><strong>Higher timeframe:</strong> Determines overall trend direction<br><strong>Trading timeframe:</strong> Where you make most decisions<br><strong>Lower timeframe:</strong> For precise entry and exit timing</p>
+                        <p style="margin-top: 1rem;"><strong>Example:</strong> Weekly shows uptrend → Daily shows pullback → 1-hour shows entry signal.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="trend-strategies">
+                    <h2 class="section-title">Trend-Following Strategies That Work</h2>
+                    <p class="article-text">Once you've identified the trend, here are the most effective ways to profit from it:</p>
+                    <div class="strategy-grid">
+                        <div class="strategy-card">
+                            <div class="strategy-title">Pullback Entries</div>
+                            <div class="strategy-subtitle">Buy the Dip, Sell the Rip</div>
+                            <ul class="strategy-rules"><li>Wait for pullback to support</li><li>Look for bullish reversal signals</li><li>Enter when price starts moving up</li><li>Stop below recent swing low</li></ul>
+                        </div>
+                        <div class="strategy-card">
+                            <div class="strategy-title">Breakout Entries</div>
+                            <div class="strategy-subtitle">Ride New Momentum</div>
+                            <ul class="strategy-rules"><li>Wait for decisive break</li><li>Confirm with volume</li><li>Enter on retest if possible</li><li>Trail stops as trend continues</li></ul>
+                        </div>
+                        <div class="strategy-card">
+                            <div class="strategy-title">Moving Average Bounces</div>
+                            <div class="strategy-subtitle">Dynamic Support/Resistance</div>
+                            <ul class="strategy-rules"><li>20/50 EMA for short-term</li><li>100/200 SMA for long-term</li><li>Buy bounces off MA in uptrends</li><li>Sell bounces off MA in downtrends</li></ul>
+                        </div>
+                    </div>
+                    <div class="quote-box">
+                        <div class="quote-text">Markets can remain irrational longer than you can remain solvent.</div>
+                        <div class="quote-author">— John Maynard Keynes</div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="volume-confirmation">
+                    <h2 class="section-title">Volume: The Truth Serum of Trends</h2>
+                    <p class="article-text"><strong>Volume never lies.</strong> While price can be manipulated, volume shows the true conviction behind price movements. Here's how to read volume in trending markets:</p>
+                    <div class="method-grid">
+                        <div class="method-card">
+                            <div class="method-title">Healthy Trends</div>
+                            <div class="method-subtitle">Volume Confirms Direction</div>
+                            <div class="method-description">In strong trends, volume increases on moves in the trend direction and decreases on pullbacks.</div>
+                            <div class="method-list"><strong>Uptrend:</strong> Higher volume on up days, lower on down days<br><strong>Downtrend:</strong> Higher volume on down days, lower on up days</div>
+                        </div>
+                        <div class="method-card">
+                            <div class="method-title">Weakening Trends</div>
+                            <div class="method-subtitle">Volume Divergence Warning</div>
+                            <div class="method-description">When volume decreases on trend moves and increases on counter-trend moves, the trend is losing steam.</div>
+                            <div class="method-list">Lower volume on new highs/lows<br>Higher volume on pullbacks<br>Climactic volume at extremes</div>
+                        </div>
+                    </div>
+                    <div class="callout warning">
+                        <div class="callout-title"><i class="fas fa-exclamation-triangle"></i> Volume Divergence Alert</div>
+                        <p>When price makes new highs but volume is declining, be very careful. This often signals trend exhaustion and potential reversal. Always watch for volume confirmation of price movements.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="trend-reversals">
+                    <h2 class="section-title">Spotting Trend Reversals Before They Happen</h2>
+                    <p class="article-text">All trends eventually end. The key is recognizing the early warning signs so you can exit before the crowd realizes the party is over.</p>
+                    <div class="reversal-grid">
+                        <div class="reversal-card">
+                            <div class="reversal-title">Uptrend Reversal Signs</div>
+                            <div class="reversal-subtitle">When Bulls Lose Control</div>
+                            <ul class="reversal-signs"><li>Failure to make new highs</li><li>Breaking below recent swing low</li><li>Volume declining on rallies</li><li>Lower high followed by lower low</li></ul>
+                        </div>
+                        <div class="reversal-card">
+                            <div class="reversal-title">Downtrend Reversal Signs</div>
+                            <div class="reversal-subtitle">When Bears Lose Control</div>
+                            <ul class="reversal-signs"><li>Failure to make new lows</li><li>Breaking above recent swing high</li><li>Volume declining on declines</li><li>Higher low followed by higher high</li></ul>
+                        </div>
+                    </div>
+                    <div class="callout info">
+                        <div class="callout-title"><i class="fas fa-shield-alt"></i> Protection Strategy</div>
+                        <p>Don't try to catch falling knives or pick tops. Wait for clear reversal confirmation before changing your bias. It's better to miss the first 10% of a new trend than to lose money fighting the last 10% of an old one.</p>
+                    </div>
+                </div>
+
+                <div class="takeaways" id="key-takeaways">
+                    <h3 class="takeaways-title"><i class="fas fa-bullseye"></i> Key Takeaways</h3>
+                    <ul class="takeaways-list">
+                        <li>Trends show market direction and which side (buyers or sellers) has control</li>
+                        <li>Uptrends make higher highs and higher lows; downtrends make lower highs and lower lows</li>
+                        <li>Ranges oscillate between clear support and resistance with no directional control</li>
+                        <li>Use multiple timeframes: higher timeframe for direction, lower for entry timing</li>
+                        <li>Volume should confirm trend direction, increasing on trend moves, decreasing on pullbacks</li>
+                        <li>Trade with the trend using pullbacks, breakouts, or moving average bounces</li>
+                        <li>Watch for reversal signals: failed highs/lows, volume divergence, structure breaks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="article-navigation">
+                <a href="article-17.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Article 17: Common Mistakes</a>
+                <a href="article-19.html" class="nav-btn next">Article 19: Price Action Trading <i class="fas fa-arrow-right"></i></a>
+            </nav>
+        </main>
+
+        <aside class="article-sidebar">
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Your Progress</h4>
+                <div class="progress-circle"></div>
+                <p style="text-align: center; font-size: 0.9rem; color: var(--text-secondary);">Article 18 of 30<br>Mastering trends!</p>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Previous Article</h4>
+                <a href="article-17.html" class="prev-article"><i class="fas fa-arrow-left"></i> Common Trading Mistakes</a>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Next Article</h4>
+                <a href="article-19.html" class="next-article">Price Action Trading <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </aside>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            const scrollTop = window.pageYOffset;
+            const docHeight = article.offsetHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / (docHeight - winHeight);
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) progressBar.style.width = Math.min(scrollPercent * 100, 100) + '%';
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+        });
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
 </body>
 </html>
