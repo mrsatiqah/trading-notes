@@ -1,9 +1,444 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article 14: Position Sizing - The Foundation of Risk Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --light-bg-primary: #FFFFFF;
+            --light-bg-secondary: #F8FAFC;
+            --light-bg-tertiary: #F1F5F9;
+            --mint-bright: #34D399;
+            --mint-bright-hover: #10B981;
+            --baby-blue-bright: #60A5FA;
+            --baby-blue-bright-hover: #3B82F6;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+            --border-light: rgba(52, 211, 153, 0.3);
+            --border-subtle: rgba(15, 23, 42, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --shadow-light: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 40px rgba(52, 211, 153, 0.2);
+            --warning-bg: #FEF3C7;
+            --warning-border: #F59E0B;
+            --success-bg: #D1FAE5;
+            --success-border: #10B981;
+            --info-bg: #DBEAFE;
+            --info-border: #3B82F6;
+            --error-bg: #FEE2E2;
+            --error-border: #EF4444;
+            --purple-light: #E0E7FF;
+            --purple-border: #8B5CF6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); color: var(--text-primary); line-height: 1.7; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); z-index: 1000; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
+        .nav-links a:hover { color: var(--mint-bright); }
+        .nav-cta { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; color: var(--text-primary); cursor: pointer; }
+        .reading-progress { position: fixed; top: 4.5rem; left: 0; right: 0; height: 4px; background: var(--light-bg-tertiary); z-index: 999; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); width: 0%; }
+        .article-layout { display: grid; grid-template-columns: 250px 1fr 200px; gap: 3rem; padding-top: 6rem; max-width: 1400px; margin: 0 auto; }
+        .article-nav { position: sticky; top: 6rem; height: fit-content; background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .article-nav h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-list { list-style: none; }
+        .nav-list li { margin-bottom: 0.5rem; }
+        .nav-list a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; display: block; padding: 0.25rem 0; }
+        .nav-list a:hover, .nav-list a.active { color: var(--mint-bright); }
+        .article-content { background: var(--light-bg-primary); border-radius: 12px; overflow: hidden; }
+        .article-header { background: linear-gradient(135deg, var(--light-bg-secondary) 0%, var(--light-bg-tertiary) 100%); padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border-subtle); }
+        .article-meta { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .meta-item { background: var(--glass-bg); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 0.5rem; }
+        .article-number { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; font-weight: 600; }
+        .article-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
+        .gradient-text { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .article-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        .article-body { padding: 3rem 2rem; }
+        .article-section { margin-bottom: 3rem; }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+        .article-text { font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .article-text strong { font-weight: 600; }
+        .article-text em { color: var(--mint-bright); font-style: italic; font-weight: 500; }
+        .callout { background: var(--glass-bg); border-left: 4px solid var(--mint-bright); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .callout.warning { border-left-color: var(--warning-border); background: var(--warning-bg); }
+        .callout.success { border-left-color: var(--success-border); background: var(--success-bg); }
+        .callout.info { border-left-color: var(--info-border); background: var(--info-bg); }
+        .callout-title { font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .interactive-box { background: var(--glass-bg); border: 2px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .interactive-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .interactive-title i { color: var(--mint-bright); }
+        .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .comparison-card { padding: 1.5rem; border-radius: 12px; }
+        .comparison-card.bad { background: var(--error-bg); border: 1px solid var(--error-border); }
+        .comparison-card.good { background: var(--success-bg); border: 1px solid var(--success-border); }
+        .comparison-title { font-weight: 700; margin-bottom: 1rem; }
+        .comparison-card.bad .comparison-title { color: var(--error-border); }
+        .comparison-card.good .comparison-title { color: var(--success-border); }
+        .comparison-card ul { list-style: none; }
+        .comparison-card li { margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative; font-size: 0.95rem; }
+        .comparison-card.bad li::before { content: '✗'; position: absolute; left: 0; color: var(--error-border); font-weight: bold; }
+        .comparison-card.good li::before { content: '✓'; position: absolute; left: 0; color: var(--success-border); font-weight: bold; }
+        .method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .method-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .method-card.poor { border-left: 4px solid var(--error-border); }
+        .method-card.okay { border-left: 4px solid var(--warning-border); }
+        .method-card.best { border-left: 4px solid var(--success-border); }
+        .method-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 0.25rem; }
+        .method-subtitle { font-size: 0.85rem; color: var(--text-muted); font-style: italic; margin-bottom: 1rem; }
+        .method-description { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1rem; }
+        .method-points { list-style: none; margin-bottom: 1rem; }
+        .method-points li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.35rem; padding-left: 1.25rem; position: relative; }
+        .method-points li::before { content: '•'; position: absolute; left: 0; color: var(--mint-bright); }
+        .method-verdict { font-size: 0.85rem; font-weight: 600; padding: 0.5rem 0.75rem; border-radius: 6px; background: var(--light-bg-tertiary); }
+        .formula-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+        .formula-title { font-weight: 700; margin-bottom: 0.75rem; color: var(--mint-bright); }
+        .formula-box { background: var(--light-bg-tertiary); padding: 1rem; border-radius: 8px; font-family: monospace; font-size: 0.95rem; margin-bottom: 0.75rem; text-align: center; }
+        .formula-example { font-size: 0.9rem; color: var(--text-secondary); }
+        .formula-example strong { color: var(--text-primary); }
+        .mistakes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .mistake-card { background: var(--error-bg); border: 1px solid var(--error-border); border-radius: 10px; padding: 1.5rem; border-left: 4px solid var(--error-border); }
+        .mistake-title { font-weight: 600; color: var(--error-border); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .mistake-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
+        .mistake-description { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; }
+        .advanced-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .advanced-card { background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%); border: 1px solid var(--purple-border); border-radius: 12px; padding: 1.5rem; }
+        .advanced-title { font-weight: 700; color: var(--purple-border); margin-bottom: 0.5rem; }
+        .advanced-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
+        .advanced-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+        .action-plan { background: linear-gradient(135deg, var(--light-bg-secondary) 0%, var(--light-bg-primary) 100%); border: 2px solid var(--border-light); border-radius: 15px; padding: 2rem; margin: 2.5rem 0; border-left: 6px solid var(--mint-bright); }
+        .action-plan h3 { color: var(--mint-bright); margin-bottom: 1.5rem; font-size: 1.3rem; }
+        .action-plan ul { list-style: none; padding: 0; }
+        .action-plan li { position: relative; margin-bottom: 0.75rem; padding-left: 2rem; }
+        .action-plan li::before { content: "✓"; position: absolute; left: 0; color: var(--success-border); font-weight: bold; }
+        .takeaways { background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(96, 165, 250, 0.05) 100%); border: 1px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+        .takeaways-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .takeaways-title i { color: var(--mint-bright); }
+        .takeaways-list { list-style: none; }
+        .takeaways-list li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; }
+        .takeaways-list li::before { content: '✓'; position: absolute; left: 0; color: var(--mint-bright); }
+        .article-sidebar { position: sticky; top: 6rem; height: fit-content; }
+        .sidebar-widget { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .widget-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+        .progress-circle { width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(var(--mint-bright) 0deg 168deg, var(--light-bg-tertiary) 168deg 360deg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; position: relative; }
+        .progress-circle::after { content: '47%'; position: absolute; font-size: 0.875rem; font-weight: 600; }
+        .next-article, .prev-article { padding: 1rem; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: 600; margin-bottom: 1rem; }
+        .next-article { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; }
+        .prev-article { background: var(--glass-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem; opacity: 0; visibility: hidden; z-index: 1000; }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .article-navigation { display: flex; justify-content: space-between; padding: 2rem; border-top: 1px solid var(--border-subtle); gap: 1rem; }
+        .nav-btn { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem 1.5rem; text-decoration: none; color: var(--text-primary); font-weight: 500; flex: 1; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .nav-btn.next { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; }
+        @media (max-width: 1024px) {
+            .article-layout { grid-template-columns: 1fr; gap: 2rem; padding-top: 5rem; }
+            .article-nav, .article-sidebar { display: none; }
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: block; }
+            .nav-links, .nav-cta { display: none; }
+            .article-header { padding: 2rem 1.5rem; }
+            .article-title { font-size: 2.2rem; }
+            .article-body { padding: 2rem 1.5rem; }
+            .comparison-grid, .method-grid, .mistakes-grid, .advanced-grid { grid-template-columns: 1fr; }
+            .article-navigation { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            .article-title { font-size: 1.8rem; }
+            .article-body { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
 <body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">Mrs Atiqah</div>
+                <ul class="nav-links"><li><a href="index.html">Home</a></li></ul>
+                <a href="index.html" class="nav-cta">Article Index</a>
+                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
 
-<h1>Coming Soon</h1>
+    <div class="reading-progress"><div class="progress-fill" id="progressBar"></div></div>
 
+    <div class="article-layout">
+        <aside class="article-nav">
+            <h4>In This Article</h4>
+            <ul class="nav-list">
+                <li><a href="#introduction" class="active">The Position Sizing Secret</a></li>
+                <li><a href="#why-sizing-matters">Why Size Matters Most</a></li>
+                <li><a href="#sizing-methods">Position Sizing Methods</a></li>
+                <li><a href="#risk-based-sizing">Risk-Based Sizing</a></li>
+                <li><a href="#calculation-examples">Practical Calculations</a></li>
+                <li><a href="#common-mistakes">Deadly Mistakes to Avoid</a></li>
+                <li><a href="#advanced-techniques">Advanced Techniques</a></li>
+                <li><a href="#key-takeaways">Key Takeaways</a></li>
+            </ul>
+        </aside>
 
+        <main class="article-content">
+            <header class="article-header">
+                <div class="article-meta">
+                    <div class="meta-item article-number">Article 14</div>
+                    <div class="meta-item"><i class="fas fa-book-open"></i> 14 min read</div>
+                    <div class="meta-item"><i class="fas fa-shield-alt"></i> Risk Management</div>
+                </div>
+                <h1 class="article-title">Position Sizing: <span class="gradient-text">The Foundation of Risk Management</span></h1>
+                <p class="article-subtitle">Master the art of position sizing and transform your trading from a gamble into a systematic wealth-building machine.</p>
+            </header>
+
+            <div class="article-body">
+                <div class="article-section" id="introduction">
+                    <p class="article-text">Two traders have identical strategies. They enter the same trades, at the same time, with the same analysis. After one year, one trader is up 50% while the other is down 30%. What made the difference?</p>
+                    <p class="article-text"><strong>Position sizing.</strong> It's the most overlooked aspect of trading, yet it's the single most important factor determining your long-term success. <em>You can be right about market direction 60% of the time and still lose money with poor position sizing.</em></p>
+                    <p class="article-text">Here's the truth that separates profitable traders from everyone else: they don't just know which trades to take, they know exactly how much to risk on each trade.</p>
+                    <div class="interactive-box">
+                        <div class="interactive-title"><i class="fas fa-balance-scale"></i> The Position Sizing Paradox</div>
+                        <p>The traders who risk the least per trade often make the most money over time. Small consistent risks compound into large consistent profits.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="why-sizing-matters">
+                    <h2 class="section-title">Why Position Sizing Matters More Than Entry/Exit</h2>
+                    <p class="article-text">Most traders obsess over finding the perfect entry and exit points. Meanwhile, professional traders spend most of their time on something else entirely: calculating exactly how much to risk.</p>
+                    <p class="article-text"><strong>A trader with mediocre entries but perfect position sizing will consistently outperform a trader with perfect entries but poor position sizing.</strong> Position sizing controls your maximum loss, determines your risk-adjusted returns, and directly impacts your psychological state during trades.</p>
+                    <div class="comparison-grid">
+                        <div class="comparison-card bad">
+                            <div class="comparison-title">Poor Position Sizing Results</div>
+                            <ul>
+                                <li>One bad trade can wipe out weeks of profits</li>
+                                <li>Emotional stress leads to poor decision-making</li>
+                                <li>Inconsistent results despite good analysis</li>
+                                <li>Fear of taking valid trades after big losses</li>
+                                <li>High probability of eventual account blow-up</li>
+                            </ul>
+                        </div>
+                        <div class="comparison-card good">
+                            <div class="comparison-title">Proper Position Sizing Results</div>
+                            <ul>
+                                <li>No single trade can significantly damage your account</li>
+                                <li>Emotional stability leads to better decisions</li>
+                                <li>Consistent results even with imperfect analysis</li>
+                                <li>Confidence to take every valid setup</li>
+                                <li>Virtually eliminates risk of account destruction</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="callout info">
+                        <div class="callout-title"><i class="fas fa-user-tie"></i> The Professional Edge</div>
+                        <p>Professional traders know that position sizing is their competitive edge. While retail traders argue about indicators and patterns, pros focus on risk management that ensures they'll still be trading profitably years from now.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="sizing-methods">
+                    <h2 class="section-title">Position Sizing Methods: From Basic to Professional</h2>
+                    <p class="article-text">Not all position sizing methods are created equal. Here's how they stack up from worst to best:</p>
+                    <div class="method-grid">
+                        <div class="method-card poor">
+                            <div class="method-title">Fixed Dollar Amount</div>
+                            <div class="method-subtitle">The Account Killer</div>
+                            <div class="method-description">Always risking the same dollar amount regardless of account size or market conditions.</div>
+                            <ul class="method-points">
+                                <li>Ignores account size and growth</li>
+                                <li>Doesn't adjust for volatility</li>
+                                <li>Risk percentage increases as account shrinks</li>
+                            </ul>
+                            <div class="method-verdict">Avoid this method completely</div>
+                        </div>
+                        <div class="method-card okay">
+                            <div class="method-title">Fixed Percentage</div>
+                            <div class="method-subtitle">Better But Flawed</div>
+                            <div class="method-description">Always risking the same percentage of account balance, regardless of trade setup or market conditions.</div>
+                            <ul class="method-points">
+                                <li>Maintains consistent risk percentage</li>
+                                <li>Scales with account size automatically</li>
+                                <li>Ignores individual trade characteristics</li>
+                            </ul>
+                            <div class="method-verdict">Basic but workable for beginners</div>
+                        </div>
+                        <div class="method-card best">
+                            <div class="method-title">Risk-Based Sizing</div>
+                            <div class="method-subtitle">The Professional Standard</div>
+                            <div class="method-description">Position size is calculated based on predetermined risk amount and the specific stop-loss distance for each trade.</div>
+                            <ul class="method-points">
+                                <li>Risk is consistent across all trades</li>
+                                <li>Position size adjusts to stop-loss distance</li>
+                                <li>Used by most professional traders</li>
+                            </ul>
+                            <div class="method-verdict">The gold standard for most traders</div>
+                        </div>
+                    </div>
+                    <div class="callout success">
+                        <div class="callout-title"><i class="fas fa-check-circle"></i> The Right Choice</div>
+                        <p>For most traders, risk-based position sizing is the optimal approach. It's sophisticated enough to be effective but simple enough to implement consistently.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="risk-based-sizing">
+                    <h2 class="section-title">Mastering Risk-Based Position Sizing</h2>
+                    <p class="article-text">Risk-based position sizing is elegant in its simplicity: you decide how much you're willing to lose on each trade, then calculate your position size based on where your stop-loss will be placed.</p>
+                    <div class="formula-card">
+                        <div class="formula-title">The Basic Formula</div>
+                        <div class="formula-box">Position Size = Risk Amount ÷ (Entry Price − Stop Loss Price)</div>
+                        <div class="formula-example"><strong>Example:</strong> You want to risk $100 on a stock trading at $50 with a stop loss at $48. Your position size would be: $100 ÷ ($50 − $48) = $100 ÷ $2 = 50 shares.</div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="calculation-examples">
+                    <h2 class="section-title">Practical Calculations</h2>
+                    <div class="formula-card">
+                        <div class="formula-title">Percentage-Based Risk</div>
+                        <div class="formula-box">Risk Amount = Account Balance × Risk %<br>Position Size = Risk Amount ÷ Risk per Share</div>
+                        <div class="formula-example"><strong>Example:</strong> $10,000 account, 1% risk rule, stock at $100, stop at $95. Risk Amount = $10,000 × 1% = $100. Position Size = $100 ÷ $5 = 20 shares.</div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">Forex Position Sizing</div>
+                        <div class="formula-box">Position Size = (Account Balance × Risk %) ÷ (Stop Loss in Pips × Pip Value)</div>
+                        <div class="formula-example"><strong>Example:</strong> $5,000 account, 2% risk, EUR/USD, 50-pip stop. Position Size = ($5,000 × 2%) ÷ (50 × $10) = $100 ÷ $500 = 0.2 lots.</div>
+                    </div>
+                    <div class="formula-card">
+                        <div class="formula-title">Options Position Sizing</div>
+                        <div class="formula-box">Number of Contracts = Risk Amount ÷ (Option Premium × 100)</div>
+                        <div class="formula-example"><strong>Example:</strong> Want to risk $200, option costs $2.00. Number of Contracts = $200 ÷ ($2.00 × 100) = 1 contract.</div>
+                    </div>
+                    <div class="callout info">
+                        <div class="callout-title"><i class="fas fa-quote-left"></i> Adapted Wisdom</div>
+                        <p>Risk comes from not knowing what you're doing. Position sizing ensures that even when you don't know what you're doing, you won't get hurt too badly. — Adapted from Warren Buffett</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="common-mistakes">
+                    <h2 class="section-title">Deadly Position Sizing Mistakes That Kill Accounts</h2>
+                    <p class="article-text">Even traders who understand position sizing often make critical errors that sabotage their success:</p>
+                    <div class="mistakes-grid">
+                        <div class="mistake-card">
+                            <div class="mistake-title"><i class="fas fa-fire"></i> The Hot Streak Trap</div>
+                            <div class="mistake-subtitle">Overconfidence Kills</div>
+                            <div class="mistake-description">Increasing position sizes after a few wins because you feel "hot." You win 5 trades in a row and start risking 5% instead of 2%. The inevitable loss wipes out all previous gains plus more.</div>
+                        </div>
+                        <div class="mistake-card">
+                            <div class="mistake-title"><i class="fas fa-layer-group"></i> The Averaging Down Disease</div>
+                            <div class="mistake-subtitle">Doubling Your Losses</div>
+                            <div class="mistake-description">Adding to losing positions instead of cutting losses. You buy 100 shares at $50, it drops to $45, so you buy 100 more to "average down."</div>
+                        </div>
+                        <div class="mistake-card">
+                            <div class="mistake-title"><i class="fas fa-dice"></i> The Home Run Swing</div>
+                            <div class="mistake-subtitle">Going for Broke</div>
+                            <div class="mistake-description">Risking 20% of your account on a single "sure thing" trade. Even if you're right 8 out of 10 times, the 2 losses will destroy you.</div>
+                        </div>
+                        <div class="mistake-card">
+                            <div class="mistake-title"><i class="fas fa-redo"></i> The Revenge Size</div>
+                            <div class="mistake-subtitle">Emotional Destruction</div>
+                            <div class="mistake-description">Increasing position size after losses to "get even faster." This compounds your losses instead of managing them.</div>
+                        </div>
+                    </div>
+                    <div class="callout warning">
+                        <div class="callout-title"><i class="fas fa-exclamation-triangle"></i> The Death Spiral</div>
+                        <p>All of these mistakes follow the same pattern: they increase risk exactly when you should be decreasing it. This creates a death spiral where losses compound rapidly and recovery becomes increasingly difficult.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="advanced-techniques">
+                    <h2 class="section-title">Advanced Position Sizing Techniques</h2>
+                    <p class="article-text">Once you've mastered basic risk-based sizing, these advanced techniques can further optimize your results:</p>
+                    <div class="advanced-grid">
+                        <div class="advanced-card">
+                            <div class="advanced-title">Kelly Criterion</div>
+                            <div class="advanced-subtitle">Mathematical Optimization</div>
+                            <div class="advanced-description">Uses your win rate and average win/loss ratio to calculate the mathematically optimal position size. Formula: f = (bp − q) / b, where b = odds, p = win probability, q = loss probability. Requires significant historical data.</div>
+                        </div>
+                        <div class="advanced-card">
+                            <div class="advanced-title">Volatility-Adjusted Sizing</div>
+                            <div class="advanced-subtitle">Market-Adaptive Risk</div>
+                            <div class="advanced-description">Adjusts position size based on current market volatility, using smaller sizes during high-volatility periods. During high VIX periods, reduce normal position size by 25-50%.</div>
+                        </div>
+                        <div class="advanced-card">
+                            <div class="advanced-title">Correlation-Adjusted Sizing</div>
+                            <div class="advanced-subtitle">Portfolio Risk Management</div>
+                            <div class="advanced-description">Reduces position sizes when holding multiple correlated positions to avoid concentration risk. If holding 3 tech stocks, reduce each position size by 20-30%.</div>
+                        </div>
+                    </div>
+                    <div class="callout info">
+                        <div class="callout-title"><i class="fas fa-graduation-cap"></i> Advanced Implementation</div>
+                        <p>These techniques require extensive backtesting and sophisticated tools. Start with basic risk-based sizing and only add complexity once you've mastered the fundamentals.</p>
+                    </div>
+                </div>
+
+                <div class="takeaways" id="key-takeaways">
+                    <h3 class="takeaways-title"><i class="fas fa-bullseye"></i> Key Takeaways</h3>
+                    <ul class="takeaways-list">
+                        <li>Position sizing matters more than entry/exit timing for long-term success</li>
+                        <li>Risk-based position sizing is the professional standard, calculate size based on stop-loss distance</li>
+                        <li>Never risk more than 1-2% of your account on any single trade</li>
+                        <li>Avoid deadly mistakes: hot streak sizing, averaging down, revenge sizing, and home run swings</li>
+                        <li>Consistent small risks compound into large consistent profits over time</li>
+                        <li>Position sizing controls your maximum loss and determines your psychological state</li>
+                        <li>Advanced techniques like Kelly Criterion require extensive data and experience</li>
+                    </ul>
+                </div>
+
+                <div class="action-plan">
+                    <h3>Your Position Sizing Mastery Plan</h3>
+                    <ul>
+                        <li>Set a maximum risk per trade (start with 1% of account balance)</li>
+                        <li>Create a position sizing calculator or spreadsheet using the risk-based formula</li>
+                        <li>Practice calculating position sizes for your next 10 potential trades</li>
+                        <li>Never deviate from your position sizing rules, regardless of how confident you feel</li>
+                        <li>Track your actual position sizes vs. planned sizes to ensure consistency</li>
+                        <li>Review and adjust your maximum risk percentage quarterly based on account growth</li>
+                        <li>Study correlation between your typical trades to identify concentration risks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="article-navigation">
+                <a href="article-13.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Article 13: Fear and Greed</a>
+                <a href="article-15.html" class="nav-btn next">Article 15: Risk-Reward Ratios <i class="fas fa-arrow-right"></i></a>
+            </nav>
+        </main>
+
+        <aside class="article-sidebar">
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Your Progress</h4>
+                <div class="progress-circle"></div>
+                <p style="text-align: center; font-size: 0.9rem; color: var(--text-secondary);">Article 14 of 30<br>Sizing mastery!</p>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Previous Article</h4>
+                <a href="article-13.html" class="prev-article"><i class="fas fa-arrow-left"></i> Mastering Fear and Greed</a>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Next Article</h4>
+                <a href="article-15.html" class="next-article">Risk-Reward Ratios <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </aside>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            const scrollTop = window.pageYOffset;
+            const docHeight = article.offsetHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / (docHeight - winHeight);
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) progressBar.style.width = Math.min(scrollPercent * 100, 100) + '%';
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+        });
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
 </body>
 </html>
