@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article 11: Technical Indicators - Moving Averages Deep Dive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --light-bg-primary: #FFFFFF;
+            --light-bg-secondary: #F8FAFC;
+            --light-bg-tertiary: #F1F5F9;
+            --mint-bright: #34D399;
+            --mint-bright-hover: #10B981;
+            --baby-blue-bright: #60A5FA;
+            --baby-blue-bright-hover: #3B82F6;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+            --border-light: rgba(52, 211, 153, 0.3);
+            --border-subtle: rgba(15, 23, 42, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --shadow-light: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 40px rgba(52, 211, 153, 0.2);
+            --warning-bg: #FEF3C7;
+            --warning-border: #F59E0B;
+            --success-bg: #D1FAE5;
+            --success-border: #10B981;
+            --info-bg: #DBEAFE;
+            --info-border: #3B82F6;
+            --error-bg: #FEE2E2;
+            --error-border: #EF4444;
+            --purple-light: #E0E7FF;
+            --purple-border: #8B5CF6;
+            --sma-color: #3B82F6;
+            --ema-color: #10B981;
+            --wma-color: #8B5CF6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); color: var(--text-primary); line-height: 1.7; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); z-index: 1000; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
+        .nav-links a:hover { color: var(--mint-bright); }
+        .nav-cta { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; color: var(--text-primary); cursor: pointer; }
+        .reading-progress { position: fixed; top: 4.5rem; left: 0; right: 0; height: 4px; background: var(--light-bg-tertiary); z-index: 999; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); width: 0%; }
+        .article-layout { display: grid; grid-template-columns: 250px 1fr 200px; gap: 3rem; padding-top: 6rem; max-width: 1400px; margin: 0 auto; }
+        .article-nav { position: sticky; top: 6rem; height: fit-content; background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .article-nav h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-list { list-style: none; }
+        .nav-list li { margin-bottom: 0.5rem; }
+        .nav-list a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; display: block; padding: 0.25rem 0; }
+        .nav-list a:hover, .nav-list a.active { color: var(--mint-bright); }
+        .article-content { background: var(--light-bg-primary); border-radius: 12px; overflow: hidden; }
+        .article-header { background: linear-gradient(135deg, var(--light-bg-secondary) 0%, var(--light-bg-tertiary) 100%); padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border-subtle); }
+        .article-meta { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .meta-item { background: var(--glass-bg); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 0.5rem; }
+        .article-number { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; font-weight: 600; }
+        .article-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
+        .gradient-text { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .article-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        .article-body { padding: 3rem 2rem; }
+        .article-section { margin-bottom: 3rem; }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+        .article-text { font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .article-text strong { font-weight: 600; }
+        .article-text em { color: var(--mint-bright); font-style: italic; font-weight: 500; }
+        .callout { background: var(--glass-bg); border-left: 4px solid var(--mint-bright); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .callout.warning { border-left-color: var(--warning-border); background: var(--warning-bg); }
+        .callout.success { border-left-color: var(--success-border); background: var(--success-bg); }
+        .callout.info { border-left-color: var(--info-border); background: var(--info-bg); }
+        .callout.error { border-left-color: var(--error-border); background: var(--error-bg); }
+        .callout-title { font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .interactive-box { background: var(--glass-bg); border: 2px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .interactive-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .interactive-title i { color: var(--mint-bright); }
+        .ma-demo { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+        .ma-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 2rem; text-align: center; }
+        .ma-types { display: flex; justify-content: space-around; align-items: center; gap: 2rem; flex-wrap: wrap; }
+        .ma-type { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+        .ma-visual { position: relative; width: 120px; height: 80px; background: var(--light-bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+        .ma-line { position: absolute; height: 2px; left: 0; right: 0; top: 50%; transform: translateY(-50%); }
+        .sma-line { background: var(--sma-color); }
+        .ema-line { background: var(--ema-color); transform: translateY(-70%); }
+        .wma-line { background: var(--wma-color); transform: translateY(-30%); }
+        .price-dots { position: absolute; width: 100%; height: 100%; }
+        .price-dot { position: absolute; width: 4px; height: 4px; background: var(--text-muted); border-radius: 50%; }
+        .ma-label { font-size: 0.9rem; font-weight: 600; }
+        .ma-description { font-size: 0.8rem; color: var(--text-secondary); text-align: center; max-width: 140px; line-height: 1.4; }
+        .ma-types-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .ma-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .ma-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .ma-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; }
+        .ma-card.sma .ma-icon { background: linear-gradient(135deg, var(--sma-color), #2563EB); }
+        .ma-card.ema .ma-icon { background: linear-gradient(135deg, var(--ema-color), var(--mint-bright-hover)); }
+        .ma-card.wma .ma-icon { background: linear-gradient(135deg, var(--wma-color), #7C3AED); }
+        .ma-card-title { font-weight: 700; margin-bottom: 0.25rem; }
+        .ma-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
+        .ma-card-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; }
+        .ma-characteristics { background: var(--light-bg-tertiary); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; }
+        .ma-characteristics strong { color: var(--mint-bright); }
+        .periods-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .period-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .period-header { text-align: center; margin-bottom: 1rem; }
+        .period-title { font-weight: 700; margin-bottom: 0.5rem; }
+        .period-range { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+        .period-examples { list-style: none; }
+        .period-examples li { margin-bottom: 0.5rem; padding: 0.5rem; background: var(--light-bg-tertiary); border-radius: 6px; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; }
+        .period-examples strong { color: var(--mint-bright); }
+        .period-use { font-size: 0.8rem; color: var(--text-secondary); }
+        .strategies-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .strategy-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; }
+        .strategy-header { text-align: center; margin-bottom: 1.5rem; }
+        .strategy-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .strategy-type { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+        .strategy-steps { list-style: none; }
+        .strategy-steps li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; font-size: 0.95rem; line-height: 1.5; }
+        .strategy-steps li::before { content: attr(data-step); position: absolute; left: 0; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--mint-bright); color: white; font-size: 0.7rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+        .mistakes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .mistake-card { background: var(--error-bg); border: 1px solid var(--error-border); border-radius: 10px; padding: 1.5rem; border-left: 4px solid var(--error-border); }
+        .mistake-title { font-weight: 600; color: var(--error-border); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .mistake-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+        .advanced-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .advanced-card { background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%); border: 1px solid var(--purple-border); border-radius: 12px; padding: 1.5rem; }
+        .advanced-title { font-weight: 700; color: var(--purple-border); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .advanced-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+        .crossover-demo { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+        .crossover-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center; }
+        .crossover-types { display: flex; justify-content: space-around; gap: 2rem; flex-wrap: wrap; }
+        .crossover-type { text-align: center; flex: 1; min-width: 200px; }
+        .cross-visual { position: relative; width: 120px; height: 80px; background: var(--light-bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; margin: 0 auto 1rem; overflow: hidden; }
+        .golden-cross { background-color: rgba(16, 185, 129, 0.1); }
+        .death-cross { background-color: rgba(239, 68, 68, 0.1); }
+        .fast-ma { position: absolute; height: 2px; background: var(--mint-bright); width: 80%; top: 45%; left: 10%; transform: rotate(5deg); }
+        .slow-ma { position: absolute; height: 2px; background: var(--sma-color); width: 80%; top: 50%; left: 10%; transform: rotate(-2deg); }
+        .death-cross .fast-ma { background: var(--error-border); transform: rotate(-5deg); top: 55%; }
+        .death-cross .slow-ma { transform: rotate(2deg); top: 45%; }
+        .cross-label { font-weight: 600; margin-bottom: 0.5rem; }
+        .golden-cross .cross-label { color: var(--success-border); }
+        .death-cross .cross-label { color: var(--error-border); }
+        .cross-description { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; }
+        .takeaways { background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(96, 165, 250, 0.05) 100%); border: 1px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+        .takeaways-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .takeaways-title i { color: var(--mint-bright); }
+        .takeaways-list { list-style: none; }
+        .takeaways-list li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; }
+        .takeaways-list li::before { content: '✓'; position: absolute; left: 0; color: var(--mint-bright); }
+        .article-sidebar { position: sticky; top: 6rem; height: fit-content; }
+        .sidebar-widget { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .widget-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+        .progress-circle { width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(var(--mint-bright) 0deg 132deg, var(--light-bg-tertiary) 132deg 360deg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; position: relative; }
+        .progress-circle::after { content: '37%'; position: absolute; font-size: 0.875rem; font-weight: 600; }
+        .next-article, .prev-article { padding: 1rem; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: 600; margin-bottom: 1rem; }
+        .next-article { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; }
+        .prev-article { background: var(--glass-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem; opacity: 0; visibility: hidden; z-index: 1000; }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .article-navigation { display: flex; justify-content: space-between; padding: 2rem; border-top: 1px solid var(--border-subtle); gap: 1rem; }
+        .nav-btn { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem 1.5rem; text-decoration: none; color: var(--text-primary); font-weight: 500; flex: 1; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .nav-btn.next { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; }
+        @media (max-width: 1024px) {
+            .article-layout { grid-template-columns: 1fr; gap: 2rem; padding-top: 5rem; }
+            .article-nav, .article-sidebar { display: none; }
+            .ma-types, .crossover-types { flex-direction: column; gap: 1.5rem; }
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: block; }
+            .nav-links, .nav-cta { display: none; }
+            .article-header { padding: 2rem 1.5rem; }
+            .article-title { font-size: 2.2rem; }
+            .article-body { padding: 2rem 1.5rem; }
+            .ma-types-grid, .strategies-grid, .mistakes-grid, .advanced-grid, .periods-grid { grid-template-columns: 1fr; }
+            .article-navigation { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            .article-title { font-size: 1.8rem; }
+            .article-body { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">Mrs Atiqah</div>
+                <ul class="nav-links"><li><a href="index.html">Home</a></li></ul>
+                <a href="index.html" class="nav-cta">Article Index</a>
+                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="reading-progress"><div class="progress-fill" id="progressBar"></div></div>
+
+    <div class="article-layout">
+        <aside class="article-nav">
+            <h4>In This Article</h4>
+            <ul class="nav-list">
+                <li><a href="#introduction" class="active">Weather Forecast</a></li>
+                <li><a href="#what-is-ma">What is a Moving Average?</a></li>
+                <li><a href="#types">Types of MAs</a></li>
+                <li><a href="#periods">Popular Periods</a></li>
+                <li><a href="#dynamic-sr">Dynamic Support/Resistance</a></li>
+                <li><a href="#crossovers">Crossover Strategies</a></li>
+                <li><a href="#trading-strategies">Trading Strategies</a></li>
+                <li><a href="#advanced">Advanced Concepts</a></li>
+                <li><a href="#mistakes">Common Mistakes</a></li>
+                <li><a href="#different-markets">Different Markets</a></li>
+                <li><a href="#key-takeaways">Key Takeaways</a></li>
+            </ul>
+        </aside>
+
+        <main class="article-content">
+            <header class="article-header">
+                <div class="article-meta">
+                    <div class="meta-item article-number">Article 11</div>
+                    <div class="meta-item"><i class="fas fa-book-open"></i> 10 min read</div>
+                    <div class="meta-item"><i class="fas fa-chart-line"></i> Technical Indicators</div>
+                </div>
+                <h1 class="article-title">Technical Indicators: <span class="gradient-text">Moving Averages Deep Dive</span></h1>
+                <p class="article-subtitle">If support and resistance levels are the battlefield maps, then moving averages are like having a weather forecast for market sentiment.</p>
+            </header>
+
+            <div class="article-body">
+                <div class="article-section" id="introduction">
+                    <p class="article-text">Moving averages are probably the most widely used technical indicators in the world, and for good reason, they're simple to understand, easy to apply, and incredibly versatile.</p>
+                    <p class="article-text">But here's the thing: <strong>most traders use moving averages wrong</strong>. They either rely on them too heavily or dismiss them as "lagging indicators" without understanding their true power.</p>
+                    <div class="interactive-box">
+                        <div class="interactive-title"><i class="fas fa-cloud-sun"></i> Your Market Weather Forecast</div>
+                        <p>Moving averages smooth out the day-to-day noise and help you see the bigger picture of where prices are trending.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="what-is-ma">
+                    <h2 class="section-title">What Exactly is a Moving Average?</h2>
+                    <p class="article-text">Think of a moving average as the market's <em>"average mood"</em> over a specific period. Instead of looking at chaotic daily price swings, you're looking at the average closing price over the last X days.</p>
+                    <div class="callout info">
+                        <div class="callout-title"><i class="fas fa-calculator"></i> Simple Example</div>
+                        <p>If a stock closed at $100, $102, $98, $101, and $104 over five days, the 5-day moving average would be <strong>$101</strong>.</p>
+                        <p style="margin-top: 1rem;">Tomorrow, when you get a new closing price, you drop the oldest day and add the newest one, creating a new average.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="types">
+                    <h2 class="section-title">Types of Moving Averages</h2>
+                    <p class="article-text">Not all moving averages are created equal:</p>
+                    <div class="ma-demo">
+                        <div class="ma-title">Moving Average Types Comparison</div>
+                        <div class="ma-types">
+                            <div class="ma-type"><div class="ma-visual"><div class="ma-line sma-line"></div></div><div class="ma-label">Simple MA (SMA)</div><div class="ma-description">Equal weight to all periods. Smooth but slow to react.</div></div>
+                            <div class="ma-type"><div class="ma-visual"><div class="ma-line ema-line"></div></div><div class="ma-label">Exponential MA (EMA)</div><div class="ma-description">More weight to recent prices. Faster reaction to changes.</div></div>
+                            <div class="ma-type"><div class="ma-visual"><div class="ma-line wma-line"></div></div><div class="ma-label">Weighted MA (WMA)</div><div class="ma-description">Linear weighting system. Between SMA and EMA responsiveness.</div></div>
+                        </div>
+                    </div>
+                    <div class="ma-types-grid">
+                        <div class="ma-card sma"><div class="ma-header"><div class="ma-icon"><i class="fas fa-minus"></i></div><div><div class="ma-card-title">Simple Moving Average (SMA)</div><div class="ma-subtitle">The Classic Average</div></div></div><div class="ma-card-description">The most basic type, adds up closing prices over X periods and divides by X.</div><div class="ma-characteristics"><strong>Best for:</strong> Long-term trend identification<br><strong>Characteristics:</strong> Slow to respond, smooth signals</div></div>
+                        <div class="ma-card ema"><div class="ma-header"><div class="ma-icon"><i class="fas fa-chart-line"></i></div><div><div class="ma-card-title">Exponential Moving Average (EMA)</div><div class="ma-subtitle">The Responsive Average</div></div></div><div class="ma-card-description">Gives more weight to recent prices, making it more responsive to current market action.</div><div class="ma-characteristics"><strong>Best for:</strong> Shorter-term trading, faster signals<br><strong>Characteristics:</strong> Fast response, more sensitive</div></div>
+                        <div class="ma-card wma"><div class="ma-header"><div class="ma-icon"><i class="fas fa-balance-scale"></i></div><div><div class="ma-card-title">Weighted Moving Average (WMA)</div><div class="ma-subtitle">The Linear Average</div></div></div><div class="ma-card-description">Uses a linear weighting system where the most recent day gets the highest weight.</div><div class="ma-characteristics"><strong>Best for:</strong> Balance between SMA and EMA<br><strong>Characteristics:</strong> Medium responsiveness, less common</div></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="periods">
+                    <h2 class="section-title">Popular Moving Average Periods</h2>
+                    <p class="article-text">Different time periods serve different purposes:</p>
+                    <div class="periods-grid">
+                        <div class="period-card"><div class="period-header"><div class="period-title">Short-Term MAs</div><div class="period-range">5-20 periods</div></div><ul class="period-examples"><li><strong>5-day</strong> <span class="period-use">Scalping, day trading</span></li><li><strong>10-day</strong> <span class="period-use">Swing trading entries</span></li><li><strong>20-day</strong> <span class="period-use">Dynamic support/resistance</span></li></ul></div>
+                        <div class="period-card"><div class="period-header"><div class="period-title">Medium-Term MAs</div><div class="period-range">21-100 periods</div></div><ul class="period-examples"><li><strong>21-day</strong> <span class="period-use">Monthly cycle</span></li><li><strong>50-day</strong> <span class="period-use">Institutional favorite</span></li><li><strong>100-day</strong> <span class="period-use">Trend confirmation</span></li></ul></div>
+                        <div class="period-card"><div class="period-header"><div class="period-title">Long-Term MAs</div><div class="period-range">150+ periods</div></div><ul class="period-examples"><li><strong>150-day</strong> <span class="period-use">Long-term trend</span></li><li><strong>200-day</strong> <span class="period-use">The "granddaddy"</span></li><li><strong>250-day</strong> <span class="period-use">One trading year</span></li></ul></div>
+                    </div>
+                    <div class="callout success">
+                        <div class="callout-title"><i class="fas fa-star"></i> Key Insight</div>
+                        <p>The <strong>50-day and 200-day</strong> moving averages are the most watched by institutional investors, making them self-fulfilling prophecies in many cases.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="dynamic-sr">
+                    <h2 class="section-title">Moving Averages as Dynamic Support and Resistance</h2>
+                    <p class="article-text">One of the most powerful uses of moving averages is as <em>dynamic support and resistance levels</em> that adjust with the trend.</p>
+                    <div class="ma-types-grid">
+                        <div class="ma-card sma"><div class="ma-header"><div class="ma-icon"><i class="fas fa-arrow-up"></i></div><div><div class="ma-card-title">In Uptrends</div><div class="ma-subtitle">MAs Act as Support</div></div></div><div class="ma-card-description">Price might dip down to the 20-day EMA, find buyers there, and bounce back up.</div><div class="ma-characteristics">The moving average becomes a <strong>"floor" that rises over time</strong>.</div></div>
+                        <div class="ma-card ema"><div class="ma-header"><div class="ma-icon"><i class="fas fa-arrow-down"></i></div><div><div class="ma-card-title">In Downtrends</div><div class="ma-subtitle">MAs Act as Resistance</div></div></div><div class="ma-card-description">Price might rally up to the 50-day SMA, encounter selling pressure, and drop back down.</div><div class="ma-characteristics">The moving average becomes a <strong>"ceiling" that falls over time</strong>.</div></div>
+                        <div class="ma-card wma"><div class="ma-header"><div class="ma-icon"><i class="fas fa-layer-group"></i></div><div><div class="ma-card-title">The Hierarchy</div><div class="ma-subtitle">Order Matters</div></div></div><div class="ma-card-description">In strong trends, you'll often see a clear hierarchy of moving averages stacked in order.</div><div class="ma-characteristics"><strong>Uptrend:</strong> Price > 20-day > 50-day > 200-day<br><strong>Downtrend:</strong> Price < 20-day < 50-day < 200-day</div></div>
+                    </div>
+                    <div class="callout warning">
+                        <div class="callout-title"><i class="fas fa-exclamation-triangle"></i> Hierarchy Disruption</div>
+                        <p>When the moving average hierarchy gets disrupted, it often signals potential trend changes.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="crossovers">
+                    <h2 class="section-title">Moving Average Crossover Strategies</h2>
+                    <div class="crossover-demo">
+                        <div class="crossover-title">Famous Crossover Signals</div>
+                        <div class="crossover-types">
+                            <div class="crossover-type"><div class="cross-visual golden-cross"><div class="fast-ma"></div><div class="slow-ma"></div></div><div class="cross-label">Golden Cross</div><div class="cross-description">50-day MA crosses above 200-day MA. Long-term bullish signal.</div></div>
+                            <div class="crossover-type"><div class="cross-visual death-cross"><div class="fast-ma"></div><div class="slow-ma"></div></div><div class="cross-label">Death Cross</div><div class="cross-description">50-day MA crosses below 200-day MA. Long-term bearish signal.</div></div>
+                        </div>
+                    </div>
+                    <div class="callout error">
+                        <div class="callout-title"><i class="fas fa-clock"></i> Reality Check</div>
+                        <p><strong>By the time Golden/Death crosses happen, much of the move has already occurred.</strong> More responsive crossovers use shorter-term moving averages.</p>
+                    </div>
+                    <div class="strategies-grid">
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">Fast Crossover Strategy</div><div class="strategy-type">Short-term Signals</div></div><ul class="strategy-steps"><li data-step="📋"><strong>Setup:</strong> Use 5-day and 20-day EMAs for faster signals</li><li data-step="🎯"><strong>Buy Signal:</strong> 5-day EMA crosses above 20-day EMA</li><li data-step="🎯"><strong>Sell Signal:</strong> 5-day EMA crosses below 20-day EMA</li></ul></div>
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">Medium-term Crossover</div><div class="strategy-type">Swing Trading</div></div><ul class="strategy-steps"><li data-step="📋"><strong>Setup:</strong> Use 20-day and 50-day moving averages</li><li data-step="🎯"><strong>Buy Signal:</strong> 20-day crosses above 50-day with volume</li><li data-step="🛑"><strong>Stop Loss:</strong> Below recent swing low or MA recross</li></ul></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="trading-strategies">
+                    <h2 class="section-title">Moving Average Trading Strategies</h2>
+                    <div class="strategies-grid">
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">The Pullback Strategy</div><div class="strategy-type">Trend Following</div></div><ul class="strategy-steps"><li data-step="📋"><strong>Setup:</strong> Stock in clear uptrend above rising 20-day EMA</li><li data-step="🎯"><strong>Entry:</strong> Buy when price pulls back to touch/penetrate 20-day EMA</li><li data-step="🛑"><strong>Stop:</strong> Below recent swing low or close below EMA</li></ul></div>
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">The Breakout Strategy</div><div class="strategy-type">Momentum Trading</div></div><ul class="strategy-steps"><li data-step="📋"><strong>Setup:</strong> Stock trading below declining moving average</li><li data-step="🎯"><strong>Entry:</strong> Buy when price closes decisively above MA with volume</li><li data-step="🛑"><strong>Stop:</strong> Back below the moving average</li></ul></div>
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">Multiple MA System</div><div class="strategy-type">Trend Assessment</div></div><ul class="strategy-steps"><li data-step="🟢"><strong>Strong Uptrend:</strong> All MAs rising, price above all three</li><li data-step="🟡"><strong>Weak Uptrend:</strong> Mixed signals</li><li data-step="🔴"><strong>Downtrend:</strong> All MAs declining, price below all three</li></ul></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="advanced">
+                    <h2 class="section-title">Advanced Moving Average Concepts</h2>
+                    <div class="advanced-grid">
+                        <div class="advanced-card"><div class="advanced-title"><i class="fas fa-expand-arrows-alt"></i> Moving Average Envelopes</div><div class="advanced-description">Draw bands above and below a moving average. Price tends to stay within these envelopes.</div></div>
+                        <div class="advanced-card"><div class="advanced-title"><i class="fas fa-chart-area"></i> MACD Connection</div><div class="advanced-description">MACD is essentially the relationship between two EMAs (usually 12-day and 26-day).</div></div>
+                        <div class="advanced-card"><div class="advanced-title"><i class="fas fa-adjust"></i> Adaptive Moving Averages</div><div class="advanced-description">These adjust their sensitivity based on market volatility.</div></div>
+                        <div class="advanced-card"><div class="advanced-title"><i class="fas fa-volume-up"></i> Volume-Weighted MAs</div><div class="advanced-description">Instead of just using price, these incorporate volume to give more weight to periods with heavy trading.</div></div>
+                        <div class="advanced-card"><div class="advanced-title"><i class="fas fa-layer-group"></i> MA + Support/Resistance</div><div class="advanced-description">When a moving average coincides with a horizontal level, it becomes much more significant.</div></div>
+                        <div class="advanced-card"><div class="advanced-title"><i class="fas fa-chart-bar"></i> MA + Volume Confirmation</div><div class="advanced-description">Moving average signals are more reliable when confirmed by volume.</div></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="mistakes">
+                    <h2 class="section-title">Common Moving Average Mistakes</h2>
+                    <div class="mistakes-grid">
+                        <div class="mistake-card"><div class="mistake-title"><i class="fas fa-exclamation-triangle"></i> Using Too Many</div><div class="mistake-description">Some traders put 5-10 different moving averages on their charts, creating confusion. Start with 1-3 maximum.</div></div>
+                        <div class="mistake-card"><div class="mistake-title"><i class="fas fa-exclamation-triangle"></i> Wrong Timeframe Match</div><div class="mistake-description">Using a 200-day MA for day trading or a 5-day MA for position trading doesn't make sense.</div></div>
+                        <div class="mistake-card"><div class="mistake-title"><i class="fas fa-exclamation-triangle"></i> Ignoring Market Context</div><div class="mistake-description">Moving averages work best in trending markets and poorly in choppy, sideways markets.</div></div>
+                        <div class="mistake-card"><div class="mistake-title"><i class="fas fa-exclamation-triangle"></i> Treating Signals as Gospel</div><div class="mistake-description">Moving averages are tools, not crystal balls.</div></div>
+                        <div class="mistake-card"><div class="mistake-title"><i class="fas fa-exclamation-triangle"></i> Forgetting They're Lagging</div><div class="mistake-description">By definition, moving averages are based on past prices, so they lag current market action.</div></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="different-markets">
+                    <h2 class="section-title">Moving Averages Across Different Markets</h2>
+                    <div class="ma-types-grid">
+                        <div class="ma-card sma"><div class="ma-header"><div class="ma-icon"><i class="fas fa-chart-line"></i></div><div><div class="ma-card-title">Stock Markets</div><div class="ma-subtitle">Traditional Application</div></div></div><div class="ma-card-description">Individual stocks and indices commonly use 20, 50, 200-day SMAs/EMAs as standard references.</div></div>
+                        <div class="ma-card ema"><div class="ma-header"><div class="ma-icon"><i class="fas fa-dollar-sign"></i></div><div><div class="ma-card-title">Forex Markets</div><div class="ma-subtitle">24-Hour Trading</div></div></div><div class="ma-card-description">Often use EMAs instead of SMAs for faster signals. Popular periods include 8, 21, 55.</div></div>
+                        <div class="ma-card wma"><div class="ma-header"><div class="ma-icon"><i class="fab fa-bitcoin"></i></div><div><div class="ma-card-title">Cryptocurrency</div><div class="ma-subtitle">High Volatility</div></div></div><div class="ma-card-description">Extremely volatile markets often work better with longer periods (50, 100, 200).</div></div>
+                        <div class="ma-card sma"><div class="ma-header"><div class="ma-icon"><i class="fas fa-seedling"></i></div><div><div class="ma-card-title">Commodities</div><div class="ma-subtitle">Seasonal Factors</div></div></div><div class="ma-card-description">Seasonal factors are important, so longer-term MAs are often more relevant.</div></div>
+                    </div>
+                </div>
+
+                <div class="takeaways" id="key-takeaways">
+                    <h3 class="takeaways-title"><i class="fas fa-bullseye"></i> Key Takeaways</h3>
+                    <ul class="takeaways-list">
+                        <li>Moving averages are the market's "weather forecast", they smooth out noise to reveal underlying trends</li>
+                        <li>Three main types: SMA (equal weight, smooth), EMA (recent price emphasis, responsive), WMA (linear weighting)</li>
+                        <li>Popular periods: 20-day (short-term), 50-day (medium-term), 200-day (long-term institutional favorite)</li>
+                        <li>MAs act as dynamic support and resistance levels that move with the trend</li>
+                        <li>Golden Cross (50 above 200) and Death Cross (50 below 200) are famous but lagging signals</li>
+                        <li>Three main strategies: Pullback, Breakout, Multiple MA system</li>
+                        <li>Common mistakes: using too many MAs, wrong timeframe matching, ignoring market context</li>
+                        <li>MAs work best in trending markets, poorly in choppy sideways conditions</li>
+                        <li>Different markets favor different MA types: stocks (SMAs), forex (EMAs), crypto (longer periods)</li>
+                        <li>Combine MAs with volume, support/resistance, and price patterns for best results</li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="article-navigation">
+                <a href="article-10.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Article 10: Emotional Triggers</a>
+                <a href="article-12.html" class="nav-btn next">Article 12: Volume Analysis <i class="fas fa-arrow-right"></i></a>
+            </nav>
+        </main>
+
+        <aside class="article-sidebar">
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Your Progress</h4>
+                <div class="progress-circle"></div>
+                <p style="text-align: center; font-size: 0.9rem; color: var(--text-secondary);">Article 11 of 30<br>Mastering moving averages!</p>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Previous Article</h4>
+                <a href="article-10.html" class="prev-article"><i class="fas fa-arrow-left"></i> Emotional Triggers in Trading</a>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Next Article</h4>
+                <a href="article-12.html" class="next-article">Volume Analysis <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </aside>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            const scrollTop = window.pageYOffset;
+            const docHeight = article.offsetHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / (docHeight - winHeight);
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) progressBar.style.width = Math.min(scrollPercent * 100, 100) + '%';
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+        });
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
+</body>
+</html>
