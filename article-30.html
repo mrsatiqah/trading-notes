@@ -1,10 +1,246 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article 30: Building a Trading Routine That Sticks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --light-bg-primary: #FFFFFF; --light-bg-secondary: #F8FAFC; --light-bg-tertiary: #F1F5F9;
+            --mint-bright: #34D399; --mint-bright-hover: #10B981; --baby-blue-bright: #60A5FA; --baby-blue-bright-hover: #3B82F6;
+            --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #64748B;
+            --border-light: rgba(52, 211, 153, 0.3); --border-subtle: rgba(15, 23, 42, 0.1); --glass-bg: rgba(255, 255, 255, 0.8);
+            --warning-bg: #FEF3C7; --warning-border: #F59E0B; --success-bg: #D1FAE5; --success-border: #10B981;
+            --info-bg: #DBEAFE; --info-border: #3B82F6; --error-bg: #FEE2E2; --error-border: #EF4444;
+            --purple-light: #E0E7FF; --purple-border: #8B5CF6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); color: var(--text-primary); line-height: 1.7; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); z-index: 1000; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
+        .nav-cta { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+        .reading-progress { position: fixed; top: 4.5rem; left: 0; right: 0; height: 4px; background: var(--light-bg-tertiary); z-index: 999; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); width: 0%; }
+        .article-layout { display: grid; grid-template-columns: 250px 1fr 200px; gap: 3rem; padding-top: 6rem; max-width: 1400px; margin: 0 auto; }
+        .article-nav { position: sticky; top: 6rem; height: fit-content; background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .article-nav h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; }
+        .nav-list { list-style: none; }
+        .nav-list li { margin-bottom: 0.5rem; }
+        .nav-list a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; }
+        .nav-list a:hover, .nav-list a.active { color: var(--mint-bright); }
+        .article-content { background: var(--light-bg-primary); border-radius: 12px; overflow: hidden; }
+        .article-header { background: linear-gradient(135deg, var(--light-bg-secondary) 0%, var(--light-bg-tertiary) 100%); padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border-subtle); }
+        .article-meta { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .meta-item { background: var(--glass-bg); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; border: 1px solid var(--border-subtle); }
+        .article-number { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; font-weight: 600; }
+        .article-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .gradient-text { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .article-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        .article-body { padding: 3rem 2rem; }
+        .article-section { margin-bottom: 3rem; }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .article-text { font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .article-text strong { font-weight: 600; }
+        .article-text em { color: var(--mint-bright); font-style: italic; }
+        .callout { background: var(--glass-bg); border-left: 4px solid var(--mint-bright); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .callout.info { border-left-color: var(--info-border); background: var(--info-bg); }
+        .callout.success { border-left-color: var(--success-border); background: var(--success-bg); }
+        .callout-title { font-weight: 600; margin-bottom: 0.5rem; }
+        .interactive-box { background: var(--glass-bg); border: 2px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .interactive-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; }
+        .routine-timeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .routine-block { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .routine-time { font-weight: 700; color: var(--mint-bright); margin-bottom: 0.5rem; }
+        .routine-title { font-weight: 700; margin-bottom: 0.5rem; }
+        .routine-list { list-style: none; }
+        .routine-list li { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.35rem; padding-left: 1.25rem; position: relative; }
+        .routine-list li::before { content: '•'; position: absolute; left: 0; color: var(--mint-bright); }
+        .pillar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .pillar-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; text-align: center; }
+        .pillar-icon { font-size: 1.75rem; color: var(--mint-bright); margin-bottom: 0.75rem; }
+        .pillar-title { font-weight: 700; margin-bottom: 0.5rem; }
+        .pillar-description { font-size: 0.9rem; color: var(--text-secondary); }
+        .weekly-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; margin: 2rem 0; }
+        .day-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem; text-align: center; }
+        .day-card.rest { background: var(--light-bg-tertiary); }
+        .day-name { font-weight: 700; margin-bottom: 0.4rem; font-size: 0.9rem; }
+        .day-activity { font-size: 0.75rem; color: var(--text-secondary); }
+        .quote-box { background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%); border: 1px solid var(--purple-border); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .quote-text { font-size: 1.1rem; font-style: italic; margin-bottom: 1rem; }
+        .quote-author { font-size: 0.9rem; color: var(--purple-border); font-weight: 600; }
+        .journey-recap { background: linear-gradient(135deg, rgba(52, 211, 153, 0.08) 0%, rgba(96, 165, 250, 0.08) 100%); border: 2px solid var(--border-light); border-radius: 15px; padding: 2rem; margin: 2.5rem 0; }
+        .journey-recap h3 { color: var(--mint-bright); margin-bottom: 1rem; text-align: center; }
+        .journey-recap p { text-align: center; font-size: 1.05rem; color: var(--text-secondary); }
+        .takeaways { background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(96, 165, 250, 0.05) 100%); border: 1px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+        .takeaways-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; }
+        .takeaways-list { list-style: none; }
+        .takeaways-list li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; }
+        .takeaways-list li::before { content: '✓'; position: absolute; left: 0; color: var(--mint-bright); }
+        .article-sidebar { position: sticky; top: 6rem; height: fit-content; }
+        .sidebar-widget { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .widget-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+        .progress-circle { width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(var(--mint-bright) 0deg 360deg, var(--light-bg-tertiary) 360deg 360deg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; position: relative; }
+        .progress-circle::after { content: '100%'; position: absolute; font-size: 0.8rem; font-weight: 600; }
+        .next-article, .prev-article { padding: 1rem; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: 600; margin-bottom: 1rem; }
+        .next-article { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; }
+        .prev-article { background: var(--glass-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem; opacity: 0; visibility: hidden; z-index: 1000; }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .article-navigation { display: flex; justify-content: space-between; padding: 2rem; border-top: 1px solid var(--border-subtle); gap: 1rem; }
+        .nav-btn { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem 1.5rem; text-decoration: none; color: var(--text-primary); font-weight: 500; flex: 1; text-align: center; }
+        .nav-btn.next { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; }
+        @media (max-width: 1024px) { .article-layout { grid-template-columns: 1fr; gap: 2rem; padding-top: 5rem; } .article-nav, .article-sidebar { display: none; } }
+        @media (max-width: 768px) { .mobile-menu-btn { display: block; } .nav-links, .nav-cta { display: none; } .article-header { padding: 2rem 1.5rem; } .article-title { font-size: 2.2rem; } .article-body { padding: 2rem 1.5rem; } .pillar-grid, .routine-timeline { grid-template-columns: 1fr; } .weekly-grid { grid-template-columns: repeat(2, 1fr); } .article-navigation { flex-direction: column; } }
+    </style>
+</head>
 <body>
-
-<h1>Coming Soon</h1>
-
-
+    <nav class="nav"><div class="container"><div class="nav-content">
+        <div class="logo">Mrs Atiqah</div>
+        <ul class="nav-links"><li><a href="index.html">Home</a></li></ul>
+        <a href="index.html" class="nav-cta">Article Index</a>
+        <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+    </div></div></nav>
+    <div class="reading-progress"><div class="progress-fill" id="progressBar"></div></div>
+    <div class="article-layout">
+        <aside class="article-nav">
+            <h4>In This Article</h4>
+            <ul class="nav-list">
+                <li><a href="#introduction" class="active">The Missing Piece</a></li>
+                <li><a href="#why-routine-matters">Why Routine Beats Willpower</a></li>
+                <li><a href="#daily-routine">A Daily Trading Routine</a></li>
+                <li><a href="#weekly-structure">Weekly Structure</a></li>
+                <li><a href="#four-pillars">The Four Pillars</a></li>
+                <li><a href="#making-it-stick">Making It Stick</a></li>
+                <li><a href="#journey-recap">Your Journey So Far</a></li>
+                <li><a href="#key-takeaways">Key Takeaways</a></li>
+            </ul>
+        </aside>
+        <main class="article-content">
+            <header class="article-header">
+                <div class="article-meta">
+                    <div class="meta-item article-number">Article 30</div>
+                    <div class="meta-item"><i class="fas fa-book-open"></i> 13 min read</div>
+                    <div class="meta-item"><i class="fas fa-calendar-check"></i> Series Finale</div>
+                </div>
+                <h1 class="article-title">Building a Trading Routine <span class="gradient-text">That Sticks</span></h1>
+                <p class="article-subtitle">Turning everything in this series into a sustainable daily and weekly routine, because knowledge without structure fades, but habits compound.</p>
+            </header>
+            <div class="article-body">
+                <div class="article-section" id="introduction">
+                    <p class="article-text">Over the last 29 articles, you've learned an enormous amount: how markets work, how to read charts, how to manage risk, how to master your emotions, and how to avoid the mistakes that sink most beginners. But there's one piece that ties everything together, and it's the piece most trading education skips entirely.</p>
+                    <p class="article-text"><strong>None of this knowledge matters if it isn't built into a routine you actually follow.</strong> Trading isn't a series of isolated decisions, it's a practice, and like any practice, it needs structure to survive contact with real life.</p>
+                    <div class="interactive-box">
+                        <div class="interactive-title"><i class="fas fa-puzzle-piece"></i> The Missing Piece</div>
+                        <p>Knowledge fades. Motivation fades. Routine doesn't, it runs on autopilot even on the days you don't feel like showing up. That's exactly why it works.</p>
+                    </div>
+                </div>
+                <div class="article-section" id="why-routine-matters">
+                    <h2 class="section-title">Why Routine Beats Willpower</h2>
+                    <p class="article-text"><em>Relying on motivation to trade well is like relying on the weather to water your garden.</em> Some days it works, most days it doesn't. A routine removes the daily decision of "will I do the right thing today?" and replaces it with "this is just what I do."</p>
+                    <div class="callout info">
+                        <div class="callout-title"><i class="fas fa-lightbulb"></i> The Compounding Effect</div>
+                        <p>A small, consistent routine followed for a year outperforms an intense but inconsistent effort followed for a month. Trading rewards traders who show up the same disciplined way, day after day, regardless of mood or market noise.</p>
+                    </div>
+                </div>
+                <div class="article-section" id="daily-routine">
+                    <h2 class="section-title">A Sample Daily Trading Routine</h2>
+                    <p class="article-text">Here's a structure you can adapt to your own schedule, trading style, and market hours:</p>
+                    <div class="routine-timeline">
+                        <div class="routine-block"><div class="routine-time">Before Market Open</div><div class="routine-title">Preparation</div><ul class="routine-list"><li>Check economic calendar for the day</li><li>Review overnight price action and news</li><li>Set intentions and mental state check</li></ul></div>
+                        <div class="routine-block"><div class="routine-time">Market Open</div><div class="routine-title">Execution Window</div><ul class="routine-list"><li>Watch for your predefined setups only</li><li>Follow your entry and risk rules exactly</li><li>No impulsive trades outside the plan</li></ul></div>
+                        <div class="routine-block"><div class="routine-time">During Session</div><div class="routine-title">Active Management</div><ul class="routine-list"><li>Monitor open positions against plan</li><li>Avoid constant chart-watching if not needed</li><li>Take scheduled breaks to reset focus</li></ul></div>
+                        <div class="routine-block"><div class="routine-time">After Market Close</div><div class="routine-title">Review and Journal</div><ul class="routine-list"><li>Log every trade in your journal</li><li>Note emotional state and plan adherence</li><li>Identify one lesson from the session</li></ul></div>
+                    </div>
+                </div>
+                <div class="article-section" id="weekly-structure">
+                    <h2 class="section-title">Structuring Your Trading Week</h2>
+                    <p class="article-text">Beyond the daily rhythm, a sustainable trader also needs a weekly structure that includes deliberate rest:</p>
+                    <div class="weekly-grid">
+                        <div class="day-card"><div class="day-name">Monday</div><div class="day-activity">Plan the week, review calendar</div></div>
+                        <div class="day-card"><div class="day-name">Tuesday</div><div class="day-activity">Active trading</div></div>
+                        <div class="day-card"><div class="day-name">Wednesday</div><div class="day-activity">Active trading</div></div>
+                        <div class="day-card"><div class="day-name">Thursday</div><div class="day-activity">Active trading</div></div>
+                        <div class="day-card"><div class="day-name">Friday</div><div class="day-activity">Trade + weekly review</div></div>
+                        <div class="day-card rest"><div class="day-name">Saturday</div><div class="day-activity">Rest, no charts</div></div>
+                        <div class="day-card rest"><div class="day-name">Sunday</div><div class="day-activity">Light prep for next week</div></div>
+                    </div>
+                    <div class="callout success">
+                        <div class="callout-title"><i class="fas fa-battery-full"></i> Rest Is Part of the Routine</div>
+                        <p>Traders who never fully disconnect burn out faster and make worse decisions. Scheduled rest days aren't a break from the routine, they're a required part of it.</p>
+                    </div>
+                </div>
+                <div class="article-section" id="four-pillars">
+                    <h2 class="section-title">The Four Pillars of a Sustainable Routine</h2>
+                    <div class="pillar-grid">
+                        <div class="pillar-card"><i class="fas fa-clock pillar-icon"></i><div class="pillar-title">Consistency</div><div class="pillar-description">The same core steps every trading day, regardless of how the previous day went.</div></div>
+                        <div class="pillar-card"><i class="fas fa-book pillar-icon"></i><div class="pillar-title">Documentation</div><div class="pillar-description">Every trade recorded in your journal, every week reviewed against your data.</div></div>
+                        <div class="pillar-card"><i class="fas fa-shield-alt pillar-icon"></i><div class="pillar-title">Boundaries</div><div class="pillar-description">Clear start and stop times, and clear rules for when trading pauses entirely.</div></div>
+                        <div class="pillar-card"><i class="fas fa-seedling pillar-icon"></i><div class="pillar-title">Growth</div><div class="pillar-description">Regular time set aside for learning, backtesting, and refining your approach.</div></div>
+                    </div>
+                    <div class="quote-box">
+                        <div class="quote-text">We are what we repeatedly do. Excellence, then, is not an act, but a habit.</div>
+                        <div class="quote-author">— Will Durant, paraphrasing Aristotle</div>
+                    </div>
+                </div>
+                <div class="article-section" id="making-it-stick">
+                    <h2 class="section-title">Making Your Routine Actually Stick</h2>
+                    <p class="article-text">Most routines fail not because they're wrong, but because they're too ambitious from day one. Here's how to build one that survives real life:</p>
+                    <div class="callout info">
+                        <div class="callout-title"><i class="fas fa-list-check"></i> Start Smaller Than Feels Necessary</div>
+                        <p>Begin with just two or three non-negotiable habits, like journaling every trade and checking the economic calendar. Add more structure only once the basics feel automatic, usually after 3-4 weeks of consistency.</p>
+                    </div>
+                    <p class="article-text">Track your routine adherence the same way you track your trades. A simple checkmark each day you followed your plan builds the same kind of honest, data-driven awareness that transformed your trading decisions earlier in this series.</p>
+                </div>
+                <div class="article-section" id="journey-recap">
+                    <div class="journey-recap">
+                        <h3>Your Journey Through This Series</h3>
+                        <p>From understanding what trading actually is, to reading candlesticks and support and resistance, to mastering fear and greed, to calculating position size and risk-reward, to building genuine confidence, and now to structuring a routine that carries all of it forward. Every article built on the one before it. The knowledge is complete. What happens next is entirely up to the routine you build around it.</p>
+                    </div>
+                </div>
+                <div class="takeaways" id="key-takeaways">
+                    <h3 class="takeaways-title"><i class="fas fa-bullseye"></i> Key Takeaways</h3>
+                    <ul class="takeaways-list">
+                        <li>Routine replaces the need for daily motivation with automatic, consistent action</li>
+                        <li>A daily structure should include preparation, execution, active management, and review</li>
+                        <li>Weekly structure should include deliberate rest days, not just active trading days</li>
+                        <li>The four pillars of a sustainable routine are consistency, documentation, boundaries, and growth</li>
+                        <li>Start with two or three non-negotiable habits before adding more structure</li>
+                        <li>Everything learned across this series only compounds if it's built into daily practice</li>
+                    </ul>
+                </div>
+            </div>
+            <nav class="article-navigation">
+                <a href="article-29.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Article 29: Choosing a Broker</a>
+                <a href="index.html" class="nav-btn next">Back to Index <i class="fas fa-arrow-right"></i></a>
+            </nav>
+        </main>
+        <aside class="article-sidebar">
+            <div class="sidebar-widget"><h4 class="widget-title">Your Progress</h4><div class="progress-circle"></div><p style="text-align: center; font-size: 0.9rem; color: var(--text-secondary);">Article 30 of 30<br>Series complete!</p></div>
+            <div class="sidebar-widget"><h4 class="widget-title">Previous Article</h4><a href="article-29.html" class="prev-article"><i class="fas fa-arrow-left"></i> Choosing a Broker</a></div>
+            <div class="sidebar-widget"><h4 class="widget-title">Back to Index</h4><a href="index.html" class="next-article">All Articles <i class="fas fa-arrow-right"></i></a></div>
+        </aside>
+    </div>
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+    <script>
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            const scrollTop = window.pageYOffset;
+            const docHeight = article.offsetHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / (docHeight - winHeight);
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) progressBar.style.width = Math.min(scrollPercent * 100, 100) + '%';
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+        });
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
 </body>
 </html>
-
