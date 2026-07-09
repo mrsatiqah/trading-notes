@@ -1,9 +1,353 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article 15: Risk-Reward Ratios - The Math Behind Profits</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --light-bg-primary: #FFFFFF;
+            --light-bg-secondary: #F8FAFC;
+            --light-bg-tertiary: #F1F5F9;
+            --mint-bright: #34D399;
+            --mint-bright-hover: #10B981;
+            --baby-blue-bright: #60A5FA;
+            --baby-blue-bright-hover: #3B82F6;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+            --border-light: rgba(52, 211, 153, 0.3);
+            --border-subtle: rgba(15, 23, 42, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --shadow-light: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 40px rgba(52, 211, 153, 0.2);
+            --warning-bg: #FEF3C7;
+            --warning-border: #F59E0B;
+            --success-bg: #D1FAE5;
+            --success-border: #10B981;
+            --info-bg: #DBEAFE;
+            --info-border: #3B82F6;
+            --error-bg: #FEE2E2;
+            --error-border: #EF4444;
+            --purple-light: #E0E7FF;
+            --purple-border: #8B5CF6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); color: var(--text-primary); line-height: 1.7; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); z-index: 1000; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
+        .nav-links a:hover { color: var(--mint-bright); }
+        .nav-cta { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; color: var(--text-primary); cursor: pointer; }
+        .reading-progress { position: fixed; top: 4.5rem; left: 0; right: 0; height: 4px; background: var(--light-bg-tertiary); z-index: 999; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); width: 0%; }
+        .article-layout { display: grid; grid-template-columns: 250px 1fr 200px; gap: 3rem; padding-top: 6rem; max-width: 1400px; margin: 0 auto; }
+        .article-nav { position: sticky; top: 6rem; height: fit-content; background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .article-nav h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-list { list-style: none; }
+        .nav-list li { margin-bottom: 0.5rem; }
+        .nav-list a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; display: block; padding: 0.25rem 0; }
+        .nav-list a:hover, .nav-list a.active { color: var(--mint-bright); }
+        .article-content { background: var(--light-bg-primary); border-radius: 12px; overflow: hidden; }
+        .article-header { background: linear-gradient(135deg, var(--light-bg-secondary) 0%, var(--light-bg-tertiary) 100%); padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border-subtle); }
+        .article-meta { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .meta-item { background: var(--glass-bg); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 0.5rem; }
+        .article-number { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; font-weight: 600; }
+        .article-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
+        .gradient-text { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .article-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        .article-body { padding: 3rem 2rem; }
+        .article-section { margin-bottom: 3rem; }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+        .article-text { font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .article-text strong { font-weight: 600; }
+        .article-text em { color: var(--mint-bright); font-style: italic; font-weight: 500; }
+        .callout { background: var(--glass-bg); border-left: 4px solid var(--mint-bright); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .callout.warning { border-left-color: var(--warning-border); background: var(--warning-bg); }
+        .callout.success { border-left-color: var(--success-border); background: var(--success-bg); }
+        .callout.info { border-left-color: var(--info-border); background: var(--info-bg); }
+        .callout-title { font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .interactive-box { background: var(--glass-bg); border: 2px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .interactive-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .interactive-title i { color: var(--mint-bright); }
+        .formula-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+        .formula-title { font-weight: 700; margin-bottom: 0.75rem; color: var(--mint-bright); }
+        .formula-box { background: var(--light-bg-tertiary); padding: 1rem; border-radius: 8px; font-family: monospace; font-size: 0.95rem; margin-bottom: 0.75rem; text-align: center; }
+        .formula-example { font-size: 0.9rem; color: var(--text-secondary); }
+        .formula-example strong { color: var(--text-primary); }
+        .ratio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin: 2rem 0; }
+        .ratio-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.25rem; text-align: center; }
+        .ratio-value { font-size: 1.5rem; font-weight: 800; color: var(--mint-bright); margin-bottom: 0.5rem; }
+        .ratio-label { font-weight: 600; margin-bottom: 0.5rem; }
+        .ratio-description { font-size: 0.85rem; color: var(--text-secondary); }
+        .table-wrap { overflow-x: auto; margin: 2rem 0; }
+        table.rr-table { width: 100%; border-collapse: collapse; background: var(--glass-bg); border-radius: 12px; overflow: hidden; }
+        table.rr-table th { background: var(--light-bg-tertiary); padding: 0.75rem 1rem; text-align: left; font-weight: 600; }
+        table.rr-table td { padding: 0.75rem 1rem; border-top: 1px solid var(--border-subtle); font-size: 0.95rem; }
+        .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .comparison-card { padding: 1.5rem; border-radius: 12px; }
+        .comparison-card.bad { background: var(--error-bg); border: 1px solid var(--error-border); }
+        .comparison-card.good { background: var(--success-bg); border: 1px solid var(--success-border); }
+        .comparison-title { font-weight: 700; margin-bottom: 1rem; }
+        .comparison-card.bad .comparison-title { color: var(--error-border); }
+        .comparison-card.good .comparison-title { color: var(--success-border); }
+        .comparison-card p { font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .mistakes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .mistake-card { background: var(--error-bg); border: 1px solid var(--error-border); border-radius: 10px; padding: 1.5rem; border-left: 4px solid var(--error-border); }
+        .mistake-title { font-weight: 600; color: var(--error-border); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .mistake-description { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; }
+        .takeaways { background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(96, 165, 250, 0.05) 100%); border: 1px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+        .takeaways-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .takeaways-title i { color: var(--mint-bright); }
+        .takeaways-list { list-style: none; }
+        .takeaways-list li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; }
+        .takeaways-list li::before { content: '✓'; position: absolute; left: 0; color: var(--mint-bright); }
+        .article-sidebar { position: sticky; top: 6rem; height: fit-content; }
+        .sidebar-widget { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .widget-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+        .progress-circle { width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(var(--mint-bright) 0deg 180deg, var(--light-bg-tertiary) 180deg 360deg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; position: relative; }
+        .progress-circle::after { content: '50%'; position: absolute; font-size: 0.875rem; font-weight: 600; }
+        .next-article, .prev-article { padding: 1rem; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: 600; margin-bottom: 1rem; }
+        .next-article { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; }
+        .prev-article { background: var(--glass-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem; opacity: 0; visibility: hidden; z-index: 1000; }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .article-navigation { display: flex; justify-content: space-between; padding: 2rem; border-top: 1px solid var(--border-subtle); gap: 1rem; }
+        .nav-btn { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem 1.5rem; text-decoration: none; color: var(--text-primary); font-weight: 500; flex: 1; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .nav-btn.next { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; }
+        @media (max-width: 1024px) {
+            .article-layout { grid-template-columns: 1fr; gap: 2rem; padding-top: 5rem; }
+            .article-nav, .article-sidebar { display: none; }
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: block; }
+            .nav-links, .nav-cta { display: none; }
+            .article-header { padding: 2rem 1.5rem; }
+            .article-title { font-size: 2.2rem; }
+            .article-body { padding: 2rem 1.5rem; }
+            .comparison-grid, .mistakes-grid, .ratio-grid { grid-template-columns: 1fr; }
+            .article-navigation { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            .article-title { font-size: 1.8rem; }
+            .article-body { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
 <body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">Mrs Atiqah</div>
+                <ul class="nav-links"><li><a href="index.html">Home</a></li></ul>
+                <a href="index.html" class="nav-cta">Article Index</a>
+                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
 
-<h1>Coming Soon</h1>
+    <div class="reading-progress"><div class="progress-fill" id="progressBar"></div></div>
 
+    <div class="article-layout">
+        <aside class="article-nav">
+            <h4>In This Article</h4>
+            <ul class="nav-list">
+                <li><a href="#introduction" class="active">Why Win Rate Lies</a></li>
+                <li><a href="#what-is-rr">What Is Risk-Reward?</a></li>
+                <li><a href="#breakeven-math">The Breakeven Math</a></li>
+                <li><a href="#expectancy">Expectancy: The Real Number</a></li>
+                <li><a href="#r-multiples">Thinking in R-Multiples</a></li>
+                <li><a href="#real-scenarios">Two Traders, Same Setup</a></li>
+                <li><a href="#mistakes">Mistakes That Wreck the Math</a></li>
+                <li><a href="#key-takeaways">Key Takeaways</a></li>
+            </ul>
+        </aside>
 
+        <main class="article-content">
+            <header class="article-header">
+                <div class="article-meta">
+                    <div class="meta-item article-number">Article 15</div>
+                    <div class="meta-item"><i class="fas fa-book-open"></i> 12 min read</div>
+                    <div class="meta-item"><i class="fas fa-calculator"></i> Risk Management</div>
+                </div>
+                <h1 class="article-title">Risk-Reward Ratios: <span class="gradient-text">The Math Behind Profits</span></h1>
+                <p class="article-subtitle">You can be wrong more often than you're right and still get rich. You can also be right most of the time and still go broke. The difference is one simple ratio.</p>
+            </header>
+
+            <div class="article-body">
+                <div class="article-section" id="introduction">
+                    <p class="article-text">Ask a new trader what makes a good trader, and they'll almost always say the same thing: <strong>"being right more often than you're wrong."</strong> It sounds obvious. It's also completely wrong.</p>
+                    <p class="article-text">A trader who wins only 30% of the time can be wildly profitable. A trader who wins 70% of the time can slowly bleed their account to zero. <em>The missing piece isn't win rate. It's risk-reward ratio</em>, the relationship between how much you stand to lose versus how much you stand to gain on every single trade.</p>
+                    <div class="interactive-box">
+                        <div class="interactive-title"><i class="fas fa-calculator"></i> The Uncomfortable Truth</div>
+                        <p>Win rate feels good. It's the number people brag about. But risk-reward ratio is the number that actually determines whether your account grows or shrinks over hundreds of trades.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="what-is-rr">
+                    <h2 class="section-title">What Is a Risk-Reward Ratio?</h2>
+                    <p class="article-text">A risk-reward ratio simply compares how much you're risking on a trade to how much you're aiming to gain. If you risk $50 to potentially make $150, your risk-reward ratio is 1:3, you're risking one dollar for every three you could win.</p>
+                    <div class="formula-card">
+                        <div class="formula-title">The Basic Formula</div>
+                        <div class="formula-box">Risk-Reward Ratio = Potential Loss ÷ Potential Gain</div>
+                        <div class="formula-example"><strong>Example:</strong> You enter at $50, set a stop loss at $48 (risking $2), and a target at $56 (potential gain of $6). Risk-Reward = $2 : $6 = 1:3.</div>
+                    </div>
+                    <div class="ratio-grid">
+                        <div class="ratio-card"><div class="ratio-value">1:1</div><div class="ratio-label">Break-Even Territory</div><div class="ratio-description">Needs a win rate above 50% just to stay profitable after costs.</div></div>
+                        <div class="ratio-card"><div class="ratio-value">1:2</div><div class="ratio-label">The Common Standard</div><div class="ratio-description">Profitable even if you're wrong more often than you're right.</div></div>
+                        <div class="ratio-card"><div class="ratio-value">1:3</div><div class="ratio-label">The Professional Zone</div><div class="ratio-description">Allows a losing majority of trades while still growing the account.</div></div>
+                        <div class="ratio-card"><div class="ratio-value">1:5+</div><div class="ratio-label">The Home Run</div><div class="ratio-description">Rare setups, but can carry an entire month with one good trade.</div></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="breakeven-math">
+                    <h2 class="section-title">The Breakeven Math Every Trader Needs</h2>
+                    <p class="article-text">Here's the calculation that changes how you see every trade: your risk-reward ratio determines the minimum win rate you need just to break even.</p>
+                    <div class="formula-card">
+                        <div class="formula-title">Breakeven Win Rate Formula</div>
+                        <div class="formula-box">Breakeven Win Rate = Risk ÷ (Risk + Reward)</div>
+                        <div class="formula-example"><strong>Example:</strong> With a 1:2 risk-reward ratio, Breakeven Win Rate = 1 ÷ (1 + 2) = 33%. You only need to be right one out of three times to break even.</div>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="rr-table">
+                            <tr><th>Risk-Reward Ratio</th><th>Breakeven Win Rate</th><th>What This Means</th></tr>
+                            <tr><td>1:1</td><td>50%</td><td>You need to win half your trades just to tread water</td></tr>
+                            <tr><td>1:2</td><td>33%</td><td>You can be wrong two-thirds of the time and still break even</td></tr>
+                            <tr><td>1:3</td><td>25%</td><td>Right one in four trades keeps you afloat</td></tr>
+                            <tr><td>1:5</td><td>17%</td><td>Wrong 5 out of 6 times, and you still don't lose money</td></tr>
+                        </table>
+                    </div>
+                    <div class="callout info">
+                        <div class="callout-title"><i class="fas fa-lightbulb"></i> Why This Matters</div>
+                        <p>This is why professional traders obsess over their risk-reward ratio before they even look at a chart pattern. A favorable ratio buys you room to be wrong, a lot, and still come out ahead.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="expectancy">
+                    <h2 class="section-title">Expectancy: The One Number That Matters</h2>
+                    <p class="article-text">Win rate and risk-reward ratio only tell half the story each. Combine them, and you get <strong>expectancy</strong>, the true measure of whether your trading approach makes money over the long run.</p>
+                    <div class="formula-card">
+                        <div class="formula-title">Expectancy Formula</div>
+                        <div class="formula-box">Expectancy = (Win Rate × Average Win) − (Loss Rate × Average Loss)</div>
+                        <div class="formula-example"><strong>Example:</strong> Win rate 40%, average win $300, loss rate 60%, average loss $100.<br>Expectancy = (0.40 × $300) − (0.60 × $100) = $120 − $60 = <strong>+$60 per trade</strong>.</div>
+                    </div>
+                    <p class="article-text">A positive expectancy means that, over a large enough number of trades, your account grows, even though the majority of individual trades might be losers. A negative expectancy means you're guaranteed to lose money over time, no matter how exciting the wins feel in the moment.</p>
+                </div>
+
+                <div class="article-section" id="r-multiples">
+                    <h2 class="section-title">Thinking in R-Multiples</h2>
+                    <p class="article-text">Professional traders rarely think in dollars while a trade is open. Instead, they think in <strong>"R"</strong>, where 1R equals the amount risked on the trade. A trade that makes twice what you risked is a "+2R" trade. A full stop-out loss is "-1R."</p>
+                    <div class="callout success">
+                        <div class="callout-title"><i class="fas fa-chart-line"></i> Why R-Multiples Are Powerful</div>
+                        <p>Thinking in R removes the emotional weight of dollar figures and lets you evaluate your trading system objectively. "I average +0.4R per trade" tells you far more about your edge than "I made $2,340 last month," because it scales with account size and stays consistent no matter how big your account grows.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="real-scenarios">
+                    <h2 class="section-title">Two Traders, Same Setup, Very Different Outcomes</h2>
+                    <p class="article-text">Let's compare two traders using the exact same strategy and win rate, but different risk-reward discipline:</p>
+                    <div class="comparison-grid">
+                        <div class="comparison-card bad">
+                            <div class="comparison-title">Trader A: No Risk-Reward Discipline</div>
+                            <p>Wins 50% of trades but cuts winners short out of fear and lets losers run out of hope.</p>
+                            <p><strong>Average win:</strong> $50 &nbsp;|&nbsp; <strong>Average loss:</strong> $150</p>
+                            <p><strong>Expectancy:</strong> (0.50 × $50) − (0.50 × $150) = <strong>−$50 per trade</strong></p>
+                            <p>Despite winning half the time, this trader is mathematically guaranteed to lose money over time.</p>
+                        </div>
+                        <div class="comparison-card good">
+                            <div class="comparison-title">Trader B: Strict 1:3 Discipline</div>
+                            <p>Wins only 35% of trades, but every trade risks $50 to make $150, no exceptions.</p>
+                            <p><strong>Average win:</strong> $150 &nbsp;|&nbsp; <strong>Average loss:</strong> $50</p>
+                            <p><strong>Expectancy:</strong> (0.35 × $150) − (0.65 × $50) = <strong>+$20 per trade</strong></p>
+                            <p>Wrong nearly two-thirds of the time, yet steadily profitable over hundreds of trades.</p>
+                        </div>
+                    </div>
+                    <div class="callout warning">
+                        <div class="callout-title"><i class="fas fa-exclamation-triangle"></i> The Real Lesson</div>
+                        <p>Trader A "feels" more successful day to day because they win more often. Trader B "feels" like they're losing constantly. But only one of them is actually building wealth. This is exactly why so many traders quit right before their edge would have paid off, they're judging themselves by the wrong number.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="mistakes">
+                    <h2 class="section-title">Mistakes That Wreck the Math</h2>
+                    <div class="mistakes-grid">
+                        <div class="mistake-card">
+                            <div class="mistake-title"><i class="fas fa-scissors"></i> Cutting Winners Short</div>
+                            <div class="mistake-description">Taking profit early "just to lock something in" turns a planned 1:3 trade into an accidental 1:0.5, destroying the very math that made the trade worth taking.</div>
+                        </div>
+                        <div class="mistake-card">
+                            <div class="mistake-title"><i class="fas fa-arrows-alt-h"></i> Moving the Stop Loss</div>
+                            <div class="mistake-description">Widening a stop mid-trade to "give it room" quietly changes your risk-reward ratio for the worse, often without you even noticing until the account statement does.</div>
+                        </div>
+                        <div class="mistake-card">
+                            <div class="mistake-title"><i class="fas fa-bullseye"></i> Chasing Unrealistic Targets</div>
+                            <div class="mistake-description">Setting a 1:10 target that the market rarely reaches looks great on paper but leads to constantly missed exits and frustration.</div>
+                        </div>
+                        <div class="mistake-card">
+                            <div class="mistake-title"><i class="fas fa-calculator"></i> Ignoring Costs</div>
+                            <div class="mistake-description">Spreads, commissions, and slippage quietly erode your reward side of the ratio. A "1:2" trade on paper can behave like 1:1.7 once real costs are factored in.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="takeaways" id="key-takeaways">
+                    <h3 class="takeaways-title"><i class="fas fa-bullseye"></i> Key Takeaways</h3>
+                    <ul class="takeaways-list">
+                        <li>Win rate alone means nothing without knowing your risk-reward ratio</li>
+                        <li>Breakeven win rate = Risk ÷ (Risk + Reward), a 1:2 ratio only needs a 33% win rate</li>
+                        <li>Expectancy combines win rate and risk-reward into the single number that predicts long-term results</li>
+                        <li>Thinking in R-multiples removes emotional attachment to dollar amounts</li>
+                        <li>A trader who wins less often can still out-earn a trader who wins more often, if the math favors them</li>
+                        <li>Cutting winners short and moving stop losses are the two fastest ways to destroy good risk-reward math</li>
+                        <li>Always account for spreads, commissions, and slippage when calculating your real reward</li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="article-navigation">
+                <a href="article-14.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Article 14: Position Sizing</a>
+                <a href="article-16.html" class="nav-btn next">Article 16: Find Your Trading Personality <i class="fas fa-arrow-right"></i></a>
+            </nav>
+        </main>
+
+        <aside class="article-sidebar">
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Your Progress</h4>
+                <div class="progress-circle"></div>
+                <p style="text-align: center; font-size: 0.9rem; color: var(--text-secondary);">Article 15 of 30<br>The math behind profits!</p>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Previous Article</h4>
+                <a href="article-14.html" class="prev-article"><i class="fas fa-arrow-left"></i> Position Sizing</a>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Next Article</h4>
+                <a href="article-16.html" class="next-article">Find Your Trading Personality <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </aside>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            const scrollTop = window.pageYOffset;
+            const docHeight = article.offsetHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / (docHeight - winHeight);
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) progressBar.style.width = Math.min(scrollPercent * 100, 100) + '%';
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+        });
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
 </body>
 </html>
