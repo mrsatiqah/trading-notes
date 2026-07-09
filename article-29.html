@@ -1,10 +1,234 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article 29: Choosing a Broker - What Really Matters</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --light-bg-primary: #FFFFFF; --light-bg-secondary: #F8FAFC; --light-bg-tertiary: #F1F5F9;
+            --mint-bright: #34D399; --mint-bright-hover: #10B981; --baby-blue-bright: #60A5FA; --baby-blue-bright-hover: #3B82F6;
+            --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #64748B;
+            --border-light: rgba(52, 211, 153, 0.3); --border-subtle: rgba(15, 23, 42, 0.1); --glass-bg: rgba(255, 255, 255, 0.8);
+            --warning-bg: #FEF3C7; --warning-border: #F59E0B; --success-bg: #D1FAE5; --success-border: #10B981;
+            --info-bg: #DBEAFE; --info-border: #3B82F6; --error-bg: #FEE2E2; --error-border: #EF4444;
+            --purple-light: #E0E7FF; --purple-border: #8B5CF6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); color: var(--text-primary); line-height: 1.7; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); z-index: 1000; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
+        .nav-cta { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+        .reading-progress { position: fixed; top: 4.5rem; left: 0; right: 0; height: 4px; background: var(--light-bg-tertiary); z-index: 999; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); width: 0%; }
+        .article-layout { display: grid; grid-template-columns: 250px 1fr 200px; gap: 3rem; padding-top: 6rem; max-width: 1400px; margin: 0 auto; }
+        .article-nav { position: sticky; top: 6rem; height: fit-content; background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .article-nav h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; }
+        .nav-list { list-style: none; }
+        .nav-list li { margin-bottom: 0.5rem; }
+        .nav-list a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; }
+        .nav-list a:hover, .nav-list a.active { color: var(--mint-bright); }
+        .article-content { background: var(--light-bg-primary); border-radius: 12px; overflow: hidden; }
+        .article-header { background: linear-gradient(135deg, var(--light-bg-secondary) 0%, var(--light-bg-tertiary) 100%); padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border-subtle); }
+        .article-meta { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .meta-item { background: var(--glass-bg); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; border: 1px solid var(--border-subtle); }
+        .article-number { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; font-weight: 600; }
+        .article-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .gradient-text { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .article-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        .article-body { padding: 3rem 2rem; }
+        .article-section { margin-bottom: 3rem; }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .article-text { font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .article-text strong { font-weight: 600; }
+        .article-text em { color: var(--mint-bright); font-style: italic; }
+        .callout { background: var(--glass-bg); border-left: 4px solid var(--mint-bright); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .callout.warning { border-left-color: var(--warning-border); background: var(--warning-bg); }
+        .callout.info { border-left-color: var(--info-border); background: var(--info-bg); }
+        .callout.success { border-left-color: var(--success-border); background: var(--success-bg); }
+        .callout-title { font-weight: 600; margin-bottom: 0.5rem; }
+        .interactive-box { background: var(--glass-bg); border: 2px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .interactive-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; }
+        .factor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .factor-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .factor-title { font-weight: 700; margin-bottom: 0.25rem; }
+        .factor-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
+        .factor-description { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .factor-check { background: var(--light-bg-tertiary); padding: 0.6rem 0.85rem; border-radius: 6px; font-size: 0.85rem; }
+        .factor-check strong { color: var(--mint-bright); }
+        .checklist-box { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; }
+        .checklist-box ul { list-style: none; }
+        .checklist-box li { margin-bottom: 0.6rem; padding-left: 1.75rem; position: relative; font-size: 0.95rem; }
+        .checklist-box li::before { content: '\f0c8'; font-family: 'Font Awesome 6 Free'; font-weight: 400; position: absolute; left: 0; color: var(--mint-bright); }
+        .redflag-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .redflag-card { background: var(--error-bg); border: 1px solid var(--error-border); border-radius: 10px; padding: 1.5rem; border-left: 4px solid var(--error-border); }
+        .redflag-title { font-weight: 600; color: var(--error-border); margin-bottom: 0.5rem; }
+        .redflag-desc { font-size: 0.9rem; color: var(--text-secondary); }
+        .takeaways { background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(96, 165, 250, 0.05) 100%); border: 1px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+        .takeaways-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; }
+        .takeaways-list { list-style: none; }
+        .takeaways-list li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; }
+        .takeaways-list li::before { content: '✓'; position: absolute; left: 0; color: var(--mint-bright); }
+        .article-sidebar { position: sticky; top: 6rem; height: fit-content; }
+        .sidebar-widget { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .widget-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+        .progress-circle { width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(var(--mint-bright) 0deg 348deg, var(--light-bg-tertiary) 348deg 360deg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; position: relative; }
+        .progress-circle::after { content: '97%'; position: absolute; font-size: 0.875rem; font-weight: 600; }
+        .next-article, .prev-article { padding: 1rem; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: 600; margin-bottom: 1rem; }
+        .next-article { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; }
+        .prev-article { background: var(--glass-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem; opacity: 0; visibility: hidden; z-index: 1000; }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .article-navigation { display: flex; justify-content: space-between; padding: 2rem; border-top: 1px solid var(--border-subtle); gap: 1rem; }
+        .nav-btn { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem 1.5rem; text-decoration: none; color: var(--text-primary); font-weight: 500; flex: 1; text-align: center; }
+        .nav-btn.next { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; }
+        @media (max-width: 1024px) { .article-layout { grid-template-columns: 1fr; gap: 2rem; padding-top: 5rem; } .article-nav, .article-sidebar { display: none; } }
+        @media (max-width: 768px) { .mobile-menu-btn { display: block; } .nav-links, .nav-cta { display: none; } .article-header { padding: 2rem 1.5rem; } .article-title { font-size: 2.2rem; } .article-body { padding: 2rem 1.5rem; } .factor-grid, .redflag-grid { grid-template-columns: 1fr; } .article-navigation { flex-direction: column; } }
+    </style>
+</head>
 <body>
-
-<h1>Coming Soon</h1>
-
-
+    <nav class="nav"><div class="container"><div class="nav-content">
+        <div class="logo">Mrs Atiqah</div>
+        <ul class="nav-links"><li><a href="index.html">Home</a></li></ul>
+        <a href="index.html" class="nav-cta">Article Index</a>
+        <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+    </div></div></nav>
+    <div class="reading-progress"><div class="progress-fill" id="progressBar"></div></div>
+    <div class="article-layout">
+        <aside class="article-nav">
+            <h4>In This Article</h4>
+            <ul class="nav-list">
+                <li><a href="#introduction" class="active">More Than an Ad</a></li>
+                <li><a href="#regulation-safety">Regulation and Safety</a></li>
+                <li><a href="#costs">Costs That Actually Matter</a></li>
+                <li><a href="#execution-quality">Execution Quality</a></li>
+                <li><a href="#platform-tools">Platform and Tools</a></li>
+                <li><a href="#red-flags">Red Flags to Avoid</a></li>
+                <li><a href="#checklist">Your Broker Checklist</a></li>
+                <li><a href="#key-takeaways">Key Takeaways</a></li>
+            </ul>
+        </aside>
+        <main class="article-content">
+            <header class="article-header">
+                <div class="article-meta">
+                    <div class="meta-item article-number">Article 29</div>
+                    <div class="meta-item"><i class="fas fa-book-open"></i> 11 min read</div>
+                    <div class="meta-item"><i class="fas fa-building-columns"></i> Trading Infrastructure</div>
+                </div>
+                <h1 class="article-title">Choosing a Broker: <span class="gradient-text">What Really Matters</span></h1>
+                <p class="article-subtitle">A practical checklist for picking a broker beyond flashy ads and referral bonuses, because the wrong broker can quietly cost you more than any bad trade.</p>
+            </header>
+            <div class="article-body">
+                <div class="article-section" id="introduction">
+                    <p class="article-text">Somewhere along your trading journey, you've probably seen the ads: "Zero commission!" "Trade like a pro!" "Get $50 free when you sign up!" Broker marketing is loud, flashy, and designed to make the decision feel simple.</p>
+                    <p class="article-text">It isn't. <strong>Your broker is the infrastructure your entire trading career runs on.</strong> A bad choice here doesn't show up as one obvious loss, it shows up as a slow leak: slightly worse fills, slightly wider spreads, a platform that freezes during volatile moments, or a withdrawal process that takes weeks longer than promised.</p>
+                    <div class="interactive-box">
+                        <div class="interactive-title"><i class="fas fa-search"></i> More Than a Referral Bonus</div>
+                        <p>Choosing a broker is like choosing a bank for your life savings, except this "bank" also controls the tool you use to make every trading decision. It deserves real due diligence, not just the biggest sign-up bonus.</p>
+                    </div>
+                </div>
+                <div class="article-section" id="regulation-safety">
+                    <h2 class="section-title">Regulation and Safety Come First</h2>
+                    <p class="article-text">Before anything else, ask: is this broker regulated by a credible financial authority in your region? Regulation doesn't guarantee perfection, but it establishes accountability, capital requirements, and a path for recourse if something goes wrong.</p>
+                    <div class="factor-grid">
+                        <div class="factor-card"><div class="factor-title">Regulatory Status</div><div class="factor-subtitle">Non-Negotiable</div><div class="factor-description">Check which authority regulates the broker and verify the license number directly on the regulator's website, not just on the broker's marketing page.</div></div>
+                        <div class="factor-card"><div class="factor-title">Client Fund Segregation</div><div class="factor-subtitle">Protecting Your Capital</div><div class="factor-description">Confirm client funds are held in segregated accounts, separate from the broker's own operating capital.</div></div>
+                        <div class="factor-card"><div class="factor-title">Track Record</div><div class="factor-subtitle">Years in Business</div><div class="factor-description">A broker that's operated for a decade through multiple market cycles has already been stress-tested by history.</div></div>
+                    </div>
+                </div>
+                <div class="article-section" id="costs">
+                    <h2 class="section-title">Costs That Actually Matter (Beyond "Zero Commission")</h2>
+                    <p class="article-text">"Commission-free" is a marketing headline, not the full cost picture. The real cost of trading usually hides in the spread and in fees that only show up once you're already a customer.</p>
+                    <div class="factor-grid">
+                        <div class="factor-card"><div class="factor-title">Spread Width</div><div class="factor-subtitle">The Hidden Cost</div><div class="factor-description">Compare typical spreads on the instruments you actually trade, a wider spread quietly eats into every single trade's profit.</div><div class="factor-check"><strong>Check:</strong> Spreads during normal hours vs. news events</div></div>
+                        <div class="factor-card"><div class="factor-title">Overnight / Swap Fees</div><div class="factor-subtitle">For Held Positions</div><div class="factor-description">If you hold trades overnight, financing charges can add up significantly over weeks and months.</div><div class="factor-check"><strong>Check:</strong> Swap rates for your typical holding period</div></div>
+                        <div class="factor-card"><div class="factor-title">Withdrawal Fees & Speed</div><div class="factor-subtitle">Getting Your Money Out</div><div class="factor-description">Some brokers make deposits instant but withdrawals slow or costly, a classic warning sign.</div><div class="factor-check"><strong>Check:</strong> Actual withdrawal times from reviews, not promises</div></div>
+                    </div>
+                </div>
+                <div class="article-section" id="execution-quality">
+                    <h2 class="section-title">Execution Quality: Where Good Brokers Separate From Bad Ones</h2>
+                    <p class="article-text">Two brokers can advertise identical spreads and still deliver very different real-world results. Execution quality, how well your orders actually get filled, is one of the least discussed but most important factors.</p>
+                    <div class="callout info">
+                        <div class="callout-title"><i class="fas fa-bolt"></i> What to Look For</div>
+                        <p><strong>Slippage:</strong> How often do orders fill at a worse price than requested, especially during volatility?<br><strong>Order types:</strong> Does the platform properly support limit orders, stop orders, and trailing stops?<br><strong>Requotes:</strong> Does the platform frequently reject orders and ask you to confirm a new price?</p>
+                    </div>
+                </div>
+                <div class="article-section" id="platform-tools">
+                    <h2 class="section-title">Platform and Tools That Fit Your Style</h2>
+                    <p class="article-text">The best platform is the one that matches how you actually trade, not the one with the flashiest interface.</p>
+                    <div class="factor-grid">
+                        <div class="factor-card"><div class="factor-title">Charting Quality</div><div class="factor-subtitle">Your Daily Workspace</div><div class="factor-description">Reliable charting with the indicators, timeframes, and drawing tools you actually use day to day.</div></div>
+                        <div class="factor-card"><div class="factor-title">Mobile App Reliability</div><div class="factor-subtitle">For Managing on the Go</div><div class="factor-description">A stable mobile app matters if you ever need to manage or close positions away from your desk.</div></div>
+                        <div class="factor-card"><div class="factor-title">Customer Support</div><div class="factor-subtitle">When Things Go Wrong</div><div class="factor-description">Test their support response time before you're in a crisis. A broker that's silent during outages is a serious liability.</div></div>
+                    </div>
+                </div>
+                <div class="article-section" id="red-flags">
+                    <h2 class="section-title">Red Flags That Should End the Conversation</h2>
+                    <div class="redflag-grid">
+                        <div class="redflag-card"><div class="redflag-title">Guaranteed Returns Promised</div><div class="redflag-desc">No legitimate broker or "partner program" can guarantee trading profits. This is a hallmark of scams.</div></div>
+                        <div class="redflag-card"><div class="redflag-title">Unverifiable Regulation Claims</div><div class="redflag-desc">If a claimed license number doesn't match the regulator's public register, walk away immediately.</div></div>
+                        <div class="redflag-card"><div class="redflag-title">Pressure to Deposit More</div><div class="redflag-desc">Aggressive account managers pushing larger deposits or "VIP upgrades" is a classic high-pressure sales tactic.</div></div>
+                        <div class="redflag-card"><div class="redflag-title">Withdrawal Obstacles</div><div class="redflag-desc">Sudden new documentation requirements or unexplained delays only when you try to withdraw funds.</div></div>
+                    </div>
+                </div>
+                <div class="article-section" id="checklist">
+                    <h2 class="section-title">Your Broker Selection Checklist</h2>
+                    <div class="checklist-box">
+                        <ul>
+                            <li>Regulatory license verified directly on the regulator's own website</li>
+                            <li>Client funds confirmed to be held in segregated accounts</li>
+                            <li>Spreads and fees compared for the specific instruments you trade</li>
+                            <li>Withdrawal process researched through independent reviews</li>
+                            <li>Demo account tested for platform stability and order execution</li>
+                            <li>Customer support response time tested before committing funds</li>
+                            <li>No guaranteed-return promises or high-pressure sales tactics present</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="takeaways" id="key-takeaways">
+                    <h3 class="takeaways-title"><i class="fas fa-bullseye"></i> Key Takeaways</h3>
+                    <ul class="takeaways-list">
+                        <li>Verify regulation directly on the regulator's website, never trust marketing claims alone</li>
+                        <li>Look beyond "zero commission" to spreads, swap fees, and withdrawal costs</li>
+                        <li>Execution quality (slippage, order types, requotes) matters as much as advertised pricing</li>
+                        <li>Choose a platform that fits your actual trading style, not the flashiest interface</li>
+                        <li>Guaranteed returns, unverifiable licenses, and withdrawal obstacles are serious red flags</li>
+                        <li>Test a demo account and customer support before committing real capital</li>
+                    </ul>
+                </div>
+            </div>
+            <nav class="article-navigation">
+                <a href="article-28.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Article 28: Backtesting</a>
+                <a href="article-30.html" class="nav-btn next">Article 30: Building a Trading Routine <i class="fas fa-arrow-right"></i></a>
+            </nav>
+        </main>
+        <aside class="article-sidebar">
+            <div class="sidebar-widget"><h4 class="widget-title">Your Progress</h4><div class="progress-circle"></div><p style="text-align: center; font-size: 0.9rem; color: var(--text-secondary);">Article 29 of 30<br>Almost there!</p></div>
+            <div class="sidebar-widget"><h4 class="widget-title">Previous Article</h4><a href="article-28.html" class="prev-article"><i class="fas fa-arrow-left"></i> Backtesting Your Strategy</a></div>
+            <div class="sidebar-widget"><h4 class="widget-title">Next Article</h4><a href="article-30.html" class="next-article">Building a Trading Routine <i class="fas fa-arrow-right"></i></a></div>
+        </aside>
+    </div>
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+    <script>
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            const scrollTop = window.pageYOffset;
+            const docHeight = article.offsetHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / (docHeight - winHeight);
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) progressBar.style.width = Math.min(scrollPercent * 100, 100) + '%';
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+        });
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
 </body>
 </html>
-
