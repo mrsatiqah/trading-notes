@@ -1,9 +1,414 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article 22: Advanced Chart Patterns - Beyond the Basics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --light-bg-primary: #FFFFFF;
+            --light-bg-secondary: #F8FAFC;
+            --light-bg-tertiary: #F1F5F9;
+            --mint-bright: #34D399;
+            --mint-bright-hover: #10B981;
+            --baby-blue-bright: #60A5FA;
+            --baby-blue-bright-hover: #3B82F6;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+            --border-light: rgba(52, 211, 153, 0.3);
+            --border-subtle: rgba(15, 23, 42, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --shadow-light: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 40px rgba(52, 211, 153, 0.2);
+            --warning-bg: #FEF3C7;
+            --warning-border: #F59E0B;
+            --success-bg: #D1FAE5;
+            --success-border: #10B981;
+            --info-bg: #DBEAFE;
+            --info-border: #3B82F6;
+            --error-bg: #FEE2E2;
+            --error-border: #EF4444;
+            --purple-light: #E0E7FF;
+            --purple-border: #8B5CF6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); color: var(--text-primary); line-height: 1.7; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); z-index: 1000; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
+        .nav-links a:hover { color: var(--mint-bright); }
+        .nav-cta { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; color: var(--text-primary); cursor: pointer; }
+        .reading-progress { position: fixed; top: 4.5rem; left: 0; right: 0; height: 4px; background: var(--light-bg-tertiary); z-index: 999; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); width: 0%; }
+        .article-layout { display: grid; grid-template-columns: 250px 1fr 200px; gap: 3rem; padding-top: 6rem; max-width: 1400px; margin: 0 auto; }
+        .article-nav { position: sticky; top: 6rem; height: fit-content; background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .article-nav h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-list { list-style: none; }
+        .nav-list li { margin-bottom: 0.5rem; }
+        .nav-list a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; display: block; padding: 0.25rem 0; }
+        .nav-list a:hover, .nav-list a.active { color: var(--mint-bright); }
+        .article-content { background: var(--light-bg-primary); border-radius: 12px; overflow: hidden; }
+        .article-header { background: linear-gradient(135deg, var(--light-bg-secondary) 0%, var(--light-bg-tertiary) 100%); padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border-subtle); }
+        .article-meta { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .meta-item { background: var(--glass-bg); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 0.5rem; }
+        .article-number { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; font-weight: 600; }
+        .article-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
+        .gradient-text { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .article-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        .article-body { padding: 3rem 2rem; }
+        .article-section { margin-bottom: 3rem; }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+        .article-text { font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .article-text strong { font-weight: 600; }
+        .article-text em { color: var(--mint-bright); font-style: italic; font-weight: 500; }
+        .callout { background: var(--glass-bg); border-left: 4px solid var(--mint-bright); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .callout.warning { border-left-color: var(--warning-border); background: var(--warning-bg); }
+        .callout.success { border-left-color: var(--success-border); background: var(--success-bg); }
+        .callout.info { border-left-color: var(--info-border); background: var(--info-bg); }
+        .callout-title { font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .interactive-box { background: var(--glass-bg); border: 2px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .interactive-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .interactive-title i { color: var(--mint-bright); }
+        .quote-box { background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%); border: 1px solid var(--purple-border); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .quote-text { font-size: 1.1rem; font-style: italic; margin-bottom: 1rem; }
+        .quote-author { font-size: 0.9rem; color: var(--purple-border); font-weight: 600; }
+        .pattern-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .pattern-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .pattern-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.25rem; }
+        .pattern-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
+        .pattern-description { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.75rem; }
+        .pattern-detail { background: var(--light-bg-tertiary); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 0.5rem; }
+        .pattern-detail strong { color: var(--mint-bright); }
+        .pattern-significance { font-size: 0.85rem; font-weight: 600; color: var(--success-border); background: var(--success-bg); padding: 0.5rem 0.75rem; border-radius: 6px; }
+        .mistake-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .mistake-card { background: var(--error-bg); border: 1px solid var(--error-border); border-radius: 10px; padding: 1.5rem; border-left: 4px solid var(--error-border); }
+        .mistake-title { font-weight: 600; color: var(--error-border); margin-bottom: 0.5rem; }
+        .mistake-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .mistake-fix { font-size: 0.85rem; color: var(--success-border); font-weight: 500; }
+        .takeaways { background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(96, 165, 250, 0.05) 100%); border: 1px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+        .takeaways-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .takeaways-title i { color: var(--mint-bright); }
+        .takeaways-list { list-style: none; }
+        .takeaways-list li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; }
+        .takeaways-list li::before { content: '✓'; position: absolute; left: 0; color: var(--mint-bright); }
+        .article-sidebar { position: sticky; top: 6rem; height: fit-content; }
+        .sidebar-widget { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .widget-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+        .progress-circle { width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(var(--mint-bright) 0deg 264deg, var(--light-bg-tertiary) 264deg 360deg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; position: relative; }
+        .progress-circle::after { content: '73%'; position: absolute; font-size: 0.875rem; font-weight: 600; }
+        .next-article, .prev-article { padding: 1rem; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: 600; margin-bottom: 1rem; }
+        .next-article { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; }
+        .prev-article { background: var(--glass-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem; opacity: 0; visibility: hidden; z-index: 1000; }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .article-navigation { display: flex; justify-content: space-between; padding: 2rem; border-top: 1px solid var(--border-subtle); gap: 1rem; }
+        .nav-btn { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem 1.5rem; text-decoration: none; color: var(--text-primary); font-weight: 500; flex: 1; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .nav-btn.next { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; }
+        @media (max-width: 1024px) {
+            .article-layout { grid-template-columns: 1fr; gap: 2rem; padding-top: 5rem; }
+            .article-nav, .article-sidebar { display: none; }
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: block; }
+            .nav-links, .nav-cta { display: none; }
+            .article-header { padding: 2rem 1.5rem; }
+            .article-title { font-size: 2.2rem; }
+            .article-body { padding: 2rem 1.5rem; }
+            .pattern-grid, .mistake-grid { grid-template-columns: 1fr; }
+            .article-navigation { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            .article-title { font-size: 1.8rem; }
+            .article-body { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
 <body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">Mrs Atiqah</div>
+                <ul class="nav-links"><li><a href="index.html">Home</a></li></ul>
+                <a href="index.html" class="nav-cta">Article Index</a>
+                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
 
-<h1>Coming Soon</h1>
+    <div class="reading-progress"><div class="progress-fill" id="progressBar"></div></div>
 
+    <div class="article-layout">
+        <aside class="article-nav">
+            <h4>In This Article</h4>
+            <ul class="nav-list">
+                <li><a href="#introduction" class="active">Beyond the Basics</a></li>
+                <li><a href="#philosophy">Pattern Philosophy</a></li>
+                <li><a href="#continuation-patterns">Continuation Patterns</a></li>
+                <li><a href="#reversal-patterns">Reversal Patterns</a></li>
+                <li><a href="#complex-formations">Complex Formations</a></li>
+                <li><a href="#volume-patterns">Volume Patterns</a></li>
+                <li><a href="#pattern-failures">Pattern Failures</a></li>
+                <li><a href="#common-mistakes">Common Mistakes</a></li>
+                <li><a href="#key-takeaways">Key Takeaways</a></li>
+            </ul>
+        </aside>
 
+        <main class="article-content">
+            <header class="article-header">
+                <div class="article-meta">
+                    <div class="meta-item article-number">Article 22</div>
+                    <div class="meta-item"><i class="fas fa-book-open"></i> 15 min read</div>
+                    <div class="meta-item"><i class="fas fa-shapes"></i> Advanced Patterns</div>
+                </div>
+                <h1 class="article-title">Advanced Chart Patterns: <span class="gradient-text">Beyond the Basics</span></h1>
+                <p class="article-subtitle">Master the sophisticated language of the markets. Learn advanced patterns that fewer traders recognize but which offer superior risk-reward opportunities.</p>
+            </header>
+
+            <div class="article-body">
+                <div class="article-section" id="introduction">
+                    <p class="article-text">Most traders learn the "big three" chart patterns early on: head and shoulders, triangles, and double tops/bottoms. These patterns are useful, but they're also widely known and heavily traded by both retail and institutional players, which means the edge they once offered has thinned out over time.</p>
+                    <p class="article-text"><strong>Today we're going beyond the basics to explore advanced chart patterns that fewer traders recognize</strong>, but which can offer excellent trading opportunities when properly identified and executed.</p>
+                    <p class="article-text">Think of basic patterns as single words in the market's language, while advanced patterns are complete sentences with complex grammar and nuanced meaning. <em>Master these, and you'll be reading market intentions that most traders miss entirely.</em></p>
+                    <div class="interactive-box">
+                        <div class="interactive-title"><i class="fas fa-language"></i> The Sophisticated Language</div>
+                        <p>Advanced patterns often develop over longer timeframes and require more patience to trade, but they frequently offer superior risk-reward ratios and higher success rates than basic patterns.</p>
+                        <p style="margin-top: 1rem; font-style: italic;">These are complete sentences, not just words.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="philosophy">
+                    <h2 class="section-title">The Philosophy of Advanced Pattern Recognition</h2>
+                    <p class="article-text">Markets are constantly evolving as participants adapt to well-known patterns. What worked perfectly decades ago might be less effective today because of algorithmic trading, widespread education, and structural changes in how markets operate.</p>
+                    <div class="pattern-grid">
+                        <div class="pattern-card"><div class="pattern-title">Pattern Evolution</div><div class="pattern-description">Markets adapt to well-known patterns, making advanced patterns more reliable as fewer traders recognize them.</div></div>
+                        <div class="pattern-card"><div class="pattern-title">Context Over Configuration</div><div class="pattern-description">Focus more on market context than perfect geometric shapes, where, why, what, and how matter more than exact shape.</div></div>
+                        <div class="pattern-card"><div class="pattern-title">Institutional Behavior</div><div class="pattern-description">Advanced patterns often reflect institutional behavior rather than retail sentiment, providing professional-level insights.</div></div>
+                        <div class="pattern-card"><div class="pattern-title">Time Investment</div><div class="pattern-description">Advanced patterns require patience and longer development periods but reward traders with superior probability setups.</div></div>
+                    </div>
+                    <div class="callout info">
+                        <div class="callout-title"><i class="fas fa-lightbulb"></i> Key Insight</div>
+                        <p>Advanced pattern analysis focuses more on market context than perfect geometric shapes. The key questions are: Where is this pattern forming? Why is it developing? What does it reveal about the supply/demand balance?</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="continuation-patterns">
+                    <h2 class="section-title">Complex Continuation Patterns</h2>
+                    <p class="article-text">These advanced continuation patterns signal that the existing trend will resume after a period of consolidation:</p>
+                    <div class="pattern-grid">
+                        <div class="pattern-card">
+                            <div class="pattern-title">Pennant Flag Formation</div>
+                            <div class="pattern-subtitle">High-Momentum Continuation</div>
+                            <div class="pattern-description">After a strong directional move (the flagpole), price consolidates in a small symmetrical triangle (the pennant) before continuing in the original direction.</div>
+                            <div class="pattern-detail"><strong>Advanced Recognition:</strong> Flagpole should be at least a 20% move on a short timeframe, pennant volume should decrease significantly, pennant should last 1-4 weeks maximum, breakout volume should exceed flagpole volume</div>
+                            <div class="pattern-significance">Best timing: after the first or second major move in a new trend</div>
+                        </div>
+                        <div class="pattern-card">
+                            <div class="pattern-title">Cup and Handle</div>
+                            <div class="pattern-subtitle">Institutional Accumulation</div>
+                            <div class="pattern-description">A U-shaped price decline and recovery (the cup) followed by a smaller decline (the handle) before breaking out to new highs.</div>
+                            <div class="pattern-detail"><strong>Advanced Recognition:</strong> Cup should form over 7+ weeks, handle should be less than 1/3 the depth of the cup, volume should dry up during handle formation, price should hold above the cup's halfway point</div>
+                            <div class="pattern-significance">Often represents institutional accumulation during the cup phase</div>
+                        </div>
+                        <div class="pattern-card">
+                            <div class="pattern-title">Ascending/Descending Scallop</div>
+                            <div class="pattern-subtitle">Repeated Accumulation Cycles</div>
+                            <div class="pattern-description">A series of connected cup-like patterns, each reaching higher highs (ascending) or lower lows (descending).</div>
+                            <div class="pattern-detail"><strong>Advanced Recognition:</strong> Each "scallop" should last 3-5 weeks, volume decreases during formation and increases on breakouts, each scallop high should exceed the previous, requires at least 3 scallops to be valid</div>
+                            <div class="pattern-significance">Psychology: repeated institutional accumulation with retail capitulation</div>
+                        </div>
+                    </div>
+                    <div class="quote-box">
+                        <div class="quote-text">The best patterns are often the most patient ones.</div>
+                        <div class="quote-author">— Professional Pattern Trader</div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="reversal-patterns">
+                    <h2 class="section-title">Advanced Reversal Patterns</h2>
+                    <p class="article-text">These sophisticated reversal patterns signal potential trend changes and often provide excellent entry points for new trends:</p>
+                    <div class="pattern-grid">
+                        <div class="pattern-card">
+                            <div class="pattern-title">Complex Head and Shoulders</div>
+                            <div class="pattern-subtitle">Multiple Variations</div>
+                            <div class="pattern-description">Beyond the basic H&S pattern: multiple shoulders, uneven shoulders, or slanted necklines that show more complex institutional behavior.</div>
+                            <div class="pattern-detail"><strong>Advanced Variations:</strong> Multiple left/right shoulders are more reliable than a simple H&S, slanted necklines are more common in strong trends, and a "failed H&S" appears complete but never breaks the neckline</div>
+                            <div class="pattern-significance">A failed H&S often leads to a strong move in the original trend direction</div>
+                        </div>
+                        <div class="pattern-card">
+                            <div class="pattern-title">Diamond Top/Bottom</div>
+                            <div class="pattern-subtitle">Rare but Highly Reliable</div>
+                            <div class="pattern-description">An expanding triangle (prices spread out) followed by a contracting triangle (prices converge), representing conflicting institutional views.</div>
+                            <div class="pattern-detail"><strong>Advanced Recognition:</strong> Requires significant volume expansion during the middle phase, often appears at major market tops/bottoms, takes 2-4 months to develop properly</div>
+                            <div class="pattern-significance">Target measured from the diamond's height at the breakout point</div>
+                        </div>
+                        <div class="pattern-card">
+                            <div class="pattern-title">Island Reversal</div>
+                            <div class="pattern-subtitle">Complete Sentiment Reversal</div>
+                            <div class="pattern-description">A gap away from the trend, followed by sideways trading, followed by a gap back toward the original trend.</div>
+                            <div class="pattern-detail"><strong>Advanced Recognition:</strong> Both gaps should be significant (2%+ for stocks), the island should last several days to weeks, volume should be high on both gap days, works best at trend extremes</div>
+                            <div class="pattern-significance">Early sellers/buyers often get trapped on the "island"</div>
+                        </div>
+                    </div>
+                    <div class="callout success">
+                        <div class="callout-title"><i class="fas fa-crosshairs"></i> Professional Tip</div>
+                        <p>Advanced reversal patterns work best when they appear at the confluence of multiple support/resistance levels, Fibonacci retracements, and other technical factors. Look for confluence, not just the pattern alone.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="complex-formations">
+                    <h2 class="section-title">Complex Multi-Pattern Formations</h2>
+                    <p class="article-text">These sophisticated formations combine multiple patterns and represent complex institutional activity:</p>
+                    <div class="pattern-grid">
+                        <div class="pattern-card">
+                            <div class="pattern-title">Broadening Formation</div>
+                            <div class="pattern-subtitle">Megaphone Pattern</div>
+                            <div class="pattern-description">An expanding triangle with higher highs and lower lows, showing increasing volatility and market uncertainty.</div>
+                            <div class="pattern-detail"><strong>Advanced Recognition:</strong> At least 5 touch points on the expanding trend lines, volume should increase with each swing, often appears before major market turns, can last several months</div>
+                            <div class="pattern-significance">Often appears at major tops when institutional distribution meets retail enthusiasm</div>
+                        </div>
+                        <div class="pattern-card">
+                            <div class="pattern-title">Rectangle Consolidation</div>
+                            <div class="pattern-subtitle">Institutional Activity Zones</div>
+                            <div class="pattern-description">Horizontal consolidation between clearly defined support and resistance levels with distinct volume characteristics.</div>
+                            <div class="pattern-detail"><strong>Advanced Recognition:</strong> A strong rectangle shows multiple clean bounces off both levels; a weak rectangle shows sloppy bounces, false breaks, and declining volume; longer rectangles (3+ months) are more reliable</div>
+                            <div class="pattern-significance">Higher volume on support bounces suggests accumulation; higher volume on resistance bounces suggests distribution</div>
+                        </div>
+                        <div class="pattern-card">
+                            <div class="pattern-title">Three-Drive Pattern</div>
+                            <div class="pattern-subtitle">Symmetrical Exhaustion</div>
+                            <div class="pattern-description">Three distinct moves in the same direction, each drive roughly equal in length and time, showing momentum exhaustion.</div>
+                            <div class="pattern-detail"><strong>Advanced Recognition:</strong> Each drive takes similar time and covers similar distance, volume should decrease on each successive drive, momentum should weaken with each drive</div>
+                            <div class="pattern-significance">Entry: reversal position at completion of the third drive</div>
+                        </div>
+                    </div>
+                    <div class="callout warning">
+                        <div class="callout-title"><i class="fas fa-hourglass-half"></i> Patience Required</div>
+                        <p>Complex formations often take months to develop properly. Don't try to trade them before they're complete. The best advanced patterns require patience, they're not day trading setups.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="volume-patterns">
+                    <h2 class="section-title">Volume-Based Advanced Patterns</h2>
+                    <p class="article-text">These patterns rely heavily on volume analysis to reveal institutional activity that price action alone cannot show:</p>
+                    <div class="pattern-grid">
+                        <div class="pattern-card">
+                            <div class="pattern-title">Accumulation Pattern</div>
+                            <div class="pattern-subtitle">Quiet Institutional Buying</div>
+                            <div class="pattern-detail"><strong>Characteristics:</strong> Higher volume on up days, lower volume on down days. Price gradually drifts higher despite a sideways appearance. Volume spikes often occur at lows. Eventually breaks upward with strong volume.</div>
+                            <div class="pattern-significance">Use volume profile and accumulation/distribution indicators to identify these patterns early</div>
+                        </div>
+                        <div class="pattern-card">
+                            <div class="pattern-title">Distribution Pattern</div>
+                            <div class="pattern-subtitle">Quiet Institutional Selling</div>
+                            <div class="pattern-detail"><strong>Characteristics:</strong> Higher volume on down days, lower volume on up days. Price gradually drifts lower despite a sideways appearance. Volume spikes often occur at highs.</div>
+                            <div class="pattern-significance">Often disguised as consolidation, but volume reveals institutional selling</div>
+                        </div>
+                        <div class="pattern-card">
+                            <div class="pattern-title">Climax Pattern</div>
+                            <div class="pattern-subtitle">Exhaustion Extremes</div>
+                            <div class="pattern-detail"><strong>Buying Climax:</strong> Massive volume spike with a large up move, often gapping higher, followed by immediate reversal. <strong>Selling Climax:</strong> Massive volume spike with a large down move, often with panic selling, followed by immediate bounce.</div>
+                            <div class="pattern-significance">Represents the final exhaustion of buying or selling pressure</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="pattern-failures">
+                    <h2 class="section-title">Pattern Failure and Reversal Recognition</h2>
+                    <p class="article-text">Understanding when and why patterns fail is just as important as recognizing successful patterns. <strong>Failed patterns often create excellent trading opportunities in the opposite direction.</strong></p>
+                    <div class="pattern-grid">
+                        <div class="pattern-card">
+                            <div class="pattern-title">Why Patterns Fail</div>
+                            <div class="pattern-subtitle">Common Failure Causes</div>
+                            <div class="pattern-detail"><strong>Common Causes:</strong> Lack of volume confirmation, poor overall market conditions, fundamental changes in the underlying asset, manipulation or unusual institutional flows</div>
+                            <div class="pattern-significance">Failed patterns often create excellent trades in the opposite direction</div>
+                        </div>
+                        <div class="pattern-card">
+                            <div class="pattern-title">The Shakeout Pattern</div>
+                            <div class="pattern-subtitle">False Breakout Reversal</div>
+                            <div class="pattern-description">Pattern appears to fail, triggering stops, then immediately reverses in the original pattern direction.</div>
+                            <div class="pattern-detail"><strong>Recognition:</strong> Quick move beyond the pattern boundary, immediate reversal back inside the pattern, often occurs on high volume</div>
+                            <div class="pattern-significance">Strategy: look for immediate re-entry in the original pattern direction</div>
+                        </div>
+                    </div>
+                    <div class="callout info">
+                        <div class="callout-title"><i class="fas fa-key"></i> Critical Insight</div>
+                        <p>Pattern failures are not random, they often happen at key technical levels where institutional players have different agendas. Learn to recognize these levels and you'll anticipate failures before they happen.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="common-mistakes">
+                    <h2 class="section-title">Common Advanced Pattern Mistakes</h2>
+                    <div class="mistake-grid">
+                        <div class="mistake-card"><div class="mistake-title">Over-Optimization</div><div class="mistake-desc">Adding too many criteria that eliminate all tradeable patterns.</div><div class="mistake-fix">Solution: Balance perfection with practicality, patterns don't need to be perfect.</div></div>
+                        <div class="mistake-card"><div class="mistake-title">Pattern Forcing</div><div class="mistake-desc">Seeing advanced patterns where only basic patterns exist.</div><div class="mistake-fix">Solution: Be honest about pattern quality and complexity.</div></div>
+                        <div class="mistake-card"><div class="mistake-title">Ignoring Market Context</div><div class="mistake-desc">Trading patterns without considering the overall market environment.</div><div class="mistake-fix">Solution: Always consider broader market trends and conditions.</div></div>
+                        <div class="mistake-card"><div class="mistake-title">Inadequate Time Commitment</div><div class="mistake-desc">Expecting advanced patterns to develop quickly.</div><div class="mistake-fix">Solution: Be patient, advanced patterns often take months to develop.</div></div>
+                    </div>
+                    <div class="callout warning">
+                        <div class="callout-title"><i class="fas fa-balance-scale"></i> The Golden Rule</div>
+                        <p>Even advanced patterns fail sometimes. The goal isn't perfection, it's tilting probabilities in your favor through superior pattern recognition and execution. Focus on risk management over prediction.</p>
+                    </div>
+                </div>
+
+                <div class="takeaways" id="key-takeaways">
+                    <h3 class="takeaways-title"><i class="fas fa-bullseye"></i> Key Takeaways</h3>
+                    <ul class="takeaways-list">
+                        <li>Advanced patterns represent the market's sophisticated language, complex sentences vs simple words</li>
+                        <li>Focus on market context over perfect geometric shapes, where, why, what, and how matter most</li>
+                        <li>Complex continuation patterns (pennants, cup & handle, scallops) often show institutional activity</li>
+                        <li>Advanced reversal patterns (complex H&S, diamonds, islands) require volume confirmation</li>
+                        <li>Multi-pattern formations reveal complex institutional behavior over longer timeframes</li>
+                        <li>Volume-based patterns (accumulation/distribution) show professional activity before price moves</li>
+                        <li>Failed patterns often create excellent trading opportunities in the opposite direction</li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="article-navigation">
+                <a href="article-21.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Article 21: Multiple Timeframe Analysis</a>
+                <a href="article-23.html" class="nav-btn next">Article 23: Next Topic <i class="fas fa-arrow-right"></i></a>
+            </nav>
+        </main>
+
+        <aside class="article-sidebar">
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Your Progress</h4>
+                <div class="progress-circle"></div>
+                <p style="text-align: center; font-size: 0.9rem; color: var(--text-secondary);">Article 22 of 30<br>Advanced pattern mastery!</p>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Previous Article</h4>
+                <a href="article-21.html" class="prev-article"><i class="fas fa-arrow-left"></i> Multiple Timeframe Analysis</a>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Next Article</h4>
+                <a href="article-23.html" class="next-article">Trading During Market Volatility<i class="fas fa-arrow-right"></i></a>
+            </div>
+        </aside>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            const scrollTop = window.pageYOffset;
+            const docHeight = article.offsetHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / (docHeight - winHeight);
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) progressBar.style.width = Math.min(scrollPercent * 100, 100) + '%';
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+        });
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
 </body>
 </html>
