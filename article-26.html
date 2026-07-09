@@ -1,9 +1,256 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article 26: Correlation and Intermarket Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --light-bg-primary: #FFFFFF; --light-bg-secondary: #F8FAFC; --light-bg-tertiary: #F1F5F9;
+            --mint-bright: #34D399; --mint-bright-hover: #10B981; --baby-blue-bright: #60A5FA; --baby-blue-bright-hover: #3B82F6;
+            --text-primary: #0F172A; --text-secondary: #475569; --text-muted: #64748B;
+            --border-light: rgba(52, 211, 153, 0.3); --border-subtle: rgba(15, 23, 42, 0.1); --glass-bg: rgba(255, 255, 255, 0.8);
+            --warning-bg: #FEF3C7; --warning-border: #F59E0B; --success-bg: #D1FAE5; --success-border: #10B981;
+            --info-bg: #DBEAFE; --info-border: #3B82F6; --error-bg: #FEE2E2; --error-border: #EF4444;
+            --purple-light: #E0E7FF; --purple-border: #8B5CF6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); color: var(--text-primary); line-height: 1.7; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); z-index: 1000; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
+        .nav-cta { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+        .reading-progress { position: fixed; top: 4.5rem; left: 0; right: 0; height: 4px; background: var(--light-bg-tertiary); z-index: 999; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); width: 0%; }
+        .article-layout { display: grid; grid-template-columns: 250px 1fr 200px; gap: 3rem; padding-top: 6rem; max-width: 1400px; margin: 0 auto; }
+        .article-nav { position: sticky; top: 6rem; height: fit-content; background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .article-nav h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; }
+        .nav-list { list-style: none; }
+        .nav-list li { margin-bottom: 0.5rem; }
+        .nav-list a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; }
+        .nav-list a:hover, .nav-list a.active { color: var(--mint-bright); }
+        .article-content { background: var(--light-bg-primary); border-radius: 12px; overflow: hidden; }
+        .article-header { background: linear-gradient(135deg, var(--light-bg-secondary) 0%, var(--light-bg-tertiary) 100%); padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border-subtle); }
+        .article-meta { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .meta-item { background: var(--glass-bg); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; border: 1px solid var(--border-subtle); }
+        .article-number { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; font-weight: 600; }
+        .article-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; }
+        .gradient-text { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .article-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        .article-body { padding: 3rem 2rem; }
+        .article-section { margin-bottom: 3rem; }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .article-text { font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .article-text strong { font-weight: 600; }
+        .article-text em { color: var(--mint-bright); font-style: italic; }
+        .callout { background: var(--glass-bg); border-left: 4px solid var(--mint-bright); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .callout.warning { border-left-color: var(--warning-border); background: var(--warning-bg); }
+        .callout.info { border-left-color: var(--info-border); background: var(--info-bg); }
+        .callout.success { border-left-color: var(--success-border); background: var(--success-bg); }
+        .callout-title { font-weight: 600; margin-bottom: 0.5rem; }
+        .interactive-box { background: var(--glass-bg); border: 2px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .interactive-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; }
+        .pair-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .pair-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .pair-card.positive { border-left: 4px solid var(--success-border); }
+        .pair-card.negative { border-left: 4px solid var(--error-border); }
+        .pair-title { font-weight: 700; margin-bottom: 0.25rem; }
+        .pair-subtitle { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.75rem; }
+        .pair-card.positive .pair-subtitle { color: var(--success-border); }
+        .pair-card.negative .pair-subtitle { color: var(--error-border); }
+        .pair-description { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .pair-note { background: var(--light-bg-tertiary); padding: 0.6rem 0.85rem; border-radius: 6px; font-size: 0.85rem; }
+        .scale-demo { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+        .scale-title { font-weight: 700; text-align: center; margin-bottom: 1.5rem; }
+        .scale-bar { display: flex; height: 40px; border-radius: 8px; overflow: hidden; margin-bottom: 0.75rem; }
+        .scale-segment { display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: white; }
+        .scale-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); }
+        .strategy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .strategy-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .strategy-title { font-weight: 700; margin-bottom: 0.25rem; }
+        .strategy-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
+        .strategy-list { list-style: none; }
+        .strategy-list li { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.4rem; padding-left: 1.25rem; position: relative; }
+        .strategy-list li::before { content: '•'; position: absolute; left: 0; color: var(--mint-bright); }
+        .mistake-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .mistake-card { background: var(--error-bg); border: 1px solid var(--error-border); border-radius: 10px; padding: 1.5rem; border-left: 4px solid var(--error-border); }
+        .mistake-title { font-weight: 600; color: var(--error-border); margin-bottom: 0.5rem; }
+        .mistake-desc { font-size: 0.9rem; color: var(--text-secondary); }
+        .takeaways { background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(96, 165, 250, 0.05) 100%); border: 1px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+        .takeaways-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; }
+        .takeaways-list { list-style: none; }
+        .takeaways-list li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; }
+        .takeaways-list li::before { content: '✓'; position: absolute; left: 0; color: var(--mint-bright); }
+        .article-sidebar { position: sticky; top: 6rem; height: fit-content; }
+        .sidebar-widget { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .widget-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+        .progress-circle { width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(var(--mint-bright) 0deg 312deg, var(--light-bg-tertiary) 312deg 360deg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; position: relative; }
+        .progress-circle::after { content: '87%'; position: absolute; font-size: 0.875rem; font-weight: 600; }
+        .next-article, .prev-article { padding: 1rem; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: 600; margin-bottom: 1rem; }
+        .next-article { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; }
+        .prev-article { background: var(--glass-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem; opacity: 0; visibility: hidden; z-index: 1000; }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .article-navigation { display: flex; justify-content: space-between; padding: 2rem; border-top: 1px solid var(--border-subtle); gap: 1rem; }
+        .nav-btn { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem 1.5rem; text-decoration: none; color: var(--text-primary); font-weight: 500; flex: 1; text-align: center; }
+        .nav-btn.next { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; }
+        @media (max-width: 1024px) { .article-layout { grid-template-columns: 1fr; gap: 2rem; padding-top: 5rem; } .article-nav, .article-sidebar { display: none; } }
+        @media (max-width: 768px) { .mobile-menu-btn { display: block; } .nav-links, .nav-cta { display: none; } .article-header { padding: 2rem 1.5rem; } .article-title { font-size: 2.2rem; } .article-body { padding: 2rem 1.5rem; } .pair-grid, .strategy-grid, .mistake-grid { grid-template-columns: 1fr; } .article-navigation { flex-direction: column; } }
+    </style>
+</head>
 <body>
-
-<h1>Coming Soon</h1>
-
-
+    <nav class="nav"><div class="container"><div class="nav-content">
+        <div class="logo">Mrs Atiqah</div>
+        <ul class="nav-links"><li><a href="index.html">Home</a></li></ul>
+        <a href="index.html" class="nav-cta">Article Index</a>
+        <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+    </div></div></nav>
+    <div class="reading-progress"><div class="progress-fill" id="progressBar"></div></div>
+    <div class="article-layout">
+        <aside class="article-nav">
+            <h4>In This Article</h4>
+            <ul class="nav-list">
+                <li><a href="#introduction" class="active">The Hidden Web</a></li>
+                <li><a href="#what-is-correlation">What Is Correlation?</a></li>
+                <li><a href="#key-relationships">Key Market Relationships</a></li>
+                <li><a href="#reading-scale">Reading the Correlation Scale</a></li>
+                <li><a href="#practical-uses">Practical Uses</a></li>
+                <li><a href="#common-mistakes">Common Mistakes</a></li>
+                <li><a href="#key-takeaways">Key Takeaways</a></li>
+            </ul>
+        </aside>
+        <main class="article-content">
+            <header class="article-header">
+                <div class="article-meta">
+                    <div class="meta-item article-number">Article 26</div>
+                    <div class="meta-item"><i class="fas fa-book-open"></i> 12 min read</div>
+                    <div class="meta-item"><i class="fas fa-project-diagram"></i> Intermarket Analysis</div>
+                </div>
+                <h1 class="article-title">Correlation and <span class="gradient-text">Intermarket Analysis</span></h1>
+                <p class="article-subtitle">No market trades in isolation. Learn to read the invisible web connecting currencies, bonds, stocks, and commodities, and use it to your advantage.</p>
+            </header>
+            <div class="article-body">
+                <div class="article-section" id="introduction">
+                    <p class="article-text">You've spent this series learning to read individual charts: candlesticks, support and resistance, trends, volume. But here's something most beginner traders miss entirely: <strong>no market moves alone.</strong></p>
+                    <p class="article-text">When oil prices spike, airline stocks often fall. When the US dollar strengthens, gold often weakens. When bond yields rise, growth stocks often struggle. These aren't coincidences, they're <em>intermarket relationships</em>, and understanding them gives you context that pure chart-reading never can.</p>
+                    <div class="interactive-box">
+                        <div class="interactive-title"><i class="fas fa-project-diagram"></i> The Hidden Web</div>
+                        <p>Think of global markets as a spider's web. Touch one strand, and the vibration travels to every other strand connected to it. Your job is to learn which strands are connected, and how strongly.</p>
+                    </div>
+                </div>
+                <div class="article-section" id="what-is-correlation">
+                    <h2 class="section-title">What Is Correlation, in Trading Terms?</h2>
+                    <p class="article-text"><em>Correlation measures how closely two assets move in relation to each other</em>, expressed as a number between -1 and +1. A correlation of +1 means two assets move perfectly together. A correlation of -1 means they move in perfect opposite directions. A correlation near 0 means there's no meaningful relationship at all.</p>
+                    <div class="callout info">
+                        <div class="callout-title"><i class="fas fa-lightbulb"></i> Why This Matters</div>
+                        <p>If you're long three assets that are all highly correlated, you don't actually have three independent trades, you have one large concentrated bet wearing three different disguises.</p>
+                    </div>
+                </div>
+                <div class="article-section" id="key-relationships">
+                    <h2 class="section-title">Key Intermarket Relationships to Know</h2>
+                    <div class="pair-grid">
+                        <div class="pair-card negative"><div class="pair-title">US Dollar vs Gold</div><div class="pair-subtitle">Typically Negative</div><div class="pair-description">A stronger dollar makes gold more expensive for foreign buyers, often pushing gold prices down, and vice versa.</div><div class="pair-note">Watch DXY (dollar index) when trading gold positions.</div></div>
+                        <div class="pair-card negative"><div class="pair-title">Bond Yields vs Growth Stocks</div><div class="pair-subtitle">Typically Negative</div><div class="pair-description">Rising yields increase the discount rate applied to future earnings, often pressuring high-growth, high-valuation stocks.</div><div class="pair-note">Tech-heavy indices are especially sensitive to yield moves.</div></div>
+                        <div class="pair-card positive"><div class="pair-title">Oil Prices vs Energy Stocks</div><div class="pair-subtitle">Typically Positive</div><div class="pair-description">Rising crude prices generally boost the revenue and profit outlook for oil and gas producers.</div><div class="pair-note">Direct, intuitive relationship, but timing can lag.</div></div>
+                        <div class="pair-card negative"><div class="pair-title">Oil Prices vs Airline Stocks</div><div class="pair-subtitle">Typically Negative</div><div class="pair-description">Fuel is one of the largest costs for airlines, so rising oil prices squeeze their margins directly.</div><div class="pair-note">Watch this pair around major oil supply news.</div></div>
+                        <div class="pair-card positive"><div class="pair-title">Risk Sentiment: Stocks vs Crypto</div><div class="pair-subtitle">Often Positive in Recent Years</div><div class="pair-description">Both have increasingly traded as "risk-on" assets, rallying together during optimism and selling off together during fear.</div><div class="pair-note">This correlation isn't fixed, it shifts with market regime.</div></div>
+                        <div class="pair-card negative"><div class="pair-title">USD vs Emerging Market Currencies</div><div class="pair-subtitle">Typically Negative</div><div class="pair-description">A strengthening dollar tends to pressure emerging market currencies and assets priced in those currencies.</div><div class="pair-note">Important context for anyone trading EM-linked assets.</div></div>
+                    </div>
+                    <div class="callout warning">
+                        <div class="callout-title"><i class="fas fa-exclamation-triangle"></i> Correlations Change</div>
+                        <p>These relationships are tendencies, not laws. Correlations can weaken, strengthen, or even flip during unusual market regimes, crises, and structural shifts in the economy. Always verify current correlation rather than assuming it holds forever.</p>
+                    </div>
+                </div>
+                <div class="article-section" id="reading-scale">
+                    <h2 class="section-title">Reading the Correlation Scale</h2>
+                    <div class="scale-demo">
+                        <div class="scale-title">Correlation Coefficient Scale</div>
+                        <div class="scale-bar">
+                            <div class="scale-segment" style="flex: 1; background: #EF4444;">-1.0</div>
+                            <div class="scale-segment" style="flex: 1; background: #F59E0B;">-0.5</div>
+                            <div class="scale-segment" style="flex: 1; background: #94A3B8;">0</div>
+                            <div class="scale-segment" style="flex: 1; background: #60A5FA;">+0.5</div>
+                            <div class="scale-segment" style="flex: 1; background: #10B981;">+1.0</div>
+                        </div>
+                        <div class="scale-labels"><span>Perfect Opposite</span><span>Weak Negative</span><span>No Relationship</span><span>Weak Positive</span><span>Perfect Together</span></div>
+                    </div>
+                    <div class="callout success">
+                        <div class="callout-title"><i class="fas fa-chart-line"></i> Practical Thresholds</div>
+                        <p><strong>Above +0.7 or below -0.7:</strong> Strong relationship, treat as connected positions.<br><strong>Between -0.3 and +0.3:</strong> Weak or no meaningful relationship, can be treated as independent.<br><strong>Everything in between:</strong> Moderate relationship, worth monitoring but not overreacting to.</p>
+                    </div>
+                </div>
+                <div class="article-section" id="practical-uses">
+                    <h2 class="section-title">Practical Ways to Use Intermarket Analysis</h2>
+                    <div class="strategy-grid">
+                        <div class="strategy-card">
+                            <div class="strategy-title">Confirm Your Bias</div>
+                            <div class="strategy-subtitle">Cross-Market Confirmation</div>
+                            <ul class="strategy-list"><li>Check if related markets support your trade thesis</li><li>Dollar weakness supporting a gold long adds confidence</li><li>Conflicting signals across related markets are a warning sign</li></ul>
+                        </div>
+                        <div class="strategy-card">
+                            <div class="strategy-title">Manage True Portfolio Risk</div>
+                            <div class="strategy-subtitle">Avoid Hidden Concentration</div>
+                            <ul class="strategy-list"><li>Reduce size across correlated positions, not just per trade</li><li>Recognize when "diversified" positions are actually one bet</li><li>Rebalance when correlation between your holdings increases</li></ul>
+                        </div>
+                        <div class="strategy-card">
+                            <div class="strategy-title">Anticipate Spillover Moves</div>
+                            <div class="strategy-subtitle">Get Ahead of Reactions</div>
+                            <ul class="strategy-list"><li>Watch leading markets (like bond yields) for early signals</li><li>Related assets can move before their counterpart catches up</li><li>Use lag time as an early warning, not a certainty</li></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-section" id="common-mistakes">
+                    <h2 class="section-title">Common Intermarket Analysis Mistakes</h2>
+                    <div class="mistake-grid">
+                        <div class="mistake-card"><div class="mistake-title">Assuming Static Correlations</div><div class="mistake-desc">Treating a relationship as permanent when correlations shift with market regime and macro conditions.</div></div>
+                        <div class="mistake-card"><div class="mistake-title">False Diversification</div><div class="mistake-desc">Believing a portfolio is diversified simply because it holds different asset names, without checking actual correlation.</div></div>
+                        <div class="mistake-card"><div class="mistake-title">Overreacting to Weak Correlations</div><div class="mistake-desc">Treating a 0.2 correlation as meaningful when it barely qualifies as a relationship at all.</div></div>
+                        <div class="mistake-card"><div class="mistake-title">Ignoring the Bigger Picture</div><div class="mistake-desc">Focusing only on a single chart while ignoring what related markets are signaling about broader risk sentiment.</div></div>
+                    </div>
+                </div>
+                <div class="takeaways" id="key-takeaways">
+                    <h3 class="takeaways-title"><i class="fas fa-bullseye"></i> Key Takeaways</h3>
+                    <ul class="takeaways-list">
+                        <li>No market trades in isolation, correlations connect currencies, bonds, stocks, and commodities</li>
+                        <li>Correlation ranges from -1 (perfect opposite) to +1 (perfect together)</li>
+                        <li>Key relationships include USD vs gold, yields vs growth stocks, and oil vs airlines</li>
+                        <li>Correlations shift over time, always verify current relationships rather than assuming</li>
+                        <li>Use intermarket analysis to confirm trade bias and manage true portfolio concentration</li>
+                        <li>Correlated positions aren't independent bets, size your total exposure accordingly</li>
+                    </ul>
+                </div>
+            </div>
+            <nav class="article-navigation">
+                <a href="article-25.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Article 25: Position Sizing Strategies</a>
+                <a href="article-27.html" class="nav-btn next">Article 27: Trading Journal <i class="fas fa-arrow-right"></i></a>
+            </nav>
+        </main>
+        <aside class="article-sidebar">
+            <div class="sidebar-widget"><h4 class="widget-title">Your Progress</h4><div class="progress-circle"></div><p style="text-align: center; font-size: 0.9rem; color: var(--text-secondary);">Article 26 of 30<br>Seeing the connections!</p></div>
+            <div class="sidebar-widget"><h4 class="widget-title">Previous Article</h4><a href="article-25.html" class="prev-article"><i class="fas fa-arrow-left"></i> Position Sizing Strategies</a></div>
+            <div class="sidebar-widget"><h4 class="widget-title">Next Article</h4><a href="article-27.html" class="next-article">Trading Journal <i class="fas fa-arrow-right"></i></a></div>
+        </aside>
+    </div>
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+    <script>
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            const scrollTop = window.pageYOffset;
+            const docHeight = article.offsetHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / (docHeight - winHeight);
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) progressBar.style.width = Math.min(scrollPercent * 100, 100) + '%';
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+        });
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
 </body>
 </html>
