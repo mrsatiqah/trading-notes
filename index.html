@@ -27,7 +27,7 @@
 
         header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             padding-bottom: 2rem;
             border-bottom: 1px solid #E2E8F0;
         }
@@ -45,6 +45,37 @@
         .subtitle {
             color: #64748B;
             font-size: 1rem;
+        }
+
+        .overall-progress {
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .overall-progress-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #0F172A;
+        }
+
+        .overall-progress-bar {
+            width: 140px;
+            height: 8px;
+            background: #E2E8F0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .overall-progress-fill {
+            height: 100%;
+            width: 20%;
+            background: linear-gradient(90deg, #34D399 0%, #60A5FA 100%);
         }
 
         .article-list {
@@ -94,14 +125,6 @@
             color: #64748B;
         }
 
-        .coming-soon {
-            text-align: center;
-            padding: 2rem;
-            color: #94A3B8;
-            font-style: italic;
-            font-size: 0.95rem;
-        }
-
         footer {
             text-align: center;
             margin-top: 3rem;
@@ -116,36 +139,41 @@
     <div class="container">
         <header>
             <div class="logo">Mrs Atiqah</div>
-            <p class="subtitle">My Trading Journey </p>
+            <p class="subtitle">Trading Journey Notes</p>
         </header>
+
+        <div class="overall-progress">
+            <span class="overall-progress-text">6 of 30 articles live</span>
+            <div class="overall-progress-bar"><div class="overall-progress-fill"></div></div>
+        </div>
 
         <ul class="article-list">
             <li class="article-item">
                 <a href="article-1.html" class="article-link">
                     <span class="article-number">Article 1</span>
                     <div class="article-title">What Is Trading? Complete Beginner's Guide</div>
-                    <div class="article-desc">Complete beginner's guide to understanding trading, markets, and whether this exciting world is right for you.</div>
+                    <div class="article-desc">A complete beginner's guide to understanding trading, markets, and whether this world is right for you.</div>
                 </a>
             </li>
             <li class="article-item">
                 <a href="article-2.html" class="article-link">
                     <span class="article-number">Article 2</span>
                     <div class="article-title">Why I Started My Trading Journey</div>
-                    <div class="article-desc">From pandemic desperation to discovering a passion for markets - my honest story of what really motivated me to learn trading.</div>
+                    <div class="article-desc">A personal story from pandemic desperation to discovering a real passion for markets.</div>
                 </a>
             </li>
             <li class="article-item">
                 <a href="article-3.html" class="article-link">
                     <span class="article-number">Article 3</span>
-                    <div class="article-title">Understanding Market Hours & Global Trading Sessions</div>
-                    <div class="article-desc">Master the global financial clock and discover when you can time your trades for maximum effectiveness.</div>
+                    <div class="article-title">Understanding Market Hours and Global Sessions</div>
+                    <div class="article-desc">Master the global financial clock and discover when markets are most active.</div>
                 </a>
             </li>
             <li class="article-item">
                 <a href="article-4.html" class="article-link">
                     <span class="article-number">Article 4</span>
-                    <div class="article-title">Essential Trading Tools & Platforms</div>
-                    <div class="article-desc">Discover the right tools, platforms, and technology to execute your strategies effectively and efficiently.</div>
+                    <div class="article-title">Essential Trading Tools</div>
+                    <div class="article-desc">Discover the right tools, platforms, and technology to execute your strategies effectively.</div>
                 </a>
             </li>
             <li class="article-item">
@@ -155,9 +183,182 @@
                     <div class="article-desc">Master the language of trading with simple explanations. No jargon, just practical knowledge.</div>
                 </a>
             </li>
+            <li class="article-item">
+                <a href="article-6.html" class="article-link">
+                    <span class="article-number">Article 6</span>
+                    <div class="article-title">Types of Financial Markets: Which One to Choose?</div>
+                    <div class="article-desc">Discover the major financial markets and learn how to choose the best one for your trading style.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-7.html" class="article-link">
+                    <span class="article-number">Article 7</span>
+                    <div class="article-title">How to Read Price Charts: Candlesticks Explained</div>
+                    <div class="article-desc">Learn how to read candlestick charts and what each pattern is telling you.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-8.html" class="article-link">
+                    <span class="article-number">Article 8</span>
+                    <div class="article-title">Dealing with Trading Losses</div>
+                    <div class="article-desc">How to process, learn from, and move past losing trades without losing your discipline.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-9.html" class="article-link">
+                    <span class="article-number">Article 9</span>
+                    <div class="article-title">Support and Resistance: Finding Key Levels</div>
+                    <div class="article-desc">Identify the price levels that matter most and understand why they keep showing up on charts.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-10.html" class="article-link">
+                    <span class="article-number">Article 10</span>
+                    <div class="article-title">Emotional Triggers in Trading</div>
+                    <div class="article-desc">Recognize the emotional patterns that quietly sabotage even well-planned trades.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-11.html" class="article-link">
+                    <span class="article-number">Article 11</span>
+                    <div class="article-title">Technical Indicators: Moving Averages Deep Dive</div>
+                    <div class="article-desc">A closer look at SMA and EMA, and how traders use them to read trend direction.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-12.html" class="article-link">
+                    <span class="article-number">Article 12</span>
+                    <div class="article-title">Volume Analysis: Reading Market Participation</div>
+                    <div class="article-desc">Understand what trading volume reveals about the strength behind a price move.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-13.html" class="article-link">
+                    <span class="article-number">Article 13</span>
+                    <div class="article-title">Trading Psychology: Mastering Fear and Greed</div>
+                    <div class="article-desc">The two emotions that drive most trading decisions, and how to keep them in check.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-14.html" class="article-link">
+                    <span class="article-number">Article 14</span>
+                    <div class="article-title">Position Sizing: The Foundation of Risk Management</div>
+                    <div class="article-desc">Why how much you trade matters more than what you trade.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-15.html" class="article-link">
+                    <span class="article-number">Article 15</span>
+                    <div class="article-title">Risk-Reward Ratios: The Math Behind Profits</div>
+                    <div class="article-desc">The simple math that separates traders who survive from traders who don't.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-16.html" class="article-link">
+                    <span class="article-number">Article 16</span>
+                    <div class="article-title">Find Your Trading Personality</div>
+                    <div class="article-desc">Match your natural temperament to a trading style that actually fits how you think.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-17.html" class="article-link">
+                    <span class="article-number">Article 17</span>
+                    <div class="article-title">Common Trading Mistakes and How to Avoid Them</div>
+                    <div class="article-desc">The recurring errors that trip up most beginners, and practical ways to sidestep them.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-18.html" class="article-link">
+                    <span class="article-number">Article 18</span>
+                    <div class="article-title">Understanding Trends and Ranges</div>
+                    <div class="article-desc">Learn to tell whether the market is trending or just chopping sideways, and why it matters.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-19.html" class="article-link">
+                    <span class="article-number">Article 19</span>
+                    <div class="article-title">Price Action Trading: Reading Raw Charts</div>
+                    <div class="article-desc">Trading based on price movement itself, without relying on indicators.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-20.html" class="article-link">
+                    <span class="article-number">Article 20</span>
+                    <div class="article-title">Economic Calendar: Trading Around News Events</div>
+                    <div class="article-desc">How to plan your trading schedule around the news releases that move markets.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-21.html" class="article-link">
+                    <span class="article-number">Article 21</span>
+                    <div class="article-title">Multiple Timeframe Analysis: The Professional's Edge</div>
+                    <div class="article-desc">Why looking at more than one timeframe changes how you see every chart.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-22.html" class="article-link">
+                    <span class="article-number">Article 22</span>
+                    <div class="article-title">Advanced Chart Patterns: Beyond the Basics</div>
+                    <div class="article-desc">A deeper look at chart patterns once you've mastered the fundamentals.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-23.html" class="article-link">
+                    <span class="article-number">Article 23</span>
+                    <div class="article-title">Dealing with Trading Losses (Part 2)</div>
+                    <div class="article-desc">Revisiting losses with a more advanced lens now that real experience has been added.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-24.html" class="article-link">
+                    <span class="article-number">Article 24</span>
+                    <div class="article-title">Building Trading Confidence</div>
+                    <div class="article-desc">How consistent process, not lucky wins, builds real confidence at the charts.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-25.html" class="article-link">
+                    <span class="article-number">Article 25</span>
+                    <div class="article-title">Position Sizing Strategies</div>
+                    <div class="article-desc">More advanced position sizing models beyond the basic 1-2% rule.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-26.html" class="article-link">
+                    <span class="article-number">Article 26</span>
+                    <div class="article-title">Risk Management Fundamentals</div>
+                    <div class="article-desc">Tying together everything learned so far into one coherent risk management framework.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-27.html" class="article-link">
+                    <span class="article-number">Article 27</span>
+                    <div class="article-title">Trading Journal: Why and How to Keep One</div>
+                    <div class="article-desc">The habit that separates traders who improve from traders who just repeat the same mistakes.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-28.html" class="article-link">
+                    <span class="article-number">Article 28</span>
+                    <div class="article-title">Backtesting Your Strategy Before Going Live</div>
+                    <div class="article-desc">How to test a strategy against historical data before ever risking real money on it.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-29.html" class="article-link">
+                    <span class="article-number">Article 29</span>
+                    <div class="article-title">Choosing a Broker: What Really Matters</div>
+                    <div class="article-desc">A practical checklist for picking a broker beyond flashy ads and referral bonuses.</div>
+                </a>
+            </li>
+            <li class="article-item">
+                <a href="article-30.html" class="article-link">
+                    <span class="article-number">Article 30</span>
+                    <div class="article-title">Building a Trading Routine That Sticks</div>
+                    <div class="article-desc">Turning everything in this series into a sustainable daily and weekly trading routine.</div>
+                </a>
+            </li>
         </ul>
-
-        <p class="coming-soon">More articles will be updated soon. Stay tuned!</p>
 
         <footer>
             <p>Mrs Atiqah &middot; Trading Journey Notes</p>
