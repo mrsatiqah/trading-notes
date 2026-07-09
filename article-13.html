@@ -1,10 +1,443 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article 13: Trading Psychology - Mastering Fear and Greed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --light-bg-primary: #FFFFFF;
+            --light-bg-secondary: #F8FAFC;
+            --light-bg-tertiary: #F1F5F9;
+            --mint-bright: #34D399;
+            --mint-bright-hover: #10B981;
+            --baby-blue-bright: #60A5FA;
+            --baby-blue-bright-hover: #3B82F6;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+            --border-light: rgba(52, 211, 153, 0.3);
+            --border-subtle: rgba(15, 23, 42, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --shadow-light: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 40px rgba(52, 211, 153, 0.2);
+            --warning-bg: #FEF3C7;
+            --warning-border: #F59E0B;
+            --success-bg: #D1FAE5;
+            --success-border: #10B981;
+            --info-bg: #DBEAFE;
+            --info-border: #3B82F6;
+            --error-bg: #FEE2E2;
+            --error-border: #EF4444;
+            --purple-light: #E0E7FF;
+            --purple-border: #8B5CF6;
+            --fear-color: #EF4444;
+            --greed-color: #F59E0B;
+            --neutral-color: #10B981;
+            --stress-color: #DC2626;
+            --calm-color: #059669;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); color: var(--text-primary); line-height: 1.7; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); z-index: 1000; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
+        .nav-links a:hover { color: var(--mint-bright); }
+        .nav-cta { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; color: var(--text-primary); cursor: pointer; }
+        .reading-progress { position: fixed; top: 4.5rem; left: 0; right: 0; height: 4px; background: var(--light-bg-tertiary); z-index: 999; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); width: 0%; }
+        .article-layout { display: grid; grid-template-columns: 250px 1fr 200px; gap: 3rem; padding-top: 6rem; max-width: 1400px; margin: 0 auto; }
+        .article-nav { position: sticky; top: 6rem; height: fit-content; background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .article-nav h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-list { list-style: none; }
+        .nav-list li { margin-bottom: 0.5rem; }
+        .nav-list a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; display: block; padding: 0.25rem 0; }
+        .nav-list a:hover, .nav-list a.active { color: var(--mint-bright); }
+        .article-content { background: var(--light-bg-primary); border-radius: 12px; overflow: hidden; }
+        .article-header { background: linear-gradient(135deg, var(--light-bg-secondary) 0%, var(--light-bg-tertiary) 100%); padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border-subtle); }
+        .article-meta { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .meta-item { background: var(--glass-bg); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 0.5rem; }
+        .article-number { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; font-weight: 600; }
+        .article-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
+        .gradient-text { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .article-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        .article-body { padding: 3rem 2rem; }
+        .article-section { margin-bottom: 3rem; }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+        .article-text { font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .article-text strong { font-weight: 600; }
+        .article-text em { color: var(--mint-bright); font-style: italic; font-weight: 500; }
+        .callout { background: var(--glass-bg); border-left: 4px solid var(--mint-bright); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .callout.warning { border-left-color: var(--warning-border); background: var(--warning-bg); }
+        .callout.success { border-left-color: var(--success-border); background: var(--success-bg); }
+        .callout.error { border-left-color: var(--error-border); background: var(--error-bg); }
+        .callout-title { font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .interactive-box { background: var(--glass-bg); border: 2px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .interactive-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .interactive-title i { color: var(--mint-bright); }
+        .cycle-demo { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+        .cycle-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 2rem; text-align: center; }
+        .cycle-wheel { position: relative; width: 300px; height: 300px; margin: 0 auto 2rem; border-radius: 50%; background: conic-gradient(from 0deg, #34D399 0deg 36deg, #60A5FA 36deg 72deg, #F59E0B 72deg 108deg, #EF4444 108deg 144deg, #DC2626 144deg 180deg, #B91C1C 180deg 216deg, #991B1B 216deg 252deg, #7F1D1D 252deg 288deg, #6B21A8 288deg 324deg, #34D399 324deg 360deg); display: flex; align-items: center; justify-content: center; }
+        .cycle-center { width: 120px; height: 120px; background: var(--light-bg-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; text-align: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .cycle-phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .cycle-phase { background: var(--light-bg-tertiary); padding: 1rem; border-radius: 8px; text-align: center; }
+        .phase-number { display: inline-block; width: 24px; height: 24px; background: var(--mint-bright); color: white; border-radius: 50%; font-size: 0.8rem; font-weight: bold; line-height: 24px; margin-bottom: 0.5rem; }
+        .phase-title { font-weight: 600; margin-bottom: 0.5rem; }
+        .phase-description { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; }
+        .emotions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .emotion-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .emotion-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .emotion-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; }
+        .emotion-card.fear .emotion-icon { background: linear-gradient(135deg, var(--fear-color), #DC2626); }
+        .emotion-card.greed .emotion-icon { background: linear-gradient(135deg, var(--greed-color), #D97706); }
+        .emotion-title { font-weight: 700; margin-bottom: 0.25rem; }
+        .emotion-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
+        .emotion-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; }
+        .emotion-example { background: var(--light-bg-tertiary); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; }
+        .emotion-example strong { color: var(--mint-bright); }
+        .bias-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .bias-card { background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%); border: 1px solid var(--purple-border); border-radius: 12px; padding: 1.5rem; }
+        .bias-title { font-weight: 700; color: var(--purple-border); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .bias-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; }
+        .bias-impact { background: var(--warning-bg); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 1rem; }
+        .bias-example { background: var(--light-bg-tertiary); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; }
+        .bias-example strong { color: var(--mint-bright); }
+        .stress-demo { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+        .stress-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 2rem; text-align: center; }
+        .stress-visual { display: flex; justify-content: space-around; align-items: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .stress-state { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+        .stress-meter { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; }
+        .stress-state.calm .stress-meter { background: radial-gradient(circle, var(--calm-color), var(--success-border)); }
+        .stress-state.stressed .stress-meter { background: radial-gradient(circle, var(--stress-color), var(--error-border)); }
+        .stress-label { font-weight: 600; }
+        .stress-description { font-size: 0.85rem; color: var(--text-secondary); text-align: center; max-width: 120px; line-height: 1.4; }
+        .strategies-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .strategy-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; }
+        .strategy-header { text-align: center; margin-bottom: 1.5rem; }
+        .strategy-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .strategy-type { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+        .strategy-steps { list-style: none; }
+        .strategy-steps li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; font-size: 0.95rem; line-height: 1.5; }
+        .strategy-steps li::before { content: attr(data-step); position: absolute; left: 0; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--mint-bright); color: white; font-size: 0.7rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+        .position-demo { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+        .position-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 2rem; text-align: center; }
+        .position-comparison { display: flex; justify-content: space-around; gap: 2rem; flex-wrap: wrap; }
+        .position-example { text-align: center; flex: 1; min-width: 200px; }
+        .position-visual { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.9rem; }
+        .position-example.safe .position-visual { background: linear-gradient(135deg, var(--success-border), var(--mint-bright-hover)); }
+        .position-example.risky .position-visual { background: linear-gradient(135deg, var(--error-border), #DC2626); }
+        .position-label { font-weight: 600; margin-bottom: 0.5rem; }
+        .position-description { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; }
+        .mistakes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .mistake-card { background: var(--error-bg); border: 1px solid var(--error-border); border-radius: 10px; padding: 1.5rem; border-left: 4px solid var(--error-border); }
+        .mistake-title { font-weight: 600; color: var(--error-border); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .mistake-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+        .resilience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .resilience-card { background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%); border: 1px solid var(--success-border); border-radius: 12px; padding: 1.5rem; }
+        .resilience-title { font-weight: 700; color: var(--success-border); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .resilience-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+        .takeaways { background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(96, 165, 250, 0.05) 100%); border: 1px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+        .takeaways-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .takeaways-title i { color: var(--mint-bright); }
+        .takeaways-list { list-style: none; }
+        .takeaways-list li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; }
+        .takeaways-list li::before { content: '✓'; position: absolute; left: 0; color: var(--mint-bright); }
+        .article-sidebar { position: sticky; top: 6rem; height: fit-content; }
+        .sidebar-widget { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .widget-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+        .progress-circle { width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(var(--mint-bright) 0deg 156deg, var(--light-bg-tertiary) 156deg 360deg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; position: relative; }
+        .progress-circle::after { content: '43%'; position: absolute; font-size: 0.875rem; font-weight: 600; }
+        .next-article, .prev-article { padding: 1rem; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: 600; margin-bottom: 1rem; }
+        .next-article { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; }
+        .prev-article { background: var(--glass-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem; opacity: 0; visibility: hidden; z-index: 1000; }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .article-navigation { display: flex; justify-content: space-between; padding: 2rem; border-top: 1px solid var(--border-subtle); gap: 1rem; }
+        .nav-btn { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem 1.5rem; text-decoration: none; color: var(--text-primary); font-weight: 500; flex: 1; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .nav-btn.next { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; }
+        @media (max-width: 1024px) {
+            .article-layout { grid-template-columns: 1fr; gap: 2rem; padding-top: 5rem; }
+            .article-nav, .article-sidebar { display: none; }
+            .cycle-wheel { width: 250px; height: 250px; }
+            .position-comparison, .stress-visual { flex-direction: column; gap: 1.5rem; }
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: block; }
+            .nav-links, .nav-cta { display: none; }
+            .article-header { padding: 2rem 1.5rem; }
+            .article-title { font-size: 2.2rem; }
+            .article-body { padding: 2rem 1.5rem; }
+            .emotions-grid, .strategies-grid, .mistakes-grid, .bias-grid, .resilience-grid { grid-template-columns: 1fr; }
+            .cycle-phases { grid-template-columns: 1fr; }
+            .article-navigation { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            .article-title { font-size: 1.8rem; }
+            .article-body { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
 <body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">Mrs Atiqah</div>
+                <ul class="nav-links"><li><a href="index.html">Home</a></li></ul>
+                <a href="index.html" class="nav-cta">Article Index</a>
+                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
 
-<h1>Coming Soon</h1>
+    <div class="reading-progress"><div class="progress-fill" id="progressBar"></div></div>
 
+    <div class="article-layout">
+        <aside class="article-nav">
+            <h4>In This Article</h4>
+            <ul class="nav-list">
+                <li><a href="#introduction" class="active">Six Inches Challenge</a></li>
+                <li><a href="#emotional-rollercoaster">Emotional Rollercoaster</a></li>
+                <li><a href="#fear-greed-cycle">Fear-Greed Cycle</a></li>
+                <li><a href="#understanding-fear">Understanding Fear</a></li>
+                <li><a href="#understanding-greed">Understanding Greed</a></li>
+                <li><a href="#cognitive-biases">Cognitive Biases</a></li>
+                <li><a href="#physiology-stress">Physiology of Stress</a></li>
+                <li><a href="#managing-fear">Managing Fear</a></li>
+                <li><a href="#managing-greed">Managing Greed</a></li>
+                <li><a href="#emotional-resilience">Building Resilience</a></li>
+                <li><a href="#position-sizing">Position Sizing Power</a></li>
+                <li><a href="#learning-mistakes">Learning from Mistakes</a></li>
+                <li><a href="#key-takeaways">Key Takeaways</a></li>
+            </ul>
+        </aside>
 
+        <main class="article-content">
+            <header class="article-header">
+                <div class="article-meta">
+                    <div class="meta-item article-number">Article 13</div>
+                    <div class="meta-item"><i class="fas fa-book-open"></i> 11 min read</div>
+                    <div class="meta-item"><i class="fas fa-brain"></i> Trading Psychology</div>
+                </div>
+                <h1 class="article-title">Trading Psychology: <span class="gradient-text">Mastering Fear and Greed</span></h1>
+                <p class="article-subtitle">The hardest part of trading isn't learning to read charts or understanding market mechanics.</p>
+            </header>
+
+            <div class="article-body">
+                <div class="article-section" id="introduction">
+                    <p class="article-text">Here's a truth that took years to accept: <strong>the hardest part of trading isn't learning to read charts, understanding market mechanics, or even developing profitable strategies</strong>. The hardest part is managing the six inches between your ears.</p>
+                    <p class="article-text">You can have the best technical analysis skills in the world, but if you can't control your emotions when money is on the line, you'll struggle to be consistently profitable. <em>Fear will cause you to exit winners too early, and greed will make you hold losers too long</em>.</p>
+                    <div class="interactive-box">
+                        <div class="interactive-title"><i class="fas fa-brain"></i> The Six Inches Challenge</div>
+                        <p>Today, we're diving deep into the psychological side of trading, the part most educational content glosses over, but which determines whether you'll ultimately succeed or fail.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="emotional-rollercoaster">
+                    <h2 class="section-title">The Emotional Rollercoaster of Trading</h2>
+                    <p class="article-text">Trading is one of the few professions where you can be right about your analysis but still lose money due to poor execution driven by emotions.</p>
+                    <div class="callout warning">
+                        <div class="callout-title"><i class="fas fa-exclamation-triangle"></i> The Paradox</div>
+                        <p>Trading rewards the opposite of human nature. We're naturally inclined to cut gains short, hold onto losses, follow the crowd, and act on emotions.</p>
+                        <p style="margin-top: 1rem;">Successful trading requires doing the exact opposite of these natural tendencies.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="fear-greed-cycle">
+                    <h2 class="section-title">The Fear-Greed Cycle</h2>
+                    <p class="article-text">Every trader gets caught in this destructive cycle. Understanding these phases helps you recognize when emotions are driving your decisions:</p>
+                    <div class="cycle-demo">
+                        <div class="cycle-title">The Destructive Emotional Cycle</div>
+                        <div class="cycle-wheel"><div class="cycle-center">Fear<br>&<br>Greed<br>Cycle</div></div>
+                        <div class="cycle-phases">
+                            <div class="cycle-phase"><div class="phase-number">1</div><div class="phase-title">Optimism</div><div class="phase-description">You place a trade based on solid analysis, feeling confident.</div></div>
+                            <div class="cycle-phase"><div class="phase-number">2</div><div class="phase-title">Excitement</div><div class="phase-description">The trade moves in your favor. You start imagining profits.</div></div>
+                            <div class="cycle-phase"><div class="phase-number">3</div><div class="phase-title">Euphoria</div><div class="phase-description">The trade continues working. You're convinced you've figured out the markets.</div></div>
+                            <div class="cycle-phase"><div class="phase-number">4</div><div class="phase-title">Anxiety</div><div class="phase-description">The trade starts moving against you. Doubt creeps in.</div></div>
+                            <div class="cycle-phase"><div class="phase-number">5</div><div class="phase-title">Denial</div><div class="phase-description">You refuse to accept the trade might be wrong. You ignore your stop loss.</div></div>
+                            <div class="cycle-phase"><div class="phase-number">6</div><div class="phase-title">Fear</div><div class="phase-description">Losses mount. You panic and either exit at the worst time or freeze.</div></div>
+                            <div class="cycle-phase"><div class="phase-number">7</div><div class="phase-title">Desperation</div><div class="phase-description">You try to "get even" with revenge trades, usually making things worse.</div></div>
+                            <div class="cycle-phase"><div class="phase-number">8</div><div class="phase-title">Panic</div><div class="phase-description">You exit everything, often at the bottom before the market reverses.</div></div>
+                            <div class="cycle-phase"><div class="phase-number">9</div><div class="phase-title">Despondency</div><div class="phase-description">You swear off trading or drastically reduce position sizes.</div></div>
+                            <div class="cycle-phase"><div class="phase-number">10</div><div class="phase-title">Hope</div><div class="phase-description">Markets recover, and you slowly regain confidence to start the cycle again.</div></div>
+                        </div>
+                    </div>
+                    <div class="callout error">
+                        <div class="callout-title"><i class="fas fa-times-circle"></i> The Destructive Result</div>
+                        <p>This cycle destroys accounts because it causes traders to do exactly the opposite of what they should: <strong>buy high (during euphoria) and sell low (during panic)</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="understanding-fear">
+                    <h2 class="section-title">Understanding Fear in Trading</h2>
+                    <p class="article-text">Fear in trading comes in several flavors, each with its own destructive patterns:</p>
+                    <div class="emotions-grid">
+                        <div class="emotion-card fear"><div class="emotion-header"><div class="emotion-icon"><i class="fas fa-running"></i></div><div><div class="emotion-title">FOMO</div><div class="emotion-subtitle">Chasing the Market</div></div></div><div class="emotion-description">Seeing others make money triggers impulsive decisions.</div><div class="emotion-example"><strong>Example:</strong> Bitcoin up 20% in two days, you jump in without checking support levels.</div></div>
+                        <div class="emotion-card fear"><div class="emotion-header"><div class="emotion-icon"><i class="fas fa-chart-line"></i></div><div><div class="emotion-title">Fear of Loss</div><div class="emotion-subtitle">Premature Exits</div></div></div><div class="emotion-description">Watching a winning trade turn against you creates panic.</div><div class="emotion-example"><strong>Example:</strong> You buy at $100, it rises to $110, drops to $107, you panic sell instead of holding for $115.</div></div>
+                        <div class="emotion-card fear"><div class="emotion-header"><div class="emotion-icon"><i class="fas fa-user-times"></i></div><div><div class="emotion-title">Fear of Being Wrong</div><div class="emotion-subtitle">Ego Protection</div></div></div><div class="emotion-description">Taking losses feels like admitting failure, leading to stubbornness.</div><div class="emotion-example"><strong>Consequence:</strong> Small losses become large losses as you refuse to admit mistakes.</div></div>
+                        <div class="emotion-card fear"><div class="emotion-header"><div class="emotion-icon"><i class="fas fa-trophy"></i></div><div><div class="emotion-title">Fear of Success</div><div class="emotion-subtitle">Self-Sabotage</div></div></div><div class="emotion-description">Making significant profits can trigger self-destructive behavior.</div><div class="emotion-example"><strong>Behavior:</strong> Taking unnecessary risks or giving back profits through poor decisions.</div></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="understanding-greed">
+                    <h2 class="section-title">Understanding Greed in Trading</h2>
+                    <p class="article-text">Greed is fear's evil twin, and it's equally destructive:</p>
+                    <div class="emotions-grid">
+                        <div class="emotion-card greed"><div class="emotion-header"><div class="emotion-icon"><i class="fas fa-arrow-up"></i></div><div><div class="emotion-title">Profit Maximization Greed</div><div class="emotion-subtitle">Never Enough</div></div></div><div class="emotion-description">A trade moving strongly in your favor triggers the desire for unlimited profits.</div><div class="emotion-example"><strong>Example:</strong> You target 10% but hold for 20%, 25%. The stock reverses, you sell for a loss.</div></div>
+                        <div class="emotion-card greed"><div class="emotion-header"><div class="emotion-icon"><i class="fas fa-chart-bar"></i></div><div><div class="emotion-title">More Opportunities Greed</div><div class="emotion-subtitle">Overtrading</div></div></div><div class="emotion-description">A few winning trades makes you see opportunities everywhere.</div><div class="emotion-example"><strong>Consequence:</strong> Taking low-quality setups, increasing position sizes dramatically.</div></div>
+                        <div class="emotion-card greed"><div class="emotion-header"><div class="emotion-icon"><i class="fas fa-redo"></i></div><div><div class="emotion-title">Revenge Trading Greed</div><div class="emotion-subtitle">Getting Even</div></div></div><div class="emotion-description">Taking a loss triggers the desire to quickly recover it through bigger risks.</div><div class="emotion-example"><strong>Danger:</strong> Turning manageable losses into account-threatening losses.</div></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="cognitive-biases">
+                    <h2 class="section-title">Cognitive Biases That Destroy Traders</h2>
+                    <p class="article-text">Our brains evolved to keep us alive on the savanna, not to trade financial markets:</p>
+                    <div class="bias-grid">
+                        <div class="bias-card"><div class="bias-title"><i class="fas fa-search"></i> Confirmation Bias</div><div class="bias-description">Only paying attention to information that confirms your existing beliefs.</div><div class="bias-impact"><strong>Trading Impact:</strong> Ignoring signals that your trade is wrong.</div><div class="bias-example"><strong>Example:</strong> You're long a stock and only read bullish reports.</div></div>
+                        <div class="bias-card"><div class="bias-title"><i class="fas fa-anchor"></i> Anchoring Bias</div><div class="bias-description">Over-relying on the first piece of information encountered.</div><div class="bias-impact"><strong>Trading Impact:</strong> Basing decisions on irrelevant reference points like your entry price.</div><div class="bias-example"><strong>Example:</strong> A stock traded at $200 last year, so $150 feels "cheap."</div></div>
+                        <div class="bias-card"><div class="bias-title"><i class="fas fa-clock"></i> Recency Bias</div><div class="bias-description">Giving more weight to recent events than historical patterns.</div><div class="bias-impact"><strong>Trading Impact:</strong> Believing recent trends will continue indefinitely.</div><div class="bias-example"><strong>Example:</strong> After three winning trades, you increase your risk.</div></div>
+                        <div class="bias-card"><div class="bias-title"><i class="fas fa-balance-scale"></i> Loss Aversion</div><div class="bias-description">Feeling losses more acutely than equivalent gains.</div><div class="bias-impact"><strong>Trading Impact:</strong> Holding losers too long and selling winners too early.</div><div class="bias-example"><strong>Example:</strong> You're more motivated to avoid a $100 loss than to secure a $100 gain.</div></div>
+                        <div class="bias-card"><div class="bias-title"><i class="fas fa-crown"></i> Overconfidence Bias</div><div class="bias-description">Overestimating your abilities, especially after recent wins.</div><div class="bias-impact"><strong>Trading Impact:</strong> Taking excessive risks, ignoring risk management.</div><div class="bias-example"><strong>Example:</strong> After a good month, you double your position sizes.</div></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="physiology-stress">
+                    <h2 class="section-title">The Physiology of Trading Stress</h2>
+                    <p class="article-text">Understanding what happens in your body during stressful trading situations helps you recognize and manage these responses:</p>
+                    <div class="stress-demo">
+                        <div class="stress-title">Your Body's Stress Response</div>
+                        <div class="stress-visual">
+                            <div class="stress-state calm"><div class="stress-meter"><i class="fas fa-leaf"></i></div><div class="stress-label">Calm State</div><div class="stress-description">Rational thinking, analytical processing, good decision-making</div></div>
+                            <div class="stress-state stressed"><div class="stress-meter"><i class="fas fa-fire"></i></div><div class="stress-label">Stress Response</div><div class="stress-description">Fight-or-flight mode, emotional hijacking, impulsive decisions</div></div>
+                        </div>
+                    </div>
+                    <div class="emotions-grid">
+                        <div class="emotion-card fear"><div class="emotion-header"><div class="emotion-icon"><i class="fas fa-bolt"></i></div><div><div class="emotion-title">The Stress Response</div><div class="emotion-subtitle">Physical Reaction</div></div></div><div class="emotion-description">When you see a trade going against you, your body triggers the same response our ancestors experienced facing physical threats.</div><div class="emotion-example"><strong>Symptoms:</strong> Heart rate increases, muscles tense, adrenaline and cortisol flood your system.</div></div>
+                        <div class="emotion-card fear"><div class="emotion-header"><div class="emotion-icon"><i class="fas fa-eye"></i></div><div><div class="emotion-title">Impact on Decision Making</div><div class="emotion-subtitle">Mental Effects</div></div></div><div class="emotion-description">Stress hormones cloud judgment and shift your brain from analytical thinking to survival mode.</div><div class="emotion-example"><strong>Effects:</strong> Tunnel vision, emotional hijacking, loss of impulse control.</div></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="managing-fear">
+                    <h2 class="section-title">Strategies for Managing Fear</h2>
+                    <div class="strategies-grid">
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">Pre-Trade Preparation</div><div class="strategy-type">Planning Phase</div></div><ul class="strategy-steps"><li data-step="📋"><strong>Define Your Risk:</strong> Know exactly how much you're willing to lose before entering any trade</li><li data-step="🛑"><strong>Set Your Stops:</strong> Determine stop-loss levels based on technical analysis, not emotions</li><li data-step="🎯"><strong>Plan Your Exit:</strong> Have both profit targets and loss limits defined in advance</li></ul></div>
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">During-Trade Management</div><div class="strategy-type">Execution Phase</div></div><ul class="strategy-steps"><li data-step="⚙️"><strong>Focus on Process:</strong> Judge yourself on following your plan, not on profits/losses</li><li data-step="🧘"><strong>Breathe and Pause:</strong> When feeling emotional, step away from screen for 5-10 minutes</li><li data-step="📱"><strong>Avoid Overmonitoring:</strong> Don't constantly check positions; trust your analysis</li></ul></div>
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">Post-Trade Analysis</div><div class="strategy-type">Learning Phase</div></div><ul class="strategy-steps"><li data-step="📊"><strong>Review Objectively:</strong> Analyze what you did right/wrong regardless of profit/loss</li><li data-step="📚"><strong>Learn from Mistakes:</strong> View losses as tuition for market education</li><li data-step="📝"><strong>Keep Records:</strong> Document emotions and decisions for pattern recognition</li></ul></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="managing-greed">
+                    <h2 class="section-title">Strategies for Managing Greed</h2>
+                    <div class="strategies-grid">
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">Profit Taking Discipline</div><div class="strategy-type">Exit Strategy</div></div><ul class="strategy-steps"><li data-step="📊"><strong>Scale Out:</strong> Take partial profits at predetermined levels</li><li data-step="📈"><strong>Trailing Stops:</strong> Use mechanical methods to protect profits</li><li data-step="🎯"><strong>Stick to Targets:</strong> When you hit profit target, take it</li></ul></div>
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">Position Size Control</div><div class="strategy-type">Risk Management</div></div><ul class="strategy-steps"><li data-step="📏"><strong>Fixed Risk:</strong> Never risk more per trade just because you're winning</li><li data-step="🎰"><strong>Avoid "House Money":</strong> Treat all account money as real money</li><li data-step="📈"><strong>Scale Gradually:</strong> Increase size slowly as account grows</li></ul></div>
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">Overtrading Prevention</div><div class="strategy-type">Discipline Control</div></div><ul class="strategy-steps"><li data-step="⭐"><strong>Quality over Quantity:</strong> Wait for your best setups</li><li data-step="📅"><strong>Daily/Weekly Limits:</strong> Set maximum number of trades per period</li><li data-step="⏸️"><strong>Mandatory Breaks:</strong> Take time away from markets after big wins or losses</li></ul></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="emotional-resilience">
+                    <h2 class="section-title">Building Emotional Resilience</h2>
+                    <div class="resilience-grid">
+                        <div class="resilience-card"><div class="resilience-title"><i class="fas fa-calendar-day"></i> Develop a Trading Routine</div><div class="resilience-description"><strong>Pre-Market Preparation:</strong> Same routine each day.<br><strong>Meditation/Mindfulness:</strong> Even 10 minutes daily helps.<br><strong>Physical Exercise:</strong> Reduces stress hormones.</div></div>
+                        <div class="resilience-card"><div class="resilience-title"><i class="fas fa-users"></i> Create Accountability Systems</div><div class="resilience-description"><strong>Trading Journal:</strong> Record trades, emotions, and decisions.<br><strong>Mentor/Coach:</strong> Provides objective perspective.<br><strong>Rules-Based System:</strong> Reduces emotional decision-making.</div></div>
+                        <div class="resilience-card"><div class="resilience-title"><i class="fas fa-spa"></i> Stress Management Techniques</div><div class="resilience-description"><strong>Deep Breathing:</strong> 4-7-8 breathing activates calm response.<br><strong>Progressive Relaxation:</strong> Systematically tense and release muscles.<br><strong>Visualization:</strong> Mental rehearsal of trading scenarios.</div></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="position-sizing">
+                    <h2 class="section-title">The Power of Position Sizing</h2>
+                    <p class="article-text">The easiest way to reduce trading emotions is to trade smaller size. If losing $100 doesn't affect your lifestyle, you'll make better decisions than if losing $1000 means you can't pay rent.</p>
+                    <div class="position-demo">
+                        <div class="position-title">Position Size Impact on Emotions</div>
+                        <div class="position-comparison">
+                            <div class="position-example safe"><div class="position-visual">1% Risk</div><div class="position-label">Proper Sizing</div><div class="position-description">Sleep well, make rational decisions, sustainable long-term approach</div></div>
+                            <div class="position-example risky"><div class="position-visual">10% Risk</div><div class="position-label">Oversized</div><div class="position-description">Stress, emotional decisions, account-threatening losses</div></div>
+                        </div>
+                    </div>
+                    <div class="strategies-grid">
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">The 1% Rule</div><div class="strategy-type">Risk Management</div></div><ul class="strategy-steps"><li data-step="📏"><strong>Maximum Risk:</strong> Never risk more than 1% of your account on any single trade</li><li data-step="🛡️"><strong>Account Protection:</strong> String of losses won't devastate account or emotions</li></ul></div>
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">Sleep Test</div><div class="strategy-type">Size Validation</div></div><ul class="strategy-steps"><li data-step="🛏️"><strong>The Test:</strong> If position size keeps you awake at night, it's too big</li><li data-step="💤"><strong>Peace of Mind:</strong> Should be able to place trade and forget about it</li></ul></div>
+                        <div class="strategy-card"><div class="strategy-header"><div class="strategy-title">Gradual Scaling</div><div class="strategy-type">Growth Strategy</div></div><ul class="strategy-steps"><li data-step="📊"><strong>Account Growth:</strong> Increase size as account and skills improve</li><li data-step="⚠️"><strong>Avoid Jumping:</strong> Don't dramatically increase size after good streaks</li></ul></div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="learning-mistakes">
+                    <h2 class="section-title">Learning from Emotional Mistakes</h2>
+                    <div class="mistakes-grid">
+                        <div class="mistake-card"><div class="mistake-title"><i class="fas fa-scissors"></i> Cutting Winners Short</div><div class="mistake-description">Exiting profitable trades too early due to fear of giving back gains.</div></div>
+                        <div class="mistake-card"><div class="mistake-title"><i class="fas fa-chart-line"></i> Letting Losers Run</div><div class="mistake-description">Holding losing trades hoping they'll recover.</div></div>
+                        <div class="mistake-card"><div class="mistake-title"><i class="fas fa-redo"></i> Revenge Trading</div><div class="mistake-description">Taking bigger risks to quickly recover losses.</div></div>
+                        <div class="mistake-card"><div class="mistake-title"><i class="fas fa-fire"></i> Overtrading Hot Streaks</div><div class="mistake-description">Increasing trade frequency or size during winning streaks.</div></div>
+                        <div class="mistake-card"><div class="mistake-title"><i class="fas fa-snowflake"></i> Freezing During Cold Streaks</div><div class="mistake-description">Becoming paralyzed after a series of losses.</div></div>
+                        <div class="mistake-card"><div class="mistake-title"><i class="fas fa-arrows-alt"></i> Moving Stops</div><div class="mistake-description">Moving stop losses further away instead of taking planned losses.</div></div>
+                    </div>
+                    <div class="callout success">
+                        <div class="callout-title"><i class="fas fa-lightbulb"></i> The Learning Process</div>
+                        <p><strong>Acknowledge:</strong> Recognize when emotions drove decisions.<br><strong>Analyze:</strong> Understand what triggered the emotional response.<br><strong>Adjust:</strong> Modify your process to handle similar situations better.</p>
+                        <p style="margin-top: 1rem;"><strong>Practice:</strong> Implement changes in small size before scaling up.</p>
+                    </div>
+                </div>
+
+                <div class="takeaways" id="key-takeaways">
+                    <h3 class="takeaways-title"><i class="fas fa-bullseye"></i> Key Takeaways</h3>
+                    <ul class="takeaways-list">
+                        <li>Trading psychology is often more important than technical analysis skills</li>
+                        <li>The fear-greed cycle causes traders to buy high (euphoria) and sell low (panic)</li>
+                        <li>Fear manifests as FOMO, fear of loss, fear of being wrong, and fear of success</li>
+                        <li>Greed shows up as profit maximization, overtrading, and revenge trading</li>
+                        <li>Cognitive biases sabotage decisions: confirmation, anchoring, recency, loss aversion, overconfidence</li>
+                        <li>Stress triggers fight-or-flight response, impairing rational decision-making</li>
+                        <li>Position sizing is the easiest way to reduce emotions, the 1% rule prevents account devastation</li>
+                        <li>Sleep test: if position size keeps you awake, it's too big</li>
+                        <li>Build resilience through routine, accountability systems, and stress management</li>
+                        <li>Success comes from managing emotions, not eliminating them completely</li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="article-navigation">
+                <a href="article-12.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Article 12: Volume Analysis</a>
+                <a href="article-14.html" class="nav-btn next">Article 14: Position Sizing <i class="fas fa-arrow-right"></i></a>
+            </nav>
+        </main>
+
+        <aside class="article-sidebar">
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Your Progress</h4>
+                <div class="progress-circle"></div>
+                <p style="text-align: center; font-size: 0.9rem; color: var(--text-secondary);">Article 13 of 30<br>Mastering emotions!</p>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Previous Article</h4>
+                <a href="article-12.html" class="prev-article"><i class="fas fa-arrow-left"></i> Volume Analysis</a>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Next Article</h4>
+                <a href="article-14.html" class="next-article">Position Sizing <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </aside>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            const scrollTop = window.pageYOffset;
+            const docHeight = article.offsetHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / (docHeight - winHeight);
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) progressBar.style.width = Math.min(scrollPercent * 100, 100) + '%';
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+        });
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
 </body>
 </html>
-
