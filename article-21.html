@@ -1,9 +1,400 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article 21: Multiple Timeframe Analysis - The Professional's Edge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --light-bg-primary: #FFFFFF;
+            --light-bg-secondary: #F8FAFC;
+            --light-bg-tertiary: #F1F5F9;
+            --mint-bright: #34D399;
+            --mint-bright-hover: #10B981;
+            --baby-blue-bright: #60A5FA;
+            --baby-blue-bright-hover: #3B82F6;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #64748B;
+            --border-light: rgba(52, 211, 153, 0.3);
+            --border-subtle: rgba(15, 23, 42, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --shadow-light: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --shadow-glow: 0 0 40px rgba(52, 211, 153, 0.2);
+            --warning-bg: #FEF3C7;
+            --warning-border: #F59E0B;
+            --success-bg: #D1FAE5;
+            --success-border: #10B981;
+            --info-bg: #DBEAFE;
+            --info-border: #3B82F6;
+            --error-bg: #FEE2E2;
+            --error-border: #EF4444;
+            --purple-light: #E0E7FF;
+            --purple-border: #8B5CF6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); color: var(--text-primary); line-height: 1.7; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); z-index: 1000; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
+        .nav-links a:hover { color: var(--mint-bright); }
+        .nav-cta { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; color: var(--text-primary); cursor: pointer; }
+        .reading-progress { position: fixed; top: 4.5rem; left: 0; right: 0; height: 4px; background: var(--light-bg-tertiary); z-index: 999; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); width: 0%; }
+        .article-layout { display: grid; grid-template-columns: 250px 1fr 200px; gap: 3rem; padding-top: 6rem; max-width: 1400px; margin: 0 auto; }
+        .article-nav { position: sticky; top: 6rem; height: fit-content; background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .article-nav h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .nav-list { list-style: none; }
+        .nav-list li { margin-bottom: 0.5rem; }
+        .nav-list a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; display: block; padding: 0.25rem 0; }
+        .nav-list a:hover, .nav-list a.active { color: var(--mint-bright); }
+        .article-content { background: var(--light-bg-primary); border-radius: 12px; overflow: hidden; }
+        .article-header { background: linear-gradient(135deg, var(--light-bg-secondary) 0%, var(--light-bg-tertiary) 100%); padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border-subtle); }
+        .article-meta { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .meta-item { background: var(--glass-bg); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 0.5rem; }
+        .article-number { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; font-weight: 600; }
+        .article-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
+        .gradient-text { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .article-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+        .article-body { padding: 3rem 2rem; }
+        .article-section { margin-bottom: 3rem; }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+        .article-text { font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .article-text strong { font-weight: 600; }
+        .article-text em { color: var(--mint-bright); font-style: italic; font-weight: 500; }
+        .callout { background: var(--glass-bg); border-left: 4px solid var(--mint-bright); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .callout.warning { border-left-color: var(--warning-border); background: var(--warning-bg); }
+        .callout.success { border-left-color: var(--success-border); background: var(--success-bg); }
+        .callout.info { border-left-color: var(--info-border); background: var(--info-bg); }
+        .callout-title { font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .interactive-box { background: var(--glass-bg); border: 2px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .interactive-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .interactive-title i { color: var(--mint-bright); }
+        .quote-box { background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%); border: 1px solid var(--purple-border); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .quote-text { font-size: 1.1rem; font-style: italic; margin-bottom: 1rem; }
+        .quote-author { font-size: 0.9rem; color: var(--purple-border); font-weight: 600; }
+        .hierarchy-pyramid { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin: 2rem 0; }
+        .pyramid-level { border-radius: 10px; padding: 1.25rem 1.5rem; text-align: center; }
+        .pyramid-level.level-1 { width: 95%; background: linear-gradient(135deg, var(--mint-bright), var(--mint-bright-hover)); color: white; }
+        .pyramid-level.level-2 { width: 78%; background: linear-gradient(135deg, var(--baby-blue-bright), var(--baby-blue-bright-hover)); color: white; }
+        .pyramid-level.level-3 { width: 61%; background: var(--glass-bg); border: 1px solid var(--border-subtle); }
+        .pyramid-level.level-4 { width: 44%; background: var(--glass-bg); border: 1px solid var(--border-subtle); }
+        .pyramid-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
+        .pyramid-sub { font-size: 0.8rem; opacity: 0.9; margin-bottom: 0.5rem; }
+        .pyramid-detail { font-size: 0.8rem; opacity: 0.85; }
+        .callout-strong { background: var(--warning-bg); border-left: 4px solid var(--warning-border); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
+        .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .process-step { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; text-align: center; }
+        .process-number { display: inline-block; width: 32px; height: 32px; background: var(--mint-bright); color: white; border-radius: 50%; line-height: 32px; font-weight: 700; margin-bottom: 0.75rem; }
+        .process-title { font-weight: 700; margin-bottom: 0.5rem; }
+        .process-description { font-size: 0.85rem; color: var(--text-secondary); }
+        .questions-box { background: var(--light-bg-tertiary); border-radius: 10px; padding: 1.25rem; margin: 1.5rem 0; font-size: 0.9rem; }
+        .questions-box strong { color: var(--mint-bright); }
+        .alignment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .alignment-card { background: var(--glass-bg); border-radius: 12px; padding: 1.5rem; }
+        .alignment-card.perfect { border-left: 4px solid var(--success-border); }
+        .alignment-card.partial { border-left: 4px solid var(--warning-border); }
+        .alignment-card.conflict { border-left: 4px solid var(--error-border); }
+        .alignment-title { font-weight: 700; margin-bottom: 0.25rem; }
+        .alignment-card.perfect .alignment-title { color: var(--success-border); }
+        .alignment-card.partial .alignment-title { color: var(--warning-border); }
+        .alignment-card.conflict .alignment-title { color: var(--error-border); }
+        .alignment-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
+        .alignment-detail { background: var(--light-bg-tertiary); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 0.5rem; }
+        .alignment-action { font-size: 0.85rem; font-weight: 600; }
+        .system-box { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
+        .system-box-title { font-weight: 700; color: var(--mint-bright); margin-bottom: 0.75rem; }
+        .pattern-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .pattern-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
+        .pattern-title { font-weight: 700; margin-bottom: 0.25rem; }
+        .pattern-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
+        .pattern-setup { background: var(--light-bg-tertiary); padding: 0.85rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 0.6rem; white-space: pre-line; }
+        .pattern-outcome { font-size: 0.85rem; color: var(--text-secondary); }
+        .pattern-outcome strong { color: var(--mint-bright); }
+        .mistake-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .mistake-card { background: var(--error-bg); border: 1px solid var(--error-border); border-radius: 10px; padding: 1.5rem; border-left: 4px solid var(--error-border); }
+        .mistake-title { font-weight: 600; color: var(--error-border); margin-bottom: 0.5rem; }
+        .mistake-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .mistake-fix { font-size: 0.85rem; color: var(--success-border); font-weight: 500; }
+        .takeaways { background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(96, 165, 250, 0.05) 100%); border: 1px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 3rem 0; }
+        .takeaways-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .takeaways-title i { color: var(--mint-bright); }
+        .takeaways-list { list-style: none; }
+        .takeaways-list li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; }
+        .takeaways-list li::before { content: '✓'; position: absolute; left: 0; color: var(--mint-bright); }
+        .article-sidebar { position: sticky; top: 6rem; height: fit-content; }
+        .sidebar-widget { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .widget-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+        .progress-circle { width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(var(--mint-bright) 0deg 252deg, var(--light-bg-tertiary) 252deg 360deg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; position: relative; }
+        .progress-circle::after { content: '70%'; position: absolute; font-size: 0.875rem; font-weight: 600; }
+        .next-article, .prev-article { padding: 1rem; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: 600; margin-bottom: 1rem; }
+        .next-article { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; }
+        .prev-article { background: var(--glass-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem; opacity: 0; visibility: hidden; z-index: 1000; }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .article-navigation { display: flex; justify-content: space-between; padding: 2rem; border-top: 1px solid var(--border-subtle); gap: 1rem; }
+        .nav-btn { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem 1.5rem; text-decoration: none; color: var(--text-primary); font-weight: 500; flex: 1; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .nav-btn.next { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; }
+        @media (max-width: 1024px) {
+            .article-layout { grid-template-columns: 1fr; gap: 2rem; padding-top: 5rem; }
+            .article-nav, .article-sidebar { display: none; }
+        }
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: block; }
+            .nav-links, .nav-cta { display: none; }
+            .article-header { padding: 2rem 1.5rem; }
+            .article-title { font-size: 2.2rem; }
+            .article-body { padding: 2rem 1.5rem; }
+            .process-steps, .alignment-grid, .pattern-grid, .mistake-grid { grid-template-columns: 1fr; }
+            .pyramid-level.level-1, .pyramid-level.level-2, .pyramid-level.level-3, .pyramid-level.level-4 { width: 100%; }
+            .article-navigation { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            .article-title { font-size: 1.8rem; }
+            .article-body { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
 <body>
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">Mrs Atiqah</div>
+                <ul class="nav-links"><li><a href="index.html">Home</a></li></ul>
+                <a href="index.html" class="nav-cta">Article Index</a>
+                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
 
-<h1>Coming Soon</h1>
+    <div class="reading-progress"><div class="progress-fill" id="progressBar"></div></div>
 
+    <div class="article-layout">
+        <aside class="article-nav">
+            <h4>In This Article</h4>
+            <ul class="nav-list">
+                <li><a href="#introduction" class="active">X-Ray Vision</a></li>
+                <li><a href="#what-is-mta">What Is MTA?</a></li>
+                <li><a href="#timeframe-hierarchy">Timeframe Hierarchy</a></li>
+                <li><a href="#top-down-process">Top-Down Process</a></li>
+                <li><a href="#alignment-strategies">Alignment Strategies</a></li>
+                <li><a href="#pattern-examples">Pattern Examples</a></li>
+                <li><a href="#common-mistakes">Common Mistakes</a></li>
+                <li><a href="#key-takeaways">Key Takeaways</a></li>
+            </ul>
+        </aside>
 
+        <main class="article-content">
+            <header class="article-header">
+                <div class="article-meta">
+                    <div class="meta-item article-number">Article 21</div>
+                    <div class="meta-item"><i class="fas fa-book-open"></i> 14 min read</div>
+                    <div class="meta-item"><i class="fas fa-layer-group"></i> Technical Analysis</div>
+                </div>
+                <h1 class="article-title">Multiple Timeframe Analysis: <span class="gradient-text">The Professional's Edge</span></h1>
+                <p class="article-subtitle">Stop trading with tunnel vision. Learn to see the market's complete story across multiple time horizons, from the forest down to individual trees.</p>
+            </header>
+
+            <div class="article-body">
+                <div class="article-section" id="introduction">
+                    <p class="article-text">Imagine trying to navigate through a city using only a street-level view. You might know exactly where you are right now, but you'd have no idea about the broader neighborhood, the traffic patterns three blocks ahead, or whether you're heading toward a dead end.</p>
+                    <p class="article-text">Now imagine having access to a satellite view, a city map, and your street-level view all at once. Suddenly, navigation becomes much clearer and more strategic.</p>
+                    <p class="article-text"><strong>Multiple timeframe analysis is exactly like having those different perspective levels for the markets.</strong> While single timeframe analysis is like trading with tunnel vision, multiple timeframe analysis gives you the complete picture, from the forest down to the individual trees.</p>
+                    <div class="interactive-box">
+                        <div class="interactive-title"><i class="fas fa-eye"></i> Market X-Ray Vision</div>
+                        <p>Multiple timeframe analysis is like having x-ray vision for the markets. It reveals the market's intentions across different time horizons and helps you position yourself for the highest probability trades.</p>
+                        <p style="margin-top: 1rem; font-style: italic;">See what professionals see, the complete market story.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="what-is-mta">
+                    <h2 class="section-title">What Is Multiple Timeframe Analysis?</h2>
+                    <p class="article-text"><em>Multiple timeframe analysis involves studying the same market across different time periods to gain a comprehensive understanding of market structure, trend direction, and optimal entry/exit points.</em></p>
+                    <p class="article-text">Think of it as reading the market's story at different scales: the long-term narrative and major themes, the current chapter and character development, the scene-by-scene action, and the word-by-word detail.</p>
+                    <div class="callout success">
+                        <div class="callout-title"><i class="fas fa-magic"></i> The Magic Formula</div>
+                        <p>Each timeframe provides unique information, but the magic happens when they align to tell a coherent story pointing in the same direction. This is where the highest probability trades are found.</p>
+                    </div>
+                    <div class="quote-box">
+                        <div class="quote-text">The trend is your friend on multiple timeframes.</div>
+                        <div class="quote-author">— Professional Trader Wisdom</div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="timeframe-hierarchy">
+                    <h2 class="section-title">The Timeframe Hierarchy</h2>
+                    <p class="article-text">Understanding the role of each timeframe is crucial for proper multiple timeframe analysis:</p>
+                    <div class="hierarchy-pyramid">
+                        <div class="pyramid-level level-1"><div class="pyramid-title">Primary Timeframe: Monthly/Weekly</div><div class="pyramid-sub">Determines major trend direction and long-term context</div><div class="pyramid-detail">Purpose: Trend direction filter · Best for: Position traders</div></div>
+                        <div class="pyramid-level level-2"><div class="pyramid-title">Intermediate: Daily Charts</div><div class="pyramid-sub">Shows intermediate trend, reveals swing opportunities</div><div class="pyramid-detail">Purpose: Setup identification · Best for: Swing traders</div></div>
+                        <div class="pyramid-level level-3"><div class="pyramid-title">Entry: 4-Hour/1-Hour</div><div class="pyramid-sub">Precise entry and exit timing within setups</div><div class="pyramid-detail">Purpose: Execution timing · Best for: Day traders</div></div>
+                        <div class="pyramid-level level-4"><div class="pyramid-title">Micro: 15-Min/5-Min</div><div class="pyramid-sub">Ultra-precise timing and immediate sentiment</div><div class="pyramid-detail">Purpose: Order execution · Best for: Scalpers</div></div>
+                    </div>
+                    <div class="callout-strong">
+                        <div class="callout-title"><i class="fas fa-gavel"></i> The Professional's Rule</div>
+                        <p>Longer timeframes determine direction, shorter timeframes determine timing. Never let shorter timeframe noise override longer timeframe direction, this is the fastest way to lose money.</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="top-down-process">
+                    <h2 class="section-title">The Top-Down Analysis Process</h2>
+                    <p class="article-text">Professional traders use a systematic top-down approach to avoid confusion and maintain proper perspective:</p>
+                    <div class="process-steps">
+                        <div class="process-step"><div class="process-number">1</div><div class="process-title">Monthly/Weekly</div><div class="process-description">Identify major trend direction, long-term support/resistance, and market cycle phase</div></div>
+                        <div class="process-step"><div class="process-number">2</div><div class="process-title">Daily Analysis</div><div class="process-description">Find specific trading setups, confirm alignment with higher timeframes</div></div>
+                        <div class="process-step"><div class="process-number">3</div><div class="process-title">Hourly Timing</div><div class="process-description">Time precise entries within daily setups, identify short-term levels</div></div>
+                        <div class="process-step"><div class="process-number">4</div><div class="process-title">Execution</div><div class="process-description">Use lowest timeframe for exact entry/exit points and immediate confirmation</div></div>
+                    </div>
+                    <div class="questions-box">
+                        <strong>Critical Questions at Each Step:</strong><br>
+                        Step 1: What's the major trend? Where are key levels?<br>
+                        Step 2: What patterns are forming? How's the risk/reward?<br>
+                        Step 3: When should I enter? What's the immediate sentiment?<br>
+                        Step 4: What's my exact stop? Any timing conflicts?
+                    </div>
+                </div>
+
+                <div class="article-section" id="alignment-strategies">
+                    <h2 class="section-title">Timeframe Alignment Strategies</h2>
+                    <p class="article-text">Not all timeframe combinations are created equal. Here's how to read and trade different alignment scenarios:</p>
+                    <div class="alignment-grid">
+                        <div class="alignment-card perfect">
+                            <div class="alignment-title">Perfect Alignment</div>
+                            <div class="alignment-subtitle">High Probability</div>
+                            <div class="alignment-detail"><strong>Setup:</strong> All timeframes pointing in same direction<br><strong>Example:</strong> Monthly uptrend → Weekly pullback to support → Daily higher low → Hourly breakout</div>
+                            <div class="alignment-action" style="color: var(--success-border);">Action: High-confidence entry with standard position size</div>
+                        </div>
+                        <div class="alignment-card partial">
+                            <div class="alignment-title">Partial Alignment</div>
+                            <div class="alignment-subtitle">Moderate Probability</div>
+                            <div class="alignment-detail"><strong>Setup:</strong> Most timeframes aligned with minor conflicts<br><strong>Example:</strong> Monthly uptrend → Weekly sideways → Daily bullish breakout → Hourly momentum</div>
+                            <div class="alignment-action" style="color: var(--warning-border);">Action: Moderate-confidence entry with reduced size</div>
+                        </div>
+                        <div class="alignment-card conflict">
+                            <div class="alignment-title">Conflicting Signals</div>
+                            <div class="alignment-subtitle">Low Probability</div>
+                            <div class="alignment-detail"><strong>Setup:</strong> Timeframes giving contradictory signals<br><strong>Example:</strong> Monthly downtrend → Weekly bounce → Daily reversal → Hourly selling</div>
+                            <div class="alignment-action" style="color: var(--error-border);">Action: Avoid trade or take very small position</div>
+                        </div>
+                    </div>
+                    <div class="system-box">
+                        <div class="system-box-title">The 5-4-1 System</div>
+                        <p style="font-size: 0.95rem; margin-bottom: 0.5rem;"><strong>5x Rule:</strong> Context timeframe is 5x longer than trading timeframe<br><strong>4x Rule:</strong> Analysis timeframe is your primary decision maker<br><strong>1x Rule:</strong> Timing timeframe is 4-5x shorter than analysis timeframe</p>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);"><strong>Example:</strong> Daily trading → Weekly context → 4-hour timing</p>
+                    </div>
+                </div>
+
+                <div class="article-section" id="pattern-examples">
+                    <h2 class="section-title">Multi-Timeframe Pattern Examples</h2>
+                    <p class="article-text">Here are the most reliable multi-timeframe setups that professionals look for:</p>
+                    <div class="pattern-grid">
+                        <div class="pattern-card">
+                            <div class="pattern-title">The Perfect Storm</div>
+                            <div class="pattern-subtitle">Ultimate High-Probability Setup</div>
+                            <div class="pattern-setup">Weekly: Strong uptrend with pullback to rising trend line
+Daily: Hammer reversal at weekly trend line
+4-Hour: Breaking above hammer high with volume
+1-Hour: Strong momentum continuation</div>
+                            <div class="pattern-outcome"><strong>Entry:</strong> Above 4-hour break level<br><strong>Target:</strong> Next weekly resistance</div>
+                        </div>
+                        <div class="pattern-card">
+                            <div class="pattern-title">Breakout Confirmation</div>
+                            <div class="pattern-subtitle">Multi-Timeframe Validation</div>
+                            <div class="pattern-setup">Monthly: Multi-year resistance being tested
+Weekly: Multiple attempts with increasing momentum
+Daily: Strong breakout candle with gap
+Hourly: No pullback, sustained momentum</div>
+                            <div class="pattern-outcome"><strong>Entry:</strong> On daily breakout or hourly continuation<br><strong>Target:</strong> Measured move or next major resistance</div>
+                        </div>
+                        <div class="pattern-card">
+                            <div class="pattern-title">Trend Resumption</div>
+                            <div class="pattern-subtitle">Continuation After Pause</div>
+                            <div class="pattern-setup">Weekly: Strong downtrend with pause at support
+Daily: Failed bounce creating lower high
+4-Hour: Break below support with volume
+1-Hour: No recovery, continued selling</div>
+                            <div class="pattern-outcome"><strong>Entry:</strong> On 4-hour breakdown<br><strong>Target:</strong> Next weekly support level</div>
+                        </div>
+                    </div>
+                    <div class="quote-box">
+                        <div class="quote-text">The best trades feel almost too easy when all timeframes align.</div>
+                        <div class="quote-author">— Mark Minervini</div>
+                    </div>
+                </div>
+
+                <div class="article-section" id="common-mistakes">
+                    <h2 class="section-title">Common Multi-Timeframe Mistakes</h2>
+                    <p class="article-text">Avoid these pitfalls that derail many traders attempting multiple timeframe analysis:</p>
+                    <div class="mistake-grid">
+                        <div class="mistake-card"><div class="mistake-title">Timeframe Contamination</div><div class="mistake-desc">Letting shorter timeframe noise override longer timeframe analysis.</div><div class="mistake-fix">Solution: Maintain hierarchy, longer timeframes trump shorter ones.</div></div>
+                        <div class="mistake-card"><div class="mistake-title">Analysis Paralysis</div><div class="mistake-desc">Analyzing too many timeframes and getting confused by conflicting signals.</div><div class="mistake-fix">Solution: Stick to 3-4 key timeframes maximum.</div></div>
+                        <div class="mistake-card"><div class="mistake-title">Wrong Timeframe for Strategy</div><div class="mistake-desc">Using inappropriate timeframes for your trading style.</div><div class="mistake-fix">Solution: Match timeframes to your holding period.</div></div>
+                        <div class="mistake-card"><div class="mistake-title">Ignoring Lower Timeframe Signals</div><div class="mistake-desc">Taking trades based only on higher timeframes without checking timing.</div><div class="mistake-fix">Solution: Always check lower timeframe for entry timing.</div></div>
+                    </div>
+                    <div class="callout warning">
+                        <div class="callout-title"><i class="fas fa-exclamation-triangle"></i> The Biggest Trap</div>
+                        <p>The biggest mistake is abandoning weekly uptrend bias because of hourly downward movement. Remember: longer timeframes provide context and direction, shorter timeframes provide timing and precision. Neither is complete without the other.</p>
+                    </div>
+                </div>
+
+                <div class="takeaways" id="key-takeaways">
+                    <h3 class="takeaways-title"><i class="fas fa-bullseye"></i> Key Takeaways</h3>
+                    <ul class="takeaways-list">
+                        <li>Multiple timeframe analysis provides complete market perspective from forest to trees</li>
+                        <li>Use top-down approach: monthly/weekly for trend, daily for setups, hourly for timing</li>
+                        <li>Perfect alignment (all timeframes agreeing) creates highest probability trades</li>
+                        <li>Longer timeframes determine direction, shorter timeframes determine timing</li>
+                        <li>Stick to 3-4 timeframes maximum to avoid analysis paralysis</li>
+                        <li>Never let shorter timeframe noise override longer timeframe trend direction</li>
+                        <li>Start simple with two timeframes, then gradually add complexity as skills develop</li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="article-navigation">
+                <a href="article-20.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Article 20: Economic Calendar</a>
+                <a href="article-22.html" class="nav-btn next">Article 22: Advanced Chart Patterns <i class="fas fa-arrow-right"></i></a>
+            </nav>
+        </main>
+
+        <aside class="article-sidebar">
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Your Progress</h4>
+                <div class="progress-circle"></div>
+                <p style="text-align: center; font-size: 0.9rem; color: var(--text-secondary);">Article 21 of 30<br>Seeing the big picture!</p>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Previous Article</h4>
+                <a href="article-20.html" class="prev-article"><i class="fas fa-arrow-left"></i> Economic Calendar</a>
+            </div>
+            <div class="sidebar-widget">
+                <h4 class="widget-title">Next Article</h4>
+                <a href="article-22.html" class="next-article">Advanced Chart Patterns <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </aside>
+    </div>
+
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const article = document.querySelector('.article-body');
+            const scrollTop = window.pageYOffset;
+            const docHeight = article.offsetHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / (docHeight - winHeight);
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) progressBar.style.width = Math.min(scrollPercent * 100, 100) + '%';
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+        });
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
 </body>
 </html>
