@@ -28,6 +28,8 @@
     --orange-border: #FB923C;
     --bullish-green: #10B981;
     --bearish-red: #EF4444;
+    --support-color: #10B981;
+    --resistance-color: #EF4444;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); color: var(--text-primary); line-height: 1.7; overflow-x: hidden; }
@@ -307,6 +309,33 @@ body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); co
 .card-icon.bad { background: linear-gradient(135deg, var(--warning-border), #D97706); }
 .card-icon.ugly { background: linear-gradient(135deg, var(--error-border), #DC2626); }
 .card-icon.antifragile { background: linear-gradient(135deg, var(--purple-border), #7C3AED); }
+.card-icon.fomo { background: linear-gradient(135deg, var(--warning-border), #D97706); }
+.card-icon.revenge { background: linear-gradient(135deg, var(--error-border), #DC2626); }
+.card-icon.overconfidence { background: linear-gradient(135deg, var(--purple-border), #7C3AED); }
+.card-icon.fear { background: linear-gradient(135deg, #6366F1, #4F46E5); }
+.card-icon.tilt { background: linear-gradient(135deg, #EF4444, #DC2626); }
+.card-icon.primary { background: linear-gradient(135deg, var(--mint-bright), var(--mint-bright-hover)); }
+.card-icon.secondary { background: linear-gradient(135deg, var(--baby-blue-bright), var(--baby-blue-bright-hover)); }
+.card-icon.warning { background: linear-gradient(135deg, var(--warning-border), #D97706); }
+.trigger-grid, .strategy-grid, .identification-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+.trigger-card, .tactic-card, .identification-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease; }
+.trigger-card:hover, .tactic-card:hover, .identification-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-light); }
+.trigger-thought, .trigger-consequence, .strategy-details { background: var(--light-bg-tertiary); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-secondary); }
+.trigger-thought { background: var(--error-bg); border-left: 3px solid var(--error-border); font-style: italic; }
+.trigger-consequence { background: var(--warning-bg); border-left: 3px solid var(--warning-border); }
+.trigger-thought strong, .trigger-consequence strong, .strategy-details strong { color: var(--mint-bright-hover); }
+.physical-signs { background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%); border: 1px solid var(--error-border); border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+.signs-title { font-size: 1.2rem; font-weight: 700; color: var(--error-border); margin-bottom: 1.5rem; text-align: center; }
+.signs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+.sign-item { background: var(--light-bg-primary); padding: 1rem; border-radius: 8px; text-align: center; border-left: 3px solid var(--error-border); }
+.sign-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.sign-label { font-weight: 600; margin-bottom: 0.25rem; color: var(--text-primary); }
+.sign-description { font-size: 0.8rem; color: var(--text-secondary); }
+.neutralization-steps { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+.steps-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem; }
+.steps-list { list-style: none; }
+.steps-list li { margin-bottom: 1rem; padding-left: 2rem; position: relative; font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); }
+.steps-list li::before { content: attr(data-step); position: absolute; left: 0; top: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--mint-bright); color: white; font-size: 0.7rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
 .card-title { font-weight: 700; margin-bottom: 0.25rem; color: var(--text-primary); }
 .card-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
 .card-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; }
@@ -344,6 +373,45 @@ body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); co
 .action-plan ul { list-style: none; padding: 0; }
 .action-plan li { position: relative; margin-bottom: 0.75rem; padding-left: 2rem; color: var(--text-secondary); }
 .action-plan li::before { content: "\f00c"; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: var(--success-border); font-size: 0.85rem; }
+.sr-demo { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+.sr-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 2rem; text-align: center; color: var(--text-primary); }
+.sr-examples { display: flex; justify-content: space-around; align-items: center; gap: 2rem; flex-wrap: wrap; }
+.sr-example { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.sr-visual { position: relative; width: 120px; height: 150px; background: var(--light-bg-secondary); border: 1px solid var(--border-subtle); border-radius: 8px; overflow: hidden; }
+.resistance-line { position: absolute; top: 20px; left: 0; right: 0; height: 2px; background: var(--resistance-color); }
+.support-line { position: absolute; bottom: 20px; left: 0; right: 0; height: 2px; background: var(--support-color); }
+.sr-label { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+.sr-description { font-size: 0.8rem; color: var(--text-secondary); text-align: center; max-width: 140px; line-height: 1.4; }
+.level-types { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+.level-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease; }
+.level-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-light); }
+.level-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.level-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; flex-shrink: 0; }
+.level-card.horizontal .level-icon { background: linear-gradient(135deg, var(--mint-bright), var(--mint-bright-hover)); }
+.level-card.diagonal .level-icon { background: linear-gradient(135deg, var(--baby-blue-bright), var(--baby-blue-bright-hover)); }
+.level-card.dynamic .level-icon { background: linear-gradient(135deg, #8B5CF6, #7C3AED); }
+.level-card.psychological .level-icon { background: linear-gradient(135deg, #F59E0B, #D97706); }
+.level-title { font-weight: 700; margin-bottom: 0.25rem; color: var(--text-primary); }
+.level-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
+.level-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; }
+.level-examples { background: var(--light-bg-tertiary); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; color: var(--text-secondary); }
+.level-examples strong { color: var(--mint-bright-hover); }
+.strategies-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+.strategy-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; }
+.strategy-header { text-align: center; margin-bottom: 1.5rem; }
+.strategy-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+.strategy-type { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+.strategy-steps { list-style: none; }
+.strategy-steps li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; font-size: 0.95rem; line-height: 1.5; color: var(--text-secondary); }
+.strategy-steps li::before { content: attr(data-step); position: absolute; left: 0; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--mint-bright); color: white; font-size: 0.7rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+.mistakes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+.mistake-card { background: var(--error-bg); border: 1px solid var(--error-border); border-radius: 10px; padding: 1.5rem; border-left: 4px solid var(--error-border); }
+.mistake-title { font-weight: 600; color: var(--error-border); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+.mistake-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+.advanced-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+.advanced-card { background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%); border: 1px solid var(--purple-border); border-radius: 12px; padding: 1.5rem; }
+.advanced-title { font-weight: 700; color: var(--purple-border); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+.advanced-description { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
 .share-buttons { display: flex; gap: 0.5rem; }
 .share-btn { flex: 1; padding: 0.75rem; border: 1px solid var(--border-subtle); background: var(--light-bg-secondary); border-radius: 8px; cursor: pointer; color: var(--text-secondary); font-size: 1rem; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; text-decoration: none; }
 .share-btn:hover { border-color: var(--mint-bright); color: var(--mint-bright); transform: translateY(-2px); box-shadow: var(--shadow-light); }
@@ -378,6 +446,9 @@ body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); co
     .comparison-table th, .comparison-table td { padding: 0.75rem 0.5rem; }
     .candlestick-demo { flex-direction: column; gap: 1.5rem; }
     .loss-grid, .emotional-cycle, .recovery-protocol, .recovery-comparison { grid-template-columns: 1fr; }
+    .level-types, .strategies-grid, .mistakes-grid, .advanced-grid, .sr-examples { grid-template-columns: 1fr; }
+    .sr-examples { flex-direction: column; }
+    .trigger-grid, .strategy-grid, .identification-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
     .article-title { font-size: 1.8rem; }
