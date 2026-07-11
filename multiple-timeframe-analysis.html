@@ -3,177 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Article 21: Multiple Timeframe Analysis - The Professional's Edge</title>
+    <title>Multiple Timeframe Analysis - The Professional's Edge | Mrs Atiqah Trading Notes</title>
+    <meta name="description" content="Stop trading with tunnel vision. Learn to see the market's complete story across multiple time horizons, from the forest down to individual trees.">
+    <meta name="keywords" content="multiple timeframe analysis, top down trading analysis, timeframe hierarchy, timeframe alignment, Mrs Atiqah">
+    <meta name="author" content="Mrs Atiqah">
+    <link rel="canonical" href="https://mrsatiqah.github.io/trading-notes/multiple-timeframe-analysis.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Multiple Timeframe Analysis - The Professional's Edge">
+    <meta property="og:description" content="Stop trading with tunnel vision. Learn to see the market's complete story across multiple time horizons, from the forest down to individual trees.">
+    <meta property="og:url" content="https://mrsatiqah.github.io/trading-notes/multiple-timeframe-analysis.html">
+    <meta property="og:site_name" content="Mrs Atiqah - Trading Notes">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Multiple Timeframe Analysis - The Professional's Edge">
+    <meta name="twitter:description" content="Stop trading with tunnel vision. Learn to see the market's complete story across multiple time horizons, from the forest down to individual trees.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --light-bg-primary: #FFFFFF;
-            --light-bg-secondary: #F8FAFC;
-            --light-bg-tertiary: #F1F5F9;
-            --mint-bright: #34D399;
-            --mint-bright-hover: #10B981;
-            --baby-blue-bright: #60A5FA;
-            --baby-blue-bright-hover: #3B82F6;
-            --text-primary: #0F172A;
-            --text-secondary: #475569;
-            --text-muted: #64748B;
-            --border-light: rgba(52, 211, 153, 0.3);
-            --border-subtle: rgba(15, 23, 42, 0.1);
-            --glass-bg: rgba(255, 255, 255, 0.8);
-            --shadow-light: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-            --shadow-glow: 0 0 40px rgba(52, 211, 153, 0.2);
-            --warning-bg: #FEF3C7;
-            --warning-border: #F59E0B;
-            --success-bg: #D1FAE5;
-            --success-border: #10B981;
-            --info-bg: #DBEAFE;
-            --info-border: #3B82F6;
-            --error-bg: #FEE2E2;
-            --error-border: #EF4444;
-            --purple-light: #E0E7FF;
-            --purple-border: #8B5CF6;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); color: var(--text-primary); line-height: 1.7; overflow-x: hidden; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); z-index: 1000; }
-        .nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
-        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .nav-links { display: flex; gap: 2rem; list-style: none; }
-        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
-        .nav-links a:hover { color: var(--mint-bright); }
-        .nav-cta { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600; }
-        .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; color: var(--text-primary); cursor: pointer; }
-        .reading-progress { position: fixed; top: 4.5rem; left: 0; right: 0; height: 4px; background: var(--light-bg-tertiary); z-index: 999; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); width: 0%; }
-        .article-layout { display: grid; grid-template-columns: 250px 1fr 200px; gap: 3rem; padding-top: 6rem; max-width: 1400px; margin: 0 auto; }
-        .article-nav { position: sticky; top: 6rem; height: fit-content; background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
-        .article-nav h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        .nav-list { list-style: none; }
-        .nav-list li { margin-bottom: 0.5rem; }
-        .nav-list a { color: var(--text-secondary); text-decoration: none; font-size: 0.875rem; display: block; padding: 0.25rem 0; }
-        .nav-list a:hover, .nav-list a.active { color: var(--mint-bright); }
-        .article-content { background: var(--light-bg-primary); border-radius: 12px; overflow: hidden; }
-        .article-header { background: linear-gradient(135deg, var(--light-bg-secondary) 0%, var(--light-bg-tertiary) 100%); padding: 3rem 2rem; text-align: center; border-bottom: 1px solid var(--border-subtle); }
-        .article-meta { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-        .meta-item { background: var(--glass-bg); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; color: var(--text-secondary); border: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 0.5rem; }
-        .article-number { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; font-weight: 600; }
-        .article-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
-        .gradient-text { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .article-subtitle { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
-        .article-body { padding: 3rem 2rem; }
-        .article-section { margin-bottom: 3rem; }
-        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
-        .article-text { font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; }
-        .article-text strong { font-weight: 600; }
-        .article-text em { color: var(--mint-bright); font-style: italic; font-weight: 500; }
-        .callout { background: var(--glass-bg); border-left: 4px solid var(--mint-bright); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
-        .callout.warning { border-left-color: var(--warning-border); background: var(--warning-bg); }
-        .callout.success { border-left-color: var(--success-border); background: var(--success-bg); }
-        .callout.info { border-left-color: var(--info-border); background: var(--info-bg); }
-        .callout-title { font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
-        .interactive-box { background: var(--glass-bg); border: 2px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
-        .interactive-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-        .interactive-title i { color: var(--mint-bright); }
-        .quote-box { background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%); border: 1px solid var(--purple-border); border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: center; }
-        .quote-text { font-size: 1.1rem; font-style: italic; margin-bottom: 1rem; }
-        .quote-author { font-size: 0.9rem; color: var(--purple-border); font-weight: 600; }
-        .hierarchy-pyramid { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin: 2rem 0; }
-        .pyramid-level { border-radius: 10px; padding: 1.25rem 1.5rem; text-align: center; }
-        .pyramid-level.level-1 { width: 95%; background: linear-gradient(135deg, var(--mint-bright), var(--mint-bright-hover)); color: white; }
-        .pyramid-level.level-2 { width: 78%; background: linear-gradient(135deg, var(--baby-blue-bright), var(--baby-blue-bright-hover)); color: white; }
-        .pyramid-level.level-3 { width: 61%; background: var(--glass-bg); border: 1px solid var(--border-subtle); }
-        .pyramid-level.level-4 { width: 44%; background: var(--glass-bg); border: 1px solid var(--border-subtle); }
-        .pyramid-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
-        .pyramid-sub { font-size: 0.8rem; opacity: 0.9; margin-bottom: 0.5rem; }
-        .pyramid-detail { font-size: 0.8rem; opacity: 0.85; }
-        .callout-strong { background: var(--warning-bg); border-left: 4px solid var(--warning-border); border-radius: 8px; padding: 1.5rem; margin: 2rem 0; }
-        .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
-        .process-step { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; text-align: center; }
-        .process-number { display: inline-block; width: 32px; height: 32px; background: var(--mint-bright); color: white; border-radius: 50%; line-height: 32px; font-weight: 700; margin-bottom: 0.75rem; }
-        .process-title { font-weight: 700; margin-bottom: 0.5rem; }
-        .process-description { font-size: 0.85rem; color: var(--text-secondary); }
-        .questions-box { background: var(--light-bg-tertiary); border-radius: 10px; padding: 1.25rem; margin: 1.5rem 0; font-size: 0.9rem; }
-        .questions-box strong { color: var(--mint-bright); }
-        .alignment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
-        .alignment-card { background: var(--glass-bg); border-radius: 12px; padding: 1.5rem; }
-        .alignment-card.perfect { border-left: 4px solid var(--success-border); }
-        .alignment-card.partial { border-left: 4px solid var(--warning-border); }
-        .alignment-card.conflict { border-left: 4px solid var(--error-border); }
-        .alignment-title { font-weight: 700; margin-bottom: 0.25rem; }
-        .alignment-card.perfect .alignment-title { color: var(--success-border); }
-        .alignment-card.partial .alignment-title { color: var(--warning-border); }
-        .alignment-card.conflict .alignment-title { color: var(--error-border); }
-        .alignment-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
-        .alignment-detail { background: var(--light-bg-tertiary); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 0.5rem; }
-        .alignment-action { font-size: 0.85rem; font-weight: 600; }
-        .system-box { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0; }
-        .system-box-title { font-weight: 700; color: var(--mint-bright); margin-bottom: 0.75rem; }
-        .pattern-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
-        .pattern-card { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; }
-        .pattern-title { font-weight: 700; margin-bottom: 0.25rem; }
-        .pattern-subtitle { font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 0.75rem; }
-        .pattern-setup { background: var(--light-bg-tertiary); padding: 0.85rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 0.6rem; white-space: pre-line; }
-        .pattern-outcome { font-size: 0.85rem; color: var(--text-secondary); }
-        .pattern-outcome strong { color: var(--mint-bright); }
-        .mistake-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
-        .mistake-card { background: var(--error-bg); border: 1px solid var(--error-border); border-radius: 10px; padding: 1.5rem; border-left: 4px solid var(--error-border); }
-        .mistake-title { font-weight: 600; color: var(--error-border); margin-bottom: 0.5rem; }
-        .mistake-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
-        .mistake-fix { font-size: 0.85rem; color: var(--success-border); font-weight: 500; }
-        .takeaways { background: linear-gradient(135deg, rgba(52, 211, 153, 0.05) 0%, rgba(96, 165, 250, 0.05) 100%); border: 1px solid var(--border-light); border-radius: 12px; padding: 2rem; margin: 3rem 0; }
-        .takeaways-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        .takeaways-title i { color: var(--mint-bright); }
-        .takeaways-list { list-style: none; }
-        .takeaways-list li { margin-bottom: 0.75rem; padding-left: 1.5rem; position: relative; }
-        .takeaways-list li::before { content: '✓'; position: absolute; left: 0; color: var(--mint-bright); }
-        .article-sidebar { position: sticky; top: 6rem; height: fit-content; }
-        .sidebar-widget { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
-        .widget-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
-        .progress-circle { width: 60px; height: 60px; border-radius: 50%; background: conic-gradient(var(--mint-bright) 0deg 252deg, var(--light-bg-tertiary) 252deg 360deg); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; position: relative; }
-        .progress-circle::after { content: '70%'; position: absolute; font-size: 0.875rem; font-weight: 600; }
-        .next-article, .prev-article { padding: 1rem; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: 600; margin-bottom: 1rem; }
-        .next-article { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; }
-        .prev-article { background: var(--glass-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); }
-        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem; opacity: 0; visibility: hidden; z-index: 1000; }
-        .back-to-top.visible { opacity: 1; visibility: visible; }
-        .article-navigation { display: flex; justify-content: space-between; padding: 2rem; border-top: 1px solid var(--border-subtle); gap: 1rem; }
-        .nav-btn { background: var(--glass-bg); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem 1.5rem; text-decoration: none; color: var(--text-primary); font-weight: 500; flex: 1; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-        .nav-btn.next { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; border: none; }
-        @media (max-width: 1024px) {
-            .article-layout { grid-template-columns: 1fr; gap: 2rem; padding-top: 5rem; }
-            .article-nav, .article-sidebar { display: none; }
-        }
-        @media (max-width: 768px) {
-            .mobile-menu-btn { display: block; }
-            .nav-links, .nav-cta { display: none; }
-            .article-header { padding: 2rem 1.5rem; }
-            .article-title { font-size: 2.2rem; }
-            .article-body { padding: 2rem 1.5rem; }
-            .process-steps, .alignment-grid, .pattern-grid, .mistake-grid { grid-template-columns: 1fr; }
-            .pyramid-level.level-1, .pyramid-level.level-2, .pyramid-level.level-3, .pyramid-level.level-4 { width: 100%; }
-            .article-navigation { flex-direction: column; }
-        }
-        @media (max-width: 480px) {
-            .article-title { font-size: 1.8rem; }
-            .article-body { padding: 1.5rem 1rem; }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-    <nav class="nav">
-        <div class="container">
-            <div class="nav-content">
-                <div class="logo">Mrs Atiqah</div>
-                <ul class="nav-links"><li><a href="index.html">Home</a></li></ul>
-                <a href="index.html" class="nav-cta">Article Index</a>
-                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-            </div>
-        </div>
-    </nav>
-
-    <div class="reading-progress"><div class="progress-fill" id="progressBar"></div></div>
+    <div id="site-header"></div>
 
     <div class="article-layout">
         <aside class="article-nav">
@@ -231,10 +79,10 @@
                     <h2 class="section-title">The Timeframe Hierarchy</h2>
                     <p class="article-text">Understanding the role of each timeframe is crucial for proper multiple timeframe analysis:</p>
                     <div class="hierarchy-pyramid">
-                        <div class="pyramid-level level-1"><div class="pyramid-title">Primary Timeframe: Monthly/Weekly</div><div class="pyramid-sub">Determines major trend direction and long-term context</div><div class="pyramid-detail">Purpose: Trend direction filter · Best for: Position traders</div></div>
-                        <div class="pyramid-level level-2"><div class="pyramid-title">Intermediate: Daily Charts</div><div class="pyramid-sub">Shows intermediate trend, reveals swing opportunities</div><div class="pyramid-detail">Purpose: Setup identification · Best for: Swing traders</div></div>
-                        <div class="pyramid-level level-3"><div class="pyramid-title">Entry: 4-Hour/1-Hour</div><div class="pyramid-sub">Precise entry and exit timing within setups</div><div class="pyramid-detail">Purpose: Execution timing · Best for: Day traders</div></div>
-                        <div class="pyramid-level level-4"><div class="pyramid-title">Micro: 15-Min/5-Min</div><div class="pyramid-sub">Ultra-precise timing and immediate sentiment</div><div class="pyramid-detail">Purpose: Order execution · Best for: Scalpers</div></div>
+                        <div class="tier-level tier-1"><div class="tier-title">Primary Timeframe: Monthly/Weekly</div><div class="tier-sub">Determines major trend direction and long-term context</div><div class="tier-detail">Purpose: Trend direction filter · Best for: Position traders</div></div>
+                        <div class="tier-level tier-2"><div class="tier-title">Intermediate: Daily Charts</div><div class="tier-sub">Shows intermediate trend, reveals swing opportunities</div><div class="tier-detail">Purpose: Setup identification · Best for: Swing traders</div></div>
+                        <div class="tier-level tier-3"><div class="tier-title">Entry: 4-Hour/1-Hour</div><div class="tier-sub">Precise entry and exit timing within setups</div><div class="tier-detail">Purpose: Execution timing · Best for: Day traders</div></div>
+                        <div class="tier-level tier-4"><div class="tier-title">Micro: 15-Min/5-Min</div><div class="tier-sub">Ultra-precise timing and immediate sentiment</div><div class="tier-detail">Purpose: Order execution · Best for: Scalpers</div></div>
                     </div>
                     <div class="callout-strong">
                         <div class="callout-title"><i class="fas fa-gavel"></i> The Professional's Rule</div>
@@ -285,7 +133,7 @@
                     </div>
                     <div class="system-box">
                         <div class="system-box-title">The 5-4-1 System</div>
-                        <p style="font-size: 0.95rem; margin-bottom: 0.5rem;"><strong>5x Rule:</strong> Context timeframe is 5x longer than trading timeframe<br><strong>4x Rule:</strong> Analysis timeframe is your primary decision maker<br><strong>1x Rule:</strong> Timing timeframe is 4-5x shorter than analysis timeframe</p>
+                        <p style="font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--text-secondary);"><strong>5x Rule:</strong> Context timeframe is 5x longer than trading timeframe<br><strong>4x Rule:</strong> Analysis timeframe is your primary decision maker<br><strong>1x Rule:</strong> Timing timeframe is 4-5x shorter than analysis timeframe</p>
                         <p style="font-size: 0.9rem; color: var(--text-secondary);"><strong>Example:</strong> Daily trading → Weekly context → 4-hour timing</p>
                     </div>
                 </div>
@@ -358,43 +206,31 @@ Daily: Failed bounce creating lower high
             </div>
 
             <nav class="article-navigation">
-                <a href="article-20.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Article 20: Economic Calendar</a>
-                <a href="article-22.html" class="nav-btn next">Article 22: Advanced Chart Patterns <i class="fas fa-arrow-right"></i></a>
+                <a href="economic-calendar.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Article 20: Economic Calendar</a>
+                <a href="advanced-chart-patterns.html" class="nav-btn next">Article 22: Advanced Chart Patterns <i class="fas fa-arrow-right"></i></a>
             </nav>
         </main>
 
         <aside class="article-sidebar">
             <div class="sidebar-widget">
                 <h4 class="widget-title">Your Progress</h4>
-                <div class="progress-circle"></div>
+                <div class="progress-circle" data-progress="70%" style="background: conic-gradient(var(--mint-bright) 0deg 252deg, var(--light-bg-tertiary) 252deg 360deg);"></div>
                 <p style="text-align: center; font-size: 0.9rem; color: var(--text-secondary);">Article 21 of 30<br>Seeing the big picture!</p>
             </div>
             <div class="sidebar-widget">
                 <h4 class="widget-title">Previous Article</h4>
-                <a href="article-20.html" class="prev-article"><i class="fas fa-arrow-left"></i> Economic Calendar</a>
+                <a href="economic-calendar.html" class="prev-article"><i class="fas fa-arrow-left"></i> Economic Calendar</a>
             </div>
             <div class="sidebar-widget">
                 <h4 class="widget-title">Next Article</h4>
-                <a href="article-22.html" class="next-article">Advanced Chart Patterns <i class="fas fa-arrow-right"></i></a>
+                <a href="advanced-chart-patterns.html" class="next-article">Advanced Chart Patterns <i class="fas fa-arrow-right"></i></a>
             </div>
         </aside>
     </div>
 
-    <button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-chevron-up"></i></button>
+    <div id="site-footer"></div>
 
-    <script>
-        window.addEventListener('scroll', () => {
-            const article = document.querySelector('.article-body');
-            const scrollTop = window.pageYOffset;
-            const docHeight = article.offsetHeight;
-            const winHeight = window.innerHeight;
-            const scrollPercent = scrollTop / (docHeight - winHeight);
-            const progressBar = document.getElementById('progressBar');
-            if (progressBar) progressBar.style.width = Math.min(scrollPercent * 100, 100) + '%';
-            const backToTop = document.getElementById('backToTop');
-            if (scrollTop > 300) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
-        });
-        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-    </script>
+    <script src="assets/article.js"></script>
+    <script data-goatcounter="https://mrsatiqah.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
