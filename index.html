@@ -4,7 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mrs Atiqah - Trading Notes</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="A 30-part trading journey series covering fundamentals, technical analysis, risk management, psychology, and building consistent trading habits.">
+    <meta name="keywords" content="trading, forex, saham, trading notes, belajar trading, Mrs Atiqah">
+    <meta name="author" content="Mrs Atiqah">
+    <link rel="canonical" href="https://mrsatiqah.github.io/trading-notes/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Mrs Atiqah - Trading Notes">
+    <meta property="og:description" content="A 30-part trading journey series covering fundamentals, technical analysis, risk management, psychology, and building consistent trading habits.">
+    <meta property="og:url" content="https://mrsatiqah.github.io/trading-notes/">
+    <meta property="og:site_name" content="Mrs Atiqah - Trading Notes">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Mrs Atiqah - Trading Notes">
+    <meta name="twitter:description" content="A 30-part trading journey series covering fundamentals, technical analysis, risk management, psychology, and building consistent trading habits.">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root {
@@ -22,11 +34,11 @@
     --border-light: rgba(52, 211, 153, 0.3);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; }
 .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 .nav { position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); z-index: 100; }
 .nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1.1rem 0; }
-.logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+.logo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.4rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
 .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
 .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.95rem; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s ease; }
 .nav-links a:hover { color: var(--mint-bright); }
@@ -34,7 +46,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: v
 .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.4rem; color: var(--text-primary); cursor: pointer; }
 .hero { text-align: center; padding: 4rem 0 2.5rem; }
 .eyebrow { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mint-bright-hover); margin-bottom: 1rem; }
-.hero h1 { font-family: 'Playfair Display', serif; font-size: 2.75rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.15; }
+.hero h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 2.75rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.15; }
 .hero p { font-size: 1.1rem; color: var(--text-secondary); max-width: 560px; margin: 0 auto; }
 .tag-filters { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin: 2rem 0 0; }
 .tag-btn { padding: 0.5rem 1.1rem; border-radius: 20px; border: 1px solid var(--border-subtle); background: var(--bg-secondary); color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s ease; }
@@ -62,7 +74,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: v
 .card-number { display: inline-flex; align-items: center; justify-content: center; padding: 0.3rem 0.75rem; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; font-size: 0.7rem; font-weight: 700; border-radius: 20px; white-space: nowrap; }
 .card-tag { display: inline-flex; align-items: center; padding: 0.3rem 0.65rem; background: var(--bg-tertiary); color: var(--text-muted); font-size: 0.68rem; font-weight: 700; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap; }
 .card-body { flex: 1; }
-.card-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.4rem; line-height: 1.35; }
+.card-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.4rem; line-height: 1.35; font-family: 'Plus Jakarta Sans', sans-serif; }
 .card-desc { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; }
 .list-view .card-desc { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
 .card-arrow { color: var(--mint-bright-hover); font-size: 0.9rem; opacity: 0; transition: opacity 0.2s ease; margin-left: auto; flex-shrink: 0; }
@@ -74,14 +86,26 @@ body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: v
 .load-more-btn:hover { border-color: var(--mint-bright); color: var(--mint-bright-hover); }
 .load-more-btn.hidden { display: none; }
 .resources-strip { background: linear-gradient(135deg, rgba(52,211,153,0.06) 0%, rgba(96,165,250,0.06) 100%); border: 1px solid var(--border-light); border-radius: 16px; padding: 1.75rem; margin: 3rem 0; display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: center; justify-content: space-between; }
-.resources-text h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 0.25rem; }
+.resources-text h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.2rem; margin-bottom: 0.25rem; }
 .resources-text p { font-size: 0.9rem; color: var(--text-secondary); }
 .resources-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 .resource-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.25rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: transform 0.2s ease; }
 .resource-btn.primary { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); color: white; }
 .resource-btn.secondary { background: white; color: var(--text-primary); border: 1px solid var(--border-subtle); }
 .resource-btn:hover { transform: translateY(-2px); }
-footer { border-top: 1px solid var(--border-subtle); margin-top: 3rem; padding: 2.5rem 0; }
+.share-strip { text-align: center; margin: 3rem 0 1rem; padding: 2rem 0 0; border-top: 1px solid var(--border-subtle); }
+.share-strip h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; margin-bottom: 1rem; color: var(--text-primary); }
+.share-buttons { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+.share-btn { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; text-decoration: none; color: white; font-size: 1rem; transition: transform 0.2s ease, opacity 0.2s ease; border: none; cursor: pointer; }
+.share-btn:hover { transform: translateY(-3px); opacity: 0.9; }
+.share-btn.whatsapp { background: #25D366; }
+.share-btn.facebook { background: #1877F2; }
+.share-btn.telegram { background: #26A5E4; }
+.share-btn.twitter { background: #0F172A; }
+.share-btn.copy { background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); }
+.copy-toast { font-size: 0.8rem; color: var(--mint-bright-hover); font-weight: 600; margin-top: 0.75rem; opacity: 0; transition: opacity 0.2s ease; }
+.copy-toast.show { opacity: 1; }
+footer { border-top: 1px solid var(--border-subtle); margin-top: 2rem; padding: 2.5rem 0; }
 .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
 .footer-social { display: flex; gap: 1.25rem; }
 .footer-social a { color: var(--text-muted); text-decoration: none; font-size: 1.1rem; transition: color 0.2s ease; }
@@ -107,9 +131,9 @@ footer { border-top: 1px solid var(--border-subtle); margin-top: 3rem; padding: 
 
 <nav class="nav">
     <div class="container nav-content">
-        <a href="index.html" class="logo">Mrs Atiqah</a>
+        <a href="https://mrsatiqah.github.io" class="logo">Mrs Atiqah</a>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
+            <li><a href="https://mrsatiqah.github.io">Home</a></li>
             <li><a href="https://mrsatiqah.github.io/trading-journal/" target="_blank">Trading Journal <i class="fas fa-arrow-up-right-from-square"></i></a></li>
             <li><a href="https://mrsatiqah.github.io/dashboard/" target="_blank">Dashboard <i class="fas fa-arrow-up-right-from-square"></i></a></li>
         </ul>
@@ -162,6 +186,18 @@ footer { border-top: 1px solid var(--border-subtle); margin-top: 3rem; padding: 
             <a href="https://mrsatiqah.github.io/dashboard/" target="_blank" class="resource-btn secondary"><i class="fas fa-chart-pie"></i> Dashboard</a>
         </div>
     </div>
+
+    <div class="share-strip">
+        <h3>Share Trading Notes</h3>
+        <div class="share-buttons">
+            <a href="#" id="shareWhatsapp" class="share-btn whatsapp" title="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" id="shareFacebook" class="share-btn facebook" title="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" id="shareTelegram" class="share-btn telegram" title="Share on Telegram"><i class="fab fa-telegram-plane"></i></a>
+            <a href="#" id="shareTwitter" class="share-btn twitter" title="Share on X"><i class="fab fa-x-twitter"></i></a>
+            <button id="shareCopy" class="share-btn copy" title="Copy link"><i class="fas fa-link"></i></button>
+        </div>
+        <div class="copy-toast" id="copyToast">Link disalin!</div>
+    </div>
 </div>
 
 <footer>
@@ -171,7 +207,7 @@ footer { border-top: 1px solid var(--border-subtle); margin-top: 3rem; padding: 
             <a href="https://mrsatiqah.github.io/dashboard/" target="_blank"><i class="fas fa-chart-pie"></i></a>
         </div>
         <nav class="footer-nav">
-            <a href="index.html">Home</a>
+            <a href="https://mrsatiqah.github.io">Home</a>
             <a href="https://mrsatiqah.github.io/trading-journal/" target="_blank">Trading Journal</a>
             <a href="https://mrsatiqah.github.io/dashboard/" target="_blank">Dashboard</a>
         </nav>
@@ -181,36 +217,36 @@ footer { border-top: 1px solid var(--border-subtle); margin-top: 3rem; padding: 
 
 <script>
 const articles = [
-    { n: 1, tag: "Fundamentals", title: "What Is Trading? Complete Beginner's Guide", desc: "A complete beginner's guide to understanding trading, markets, and whether this world is right for you." },
-    { n: 2, tag: "Fundamentals", title: "Why I Started My Trading Journey", desc: "A personal story from pandemic desperation to discovering a real passion for markets." },
-    { n: 3, tag: "Fundamentals", title: "Understanding Market Hours and Global Sessions", desc: "Master the global financial clock and discover when markets are most active." },
-    { n: 4, tag: "Fundamentals", title: "Essential Trading Tools", desc: "Discover the right tools, platforms, and technology to execute your strategies effectively." },
-    { n: 5, tag: "Fundamentals", title: "Trading Terminology Every Beginner Must Know", desc: "Master the language of trading with simple explanations. No jargon, just practical knowledge." },
-    { n: 6, tag: "Fundamentals", title: "Types of Financial Markets: Which One to Choose?", desc: "Discover the major financial markets and learn how to choose the best one for your trading style." },
-    { n: 7, tag: "Technical Analysis", title: "How to Read Price Charts: Candlesticks Explained", desc: "Learn how to read candlestick charts and what each pattern is telling you." },
-    { n: 8, tag: "Psychology", title: "Dealing with Trading Losses", desc: "How to process, learn from, and move past losing trades without losing your discipline." },
-    { n: 9, tag: "Technical Analysis", title: "Support and Resistance: Finding Key Levels", desc: "Identify the price levels that matter most and understand why they keep showing up on charts." },
-    { n: 10, tag: "Psychology", title: "Emotional Triggers in Trading", desc: "Recognize the emotional patterns that quietly sabotage even well-planned trades." },
-    { n: 11, tag: "Technical Analysis", title: "Technical Indicators: Moving Averages Deep Dive", desc: "A closer look at SMA and EMA, and how traders use them to read trend direction." },
-    { n: 12, tag: "Technical Analysis", title: "Volume Analysis: Reading Market Participation", desc: "Understand what trading volume reveals about the strength behind a price move." },
-    { n: 13, tag: "Psychology", title: "Trading Psychology: Mastering Fear and Greed", desc: "The two emotions that drive most trading decisions, and how to keep them in check." },
-    { n: 14, tag: "Risk Management", title: "Position Sizing: The Foundation of Risk Management", desc: "Why how much you trade matters more than what you trade." },
-    { n: 15, tag: "Risk Management", title: "Risk-Reward Ratios: The Math Behind Profits", desc: "The simple math that separates traders who survive from traders who don't." },
-    { n: 16, tag: "Psychology", title: "Find Your Trading Personality", desc: "Match your natural temperament to a trading style that actually fits how you think." },
-    { n: 17, tag: "Strategy", title: "Common Trading Mistakes and How to Avoid Them", desc: "The recurring errors that trip up most beginners, and practical ways to sidestep them." },
-    { n: 18, tag: "Technical Analysis", title: "Understanding Trends and Ranges", desc: "Learn to tell whether the market is trending or just chopping sideways, and why it matters." },
-    { n: 19, tag: "Technical Analysis", title: "Price Action Trading: Reading Raw Charts", desc: "Trading based on price movement itself, without relying on indicators." },
-    { n: 20, tag: "Strategy", title: "Economic Calendar: Trading Around News Events", desc: "How to plan your trading schedule around the news releases that move markets." },
-    { n: 21, tag: "Technical Analysis", title: "Multiple Timeframe Analysis: The Professional's Edge", desc: "Why looking at more than one timeframe changes how you see every chart." },
-    { n: 22, tag: "Technical Analysis", title: "Advanced Chart Patterns: Beyond the Basics", desc: "A deeper look at chart patterns once you've mastered the fundamentals." },
-    { n: 23, tag: "Risk Management", title: "Trading During Market Volatility", desc: "Calm seas make comfortable sailors, but storms are where fortunes are made and lost." },
-    { n: 24, tag: "Psychology", title: "Building Trading Confidence", desc: "How consistent process, not lucky wins, builds real confidence at the charts." },
-    { n: 25, tag: "Risk Management", title: "Position Sizing Strategies", desc: "More advanced position sizing models beyond the basic 1-2% rule." },
-    { n: 26, tag: "Technical Analysis", title: "Correlation and Intermarket Analysis", desc: "No market trades in isolation, learn how currencies, bonds, stocks, and commodities move together." },
-    { n: 27, tag: "Strategy", title: "Trading Journal: Why and How to Keep One", desc: "The habit that separates traders who improve from traders who just repeat the same mistakes." },
-    { n: 28, tag: "Strategy", title: "Backtesting Your Strategy Before Going Live", desc: "How to test a strategy against historical data before ever risking real money on it." },
-    { n: 29, tag: "Strategy", title: "Choosing a Broker: What Really Matters", desc: "A practical checklist for picking a broker beyond flashy ads and referral bonuses." },
-    { n: 30, tag: "Strategy", title: "Building a Trading Routine That Sticks", desc: "Turning everything in this series into a sustainable daily and weekly trading routine." }
+    { n: 1, slug: "what-is-trading", tag: "Fundamentals", title: "What Is Trading? Complete Beginner's Guide", desc: "A complete beginner's guide to understanding trading, markets, and whether this world is right for you." },
+    { n: 2, slug: "why-i-trade", tag: "Fundamentals", title: "Why I Started My Trading Journey", desc: "A personal story from pandemic desperation to discovering a real passion for markets." },
+    { n: 3, slug: "market-hours", tag: "Fundamentals", title: "Understanding Market Hours and Global Sessions", desc: "Master the global financial clock and discover when markets are most active." },
+    { n: 4, slug: "trading-tools", tag: "Fundamentals", title: "Essential Trading Tools", desc: "Discover the right tools, platforms, and technology to execute your strategies effectively." },
+    { n: 5, slug: "trading-terminology", tag: "Fundamentals", title: "Trading Terminology Every Beginner Must Know", desc: "Master the language of trading with simple explanations. No jargon, just practical knowledge." },
+    { n: 6, slug: "financil-markets", tag: "Fundamentals", title: "Types of Financial Markets: Which One to Choose?", desc: "Discover the major financial markets and learn how to choose the best one for your trading style." },
+    { n: 7, slug: "candlesticks-explained", tag: "Technical Analysis", title: "How to Read Price Charts: Candlesticks Explained", desc: "Learn how to read candlestick charts and what each pattern is telling you." },
+    { n: 8, slug: "trading-losses", tag: "Psychology", title: "Dealing with Trading Losses", desc: "How to process, learn from, and move past losing trades without losing your discipline." },
+    { n: 9, slug: "support-and-resistance", tag: "Technical Analysis", title: "Support and Resistance: Finding Key Levels", desc: "Identify the price levels that matter most and understand why they keep showing up on charts." },
+    { n: 10, slug: "emotional-triggers", tag: "Psychology", title: "Emotional Triggers in Trading", desc: "Recognize the emotional patterns that quietly sabotage even well-planned trades." },
+    { n: 11, slug: "moving-averages", tag: "Technical Analysis", title: "Technical Indicators: Moving Averages Deep Dive", desc: "A closer look at SMA and EMA, and how traders use them to read trend direction." },
+    { n: 12, slug: "volume-analysis", tag: "Technical Analysis", title: "Volume Analysis: Reading Market Participation", desc: "Understand what trading volume reveals about the strength behind a price move." },
+    { n: 13, slug: "fear-and-greed", tag: "Psychology", title: "Trading Psychology: Mastering Fear and Greed", desc: "The two emotions that drive most trading decisions, and how to keep them in check." },
+    { n: 14, slug: "position-sizing", tag: "Risk Management", title: "Position Sizing: The Foundation of Risk Management", desc: "Why how much you trade matters more than what you trade." },
+    { n: 15, slug: "risk-reward-ratios", tag: "Risk Management", title: "Risk-Reward Ratios: The Math Behind Profits", desc: "The simple math that separates traders who survive from traders who don't." },
+    { n: 16, slug: "trading-personality", tag: "Psychology", title: "Find Your Trading Personality", desc: "Match your natural temperament to a trading style that actually fits how you think." },
+    { n: 17, slug: "trading-mistakes", tag: "Strategy", title: "Common Trading Mistakes and How to Avoid Them", desc: "The recurring errors that trip up most beginners, and practical ways to sidestep them." },
+    { n: 18, slug: "trends-and-ranges", tag: "Technical Analysis", title: "Understanding Trends and Ranges", desc: "Learn to tell whether the market is trending or just chopping sideways, and why it matters." },
+    { n: 19, slug: "raw-charts", tag: "Technical Analysis", title: "Price Action Trading: Reading Raw Charts", desc: "Trading based on price movement itself, without relying on indicators." },
+    { n: 20, slug: "economic-calendar", tag: "Strategy", title: "Economic Calendar: Trading Around News Events", desc: "How to plan your trading schedule around the news releases that move markets." },
+    { n: 21, slug: "multiple-timeframe-analysis", tag: "Technical Analysis", title: "Multiple Timeframe Analysis: The Professional's Edge", desc: "Why looking at more than one timeframe changes how you see every chart." },
+    { n: 22, slug: "advanced-chart-patterns", tag: "Technical Analysis", title: "Advanced Chart Patterns: Beyond the Basics", desc: "A deeper look at chart patterns once you've mastered the fundamentals." },
+    { n: 23, slug: "market-volatility", tag: "Risk Management", title: "Trading During Market Volatility", desc: "Calm seas make comfortable sailors, but storms are where fortunes are made and lost." },
+    { n: 24, slug: "trading-confidence", tag: "Psychology", title: "Building Trading Confidence", desc: "How consistent process, not lucky wins, builds real confidence at the charts." },
+    { n: 25, slug: "position-sizing-strategies", tag: "Risk Management", title: "Position Sizing Strategies", desc: "More advanced position sizing models beyond the basic 1-2% rule." },
+    { n: 26, slug: "correlation-and-intermarket-analysis", tag: "Technical Analysis", title: "Correlation and Intermarket Analysis", desc: "No market trades in isolation, learn how currencies, bonds, stocks, and commodities move together." },
+    { n: 27, slug: "trading-journal", tag: "Strategy", title: "Trading Journal: Why and How to Keep One", desc: "The habit that separates traders who improve from traders who just repeat the same mistakes." },
+    { n: 28, slug: "backtest", tag: "Strategy", title: "Backtesting Your Strategy Before Going Live", desc: "How to test a strategy against historical data before ever risking real money on it." },
+    { n: 29, slug: "choosing-a-broker", tag: "Strategy", title: "Choosing a Broker: What Really Matters", desc: "A practical checklist for picking a broker beyond flashy ads and referral bonuses." },
+    { n: 30, slug: "trading-routine", tag: "Strategy", title: "Building a Trading Routine That Sticks", desc: "Turning everything in this series into a sustainable daily and weekly trading routine." }
 ];
 
 const tags = ["All", "Fundamentals", "Technical Analysis", "Psychology", "Risk Management", "Strategy"];
@@ -261,7 +297,7 @@ function render(filtered) {
     }
 
     grid.innerHTML = toShow.map(a => `
-        <a href="article-${a.n}.html" class="card">
+        <a href="${a.slug}.html" class="card">
             <div class="card-top">
                 <span class="card-number">Article ${a.n}</span>
                 <span class="card-tag">${a.tag}</span>
@@ -309,6 +345,34 @@ document.getElementById('listBtn').addEventListener('click', () => {
 
 renderTagButtons();
 applyFilters();
+
+// Share buttons
+const shareUrl = "https://mrsatiqah.github.io/trading-notes/";
+const shareText = "Trading Notes - 30-part beginner-to-practitioner trading series by Mrs Atiqah";
+
+document.getElementById('shareWhatsapp').href = `https://wa.me/?text=${encodeURIComponent(shareText + " " + shareUrl)}`;
+document.getElementById('shareFacebook').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+document.getElementById('shareTelegram').href = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
+document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+
+['shareWhatsapp', 'shareFacebook', 'shareTelegram', 'shareTwitter'].forEach(id => {
+    document.getElementById(id).addEventListener('click', function(e) {
+        e.preventDefault();
+        window.open(this.href, '_blank', 'width=600,height=500');
+    });
+});
+
+document.getElementById('shareCopy').addEventListener('click', async () => {
+    try {
+        await navigator.clipboard.writeText(shareUrl);
+        const toast = document.getElementById('copyToast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+    } catch (err) {
+        console.error('Copy failed', err);
+    }
+});
 </script>
+<script data-goatcounter="https://mrsatiqah.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
