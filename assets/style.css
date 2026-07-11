@@ -47,7 +47,20 @@ body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); co
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); z-index: 1000; transition: all 0.3s ease; }
 .nav-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; position: relative; }
-.logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+.logo {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+.grad-text {
+    background: linear-gradient(135deg, var(--mint-bright) 0%, var(--baby-blue-bright) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
 .nav-links { display: flex; gap: 2rem; list-style: none; }
 .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
 .nav-links a:hover { color: var(--mint-bright); }
