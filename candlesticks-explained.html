@@ -21,6 +21,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/style.css">
+    <style>
+        /* Mini pattern-illustration candles — reuse existing upper-wick / candle-body / lower-wick
+           classes from assets/style.css so colors/fonts stay in sync with the rest of the site.
+           Only sizing is overridden inline per pattern below. */
+        .pattern-header{ display:flex; align-items:center; gap:14px; }
+        .pattern-visual{ display:flex; flex-direction:column; align-items:center; width:24px; flex-shrink:0; }
+        .pattern-visual .upper-wick,
+        .pattern-visual .lower-wick{ width:2px; }
+        .pattern-visual .candle-body{ width:20px; border-radius:2px; }
+        .pattern-visual.two-up{ flex-direction:row; gap:10px; width:auto; }
+        .pattern-visual.two-up .candle-visual{ display:flex; flex-direction:column; align-items:center; }
+    </style>
 </head>
 <body>
     <div id="site-header"></div>
@@ -121,7 +133,14 @@
                             <div class="pattern-significance">Indecision. Neither side could gain meaningful control. Often signals potential direction changes.</div>
                         </div>
                         <div class="pattern-card">
-                            <div class="pattern-header"><div><div class="pattern-title">Perfect Doji</div><div class="pattern-type">Perfect Balance</div></div></div>
+                            <div class="pattern-header">
+                                <div class="pattern-visual">
+                                    <div class="upper-wick" style="height:45px"></div>
+                                    <div class="candle-body" style="height:2px"></div>
+                                    <div class="lower-wick" style="height:45px"></div>
+                                </div>
+                                <div><div class="pattern-title">Perfect Doji</div><div class="pattern-type">Perfect Balance</div></div>
+                            </div>
                             <div class="pattern-description">When open and close prices are exactly the same, you get a cross-like formation with just wicks.</div>
                             <div class="pattern-significance">Perfect balance between buyers and sellers, often precedes significant moves.</div>
                         </div>
@@ -155,22 +174,49 @@
                     <p class="article-text">Now that you understand the basics, let's look at some significant single-candle formations:</p>
                     <div class="patterns-grid">
                         <div class="pattern-card">
-                            <div class="pattern-header"><div><div class="pattern-title">Hammer</div><div class="pattern-type">Bullish Reversal</div></div></div>
+                            <div class="pattern-header">
+                                <div class="pattern-visual">
+                                    <div class="upper-wick" style="height:4px"></div>
+                                    <div class="candle-body bullish" style="height:22px"></div>
+                                    <div class="lower-wick" style="height:60px"></div>
+                                </div>
+                                <div><div class="pattern-title">Hammer</div><div class="pattern-type">Bullish Reversal</div></div>
+                            </div>
                             <div class="pattern-description">Small body at the top, long lower wick (at least twice the body size), little to no upper wick.</div>
                             <div class="pattern-significance"><strong>Story:</strong> Bears pushed lower, but bulls fought back to close near session high. Potential reversal after a downtrend.</div>
                         </div>
                         <div class="pattern-card">
-                            <div class="pattern-header"><div><div class="pattern-title">Shooting Star</div><div class="pattern-type">Bearish Reversal</div></div></div>
+                            <div class="pattern-header">
+                                <div class="pattern-visual">
+                                    <div class="upper-wick" style="height:60px"></div>
+                                    <div class="candle-body bearish" style="height:22px"></div>
+                                    <div class="lower-wick" style="height:4px"></div>
+                                </div>
+                                <div><div class="pattern-title">Shooting Star</div><div class="pattern-type">Bearish Reversal</div></div>
+                            </div>
                             <div class="pattern-description">Small body at the bottom, long upper wick, little to no lower wick.</div>
                             <div class="pattern-significance"><strong>Story:</strong> Bulls pushed higher, but bears closed near session low. Potential reversal after an uptrend.</div>
                         </div>
                         <div class="pattern-card">
-                            <div class="pattern-header"><div><div class="pattern-title">Spinning Top</div><div class="pattern-type">Indecision</div></div></div>
+                            <div class="pattern-header">
+                                <div class="pattern-visual">
+                                    <div class="upper-wick" style="height:42px"></div>
+                                    <div class="candle-body" style="height:14px"></div>
+                                    <div class="lower-wick" style="height:42px"></div>
+                                </div>
+                                <div><div class="pattern-title">Spinning Top</div><div class="pattern-type">Indecision</div></div>
+                            </div>
                             <div class="pattern-description">Very small body with upper and lower wicks of similar length.</div>
                             <div class="pattern-significance"><strong>Story:</strong> Both sides fought hard, neither gained control. Often appears before significant moves.</div>
                         </div>
                         <div class="pattern-card">
-                            <div class="pattern-header"><div><div class="pattern-title">Marubozu</div><div class="pattern-type">Strong Direction</div></div></div>
+                            <div class="pattern-header">
+                                <div class="pattern-visual two-up">
+                                    <div class="candle-visual"><div class="upper-wick" style="height:0px"></div><div class="candle-body bullish" style="height:70px"></div><div class="lower-wick" style="height:0px"></div></div>
+                                    <div class="candle-visual"><div class="upper-wick" style="height:0px"></div><div class="candle-body bearish" style="height:70px"></div><div class="lower-wick" style="height:0px"></div></div>
+                                </div>
+                                <div><div class="pattern-title">Marubozu</div><div class="pattern-type">Strong Direction</div></div>
+                            </div>
                             <div class="pattern-description">Large body with no wicks (or very tiny ones).</div>
                             <div class="pattern-significance"><strong>Story:</strong> One side dominated completely. Very strong directional conviction.</div>
                         </div>
