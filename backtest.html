@@ -33,6 +33,7 @@
                 <li><a href="#key-metrics">Key Metrics to Track</a></li>
                 <li><a href="#methods">Backtesting Methods</a></li>
                 <li><a href="#common-mistakes">Common Mistakes</a></li>
+                <li><a href="#final-thoughts">Final Thoughts</a></li>
                 <li><a href="#key-takeaways">Key Takeaways</a></li>
             </ul>
         </aside>
@@ -48,77 +49,84 @@
             </header>
             <div class="article-body">
                 <div class="article-section" id="introduction">
-                    <p class="article-text">Would you get on a plane flown by a pilot who'd never used a flight simulator, never practiced emergency procedures, and was about to try landing for the very first time with real passengers on board?</p>
-                    <p class="article-text">Yet that's exactly what most beginner traders do. They come up with an idea, maybe from a book or a video, and immediately start risking real money on it. <strong>No testing. No data. Just hope.</strong></p>
+                    <p class="article-text">Before you risk real money, you should know if your strategy actually works.</p>
+                    <p class="article-text">Many beginners skip this step. They find a strategy on YouTube, read about it in a book, or hear someone talking about it online. Then they immediately start trading with real money.</p>
+                    <p class="article-text">The problem is, they have no idea whether the strategy has an edge or not. <strong>That's where backtesting comes in.</strong></p>
                     <div class="interactive-box">
-                        <div class="interactive-title"><i class="fas fa-plane"></i> Your Flight Simulator</div>
-                        <p>Backtesting is your flight simulator. It lets you fly your strategy through hundreds of past market conditions, crashing safely in a spreadsheet instead of crashing your real account.</p>
+                        <div class="interactive-title"><i class="fas fa-plane"></i> Think of It Like a Flight Simulator</div>
+                        <p>Imagine getting on a plane with a pilot who has never practiced flying, no training, no simulator, no emergency drills. Most people wouldn't feel comfortable. Trading is no different. Backtesting is like a flight simulator for traders, it lets you practise your strategy using historical market data before putting real money at risk. If your strategy fails, you lose nothing except time, and that's much better than losing your trading account.</p>
                     </div>
                 </div>
                 <div class="article-section" id="why-backtest">
-                    <h2 class="section-title">Why Backtesting Comes Before Live Trading</h2>
-                    <p class="article-text"><em>Backtesting means applying your trading rules to historical price data to see how the strategy would have performed, without risking a cent.</em> It answers the most important question before you ever click "buy": does this idea actually have an edge, or does it just sound good?</p>
+                    <h2 class="section-title">Why Backtesting Is So Important</h2>
+                    <p class="article-text"><em>Backtesting simply means applying your trading rules to past market data to see how the strategy would have performed.</em> It helps answer one important question: does this strategy actually have an edge, or does it just sound good? Instead of guessing, you'll have data to support your decision.</p>
                     <div class="callout info">
-                        <div class="callout-title"><i class="fas fa-lightbulb"></i> What Backtesting Reveals</div>
-                        <p>A rigorous backtest shows your realistic win rate, average win/loss size, expected drawdowns, and how the strategy behaves across different market conditions, trending, ranging, volatile, and calm.</p>
+                        <div class="callout-title"><i class="fas fa-lightbulb"></i> What You'll Learn From a Backtest</div>
+                        <p>A proper backtest gives you much more than just your win rate. It also shows how often the strategy wins, the average size of your winning and losing trades, the biggest drawdown you might experience, and how the strategy performs in different market conditions, whether trending, moving sideways, or highly volatile. This gives you a much more realistic expectation before trading live.</p>
                     </div>
                 </div>
                 <div class="article-section" id="the-process">
-                    <h2 class="section-title">The Backtesting Process, Step by Step</h2>
+                    <h2 class="section-title">How to Backtest a Strategy</h2>
                     <div class="process-steps">
-                        <div class="process-step"><div class="process-number">1</div><div class="process-title">Define Exact Rules</div><div class="process-description">Write down precise entry, exit, stop loss, and position sizing rules, no ambiguity allowed.</div></div>
-                        <div class="process-step"><div class="process-number">2</div><div class="process-title">Gather Historical Data</div><div class="process-description">Pull enough price history to cover multiple market conditions, ideally 2-5 years or 100+ trade signals.</div></div>
-                        <div class="process-step"><div class="process-number">3</div><div class="process-title">Apply Rules Consistently</div><div class="process-description">Go through the data trade by trade, applying your exact rules without hindsight bias.</div></div>
-                        <div class="process-step"><div class="process-number">4</div><div class="process-title">Record Every Result</div><div class="process-description">Log every signal, win or lose, exactly like you would in a live trading journal.</div></div>
-                        <div class="process-step"><div class="process-number">5</div><div class="process-title">Analyze the Statistics</div><div class="process-description">Calculate win rate, average R multiple, expectancy, and maximum drawdown from the full data set.</div></div>
+                        <div class="process-step"><div class="process-number">1</div><div class="process-title">Write Down Your Rules</div><div class="process-description">Be as specific as possible. Your rules should clearly explain when to enter, where to place your stop loss, when to take profit, and how much to risk on each trade. If your rules are vague, your backtest won't be reliable.</div></div>
+                        <div class="process-step"><div class="process-number">2</div><div class="process-title">Collect Historical Data</div><div class="process-description">Use enough chart history to cover different market conditions. A good starting point is two to five years of historical data or at least 100 trade setups. The more data you test, the more confidence you'll have in the results.</div></div>
+                        <div class="process-step"><div class="process-number">3</div><div class="process-title">Apply Your Rules</div><div class="process-description">Go through the charts one trade at a time. Follow your rules exactly as written. Don't change the rules halfway through just because a setup looks better in hindsight. The goal is to be consistent.</div></div>
+                        <div class="process-step"><div class="process-number">4</div><div class="process-title">Record Every Trade</div><div class="process-description">Keep a record of every trade, whether it's a winner or a loser. A spreadsheet works perfectly for this. The more organised your records are, the easier it is to analyse the strategy later.</div></div>
+                        <div class="process-step"><div class="process-number">5</div><div class="process-title">Review the Results</div><div class="process-description">After you've finished testing, calculate the important numbers. These statistics will tell you whether the strategy is worth considering.</div></div>
                     </div>
                 </div>
                 <div class="article-section" id="key-metrics">
-                    <h2 class="section-title">Key Metrics Every Backtest Should Produce</h2>
+                    <h2 class="section-title">Important Numbers to Track</h2>
                     <div class="metric-grid">
-                        <div class="metric-card"><div class="metric-title">Win Rate</div><div class="metric-description">Percentage of trades that were profitable</div></div>
-                        <div class="metric-card"><div class="metric-title">Average R Multiple</div><div class="metric-description">Typical win or loss size relative to risk</div></div>
-                        <div class="metric-card"><div class="metric-title">Expectancy</div><div class="metric-description">Expected profit per trade over the long run</div></div>
-                        <div class="metric-card"><div class="metric-title">Max Drawdown</div><div class="metric-description">Worst losing streak the strategy experienced</div></div>
-                        <div class="metric-card"><div class="metric-title">Sample Size</div><div class="metric-description">Total number of trades, more is more reliable</div></div>
-                        <div class="metric-card"><div class="metric-title">Consistency</div><div class="metric-description">Performance across different market regimes</div></div>
+                        <div class="metric-card"><div class="metric-title">Win Rate</div><div class="metric-description">The percentage of trades that ended in profit</div></div>
+                        <div class="metric-card"><div class="metric-title">Average R Multiple</div><div class="metric-description">The average amount you make or lose compared to the amount you risk</div></div>
+                        <div class="metric-card"><div class="metric-title">Expectancy</div><div class="metric-description">How much you can expect to make or lose per trade over a large number of trades</div></div>
+                        <div class="metric-card"><div class="metric-title">Maximum Drawdown</div><div class="metric-description">The biggest losing period the strategy experienced, so you can prepare mentally before trading live</div></div>
+                        <div class="metric-card"><div class="metric-title">Sample Size</div><div class="metric-description">The more trades you test, the more reliable your results become</div></div>
+                        <div class="metric-card"><div class="metric-title">Consistency</div><div class="metric-description">Whether the strategy performs reasonably well across different market conditions instead of only during one specific period</div></div>
                     </div>
                     <div class="callout warning">
-                        <div class="callout-title"><i class="fas fa-exclamation-triangle"></i> The Sample Size Trap</div>
-                        <p>Ten winning trades in a row doesn't prove an edge, it might just be luck. Aim for at least 50-100 historical trade signals before drawing firm conclusions about a strategy's viability.</p>
+                        <div class="callout-title"><i class="fas fa-exclamation-triangle"></i> Don't Be Fooled by Small Samples</div>
+                        <p>Winning ten trades in a row feels great, but it doesn't necessarily prove your strategy works, sometimes it's simply good luck. Try to backtest at least 50 to 100 trades, or even more if possible. A larger sample gives you much more confidence in your results.</p>
                     </div>
                 </div>
                 <div class="article-section" id="methods">
-                    <h2 class="section-title">Backtesting Methods, From Simple to Sophisticated</h2>
+                    <h2 class="section-title">Different Ways to Backtest</h2>
                     <div class="method-grid">
-                        <div class="method-card"><div class="method-title">Manual Chart Review</div><div class="method-subtitle">Beginner-Friendly</div><div class="method-description">Scroll back through historical charts and manually mark where your rules would have triggered entries and exits. Slow but builds real pattern recognition.</div></div>
-                        <div class="method-card"><div class="method-title">Spreadsheet Tracking</div><div class="method-subtitle">Structured and Repeatable</div><div class="method-description">Log each manually-identified trade into a spreadsheet to calculate statistics automatically. Bridges manual review with quantitative analysis.</div></div>
-                        <div class="method-card"><div class="method-title">Software Backtesting</div><div class="method-subtitle">Advanced and Fast</div><div class="method-description">Use platforms like TradingView's strategy tester to code rules and run them across years of data in seconds. Requires more technical setup.</div></div>
+                        <div class="method-card"><div class="method-title">Manual Chart Review</div><div class="method-subtitle">Easiest for Beginners</div><div class="method-description">Scroll through historical charts and manually mark every trade based on your rules. It takes time, but you'll become much better at recognising chart patterns.</div></div>
+                        <div class="method-card"><div class="method-title">Spreadsheet Tracking</div><div class="method-subtitle">Organise and Calculate</div><div class="method-description">After identifying your trades, record everything in a spreadsheet. This makes it easy to calculate your statistics and compare results.</div></div>
+                        <div class="method-card"><div class="method-title">Backtesting Software</div><div class="method-subtitle">Fast but Technical</div><div class="method-description">Many trading platforms include built-in backtesting tools. TradingView's Strategy Tester, for example, allows you to test coded strategies over several years of historical data within seconds, though it usually requires some programming knowledge.</div></div>
                     </div>
                     <div class="callout success">
-                        <div class="callout-title"><i class="fas fa-forward"></i> After Backtesting: Forward Test</div>
-                        <p>A good backtest isn't the final step, it's the gateway to forward testing (paper trading the strategy in real time) before committing real capital. History doesn't repeat exactly, so always confirm with live conditions on a small scale first.</p>
+                        <div class="callout-title"><i class="fas fa-forward"></i> Backtesting Isn't the Final Step</div>
+                        <p>A strategy that performs well in backtesting still needs another test, called forward testing or paper trading. Trade the strategy in real market conditions without risking real money first. Markets are always changing, so it's important to see how your strategy performs today, not only in the past. Once you're confident with the results, you can slowly move to live trading using small position sizes.</p>
                     </div>
                 </div>
                 <div class="article-section" id="common-mistakes">
                     <h2 class="section-title">Common Backtesting Mistakes</h2>
                     <div class="mistake-grid">
-                        <div class="mistake-card"><div class="mistake-title">Hindsight Bias</div><div class="mistake-desc">Unconsciously cherry-picking trades that look good in hindsight instead of applying rules blindly.</div></div>
-                        <div class="mistake-card"><div class="mistake-title">Curve Fitting</div><div class="mistake-desc">Over-optimizing rules to perfectly fit past data, which often fails completely on new, unseen data.</div></div>
-                        <div class="mistake-card"><div class="mistake-title">Ignoring Costs</div><div class="mistake-desc">Forgetting to factor in spreads, commissions, and slippage, which can turn a "profitable" backtest into a losing live strategy.</div></div>
-                        <div class="mistake-card"><div class="mistake-title">Too Small a Sample</div><div class="mistake-desc">Drawing conclusions from 10-15 trades when 50-100+ are needed for statistical reliability.</div></div>
+                        <div class="mistake-card"><div class="mistake-title">Looking Into the Future</div><div class="mistake-desc">Don't let hindsight influence your decisions. Only use the information that would have been available at that point in time.</div></div>
+                        <div class="mistake-card"><div class="mistake-title">Curve Fitting</div><div class="mistake-desc">Some traders keep adjusting their strategy until it looks perfect on historical data. These "perfect" strategies often perform badly in live markets. Simple and consistent usually works better.</div></div>
+                        <div class="mistake-card"><div class="mistake-title">Ignoring Trading Costs</div><div class="mistake-desc">Remember to include commissions, spreads, and slippage. These costs can turn a profitable backtest into an unprofitable live strategy.</div></div>
+                        <div class="mistake-card"><div class="mistake-title">Testing Too Few Trades</div><div class="mistake-desc">Don't make conclusions after only 10 or 15 trades. A small sample doesn't tell you much. Always aim for at least 50 to 100 trades before deciding whether a strategy has an edge.</div></div>
                     </div>
+                </div>
+                <div class="article-section" id="final-thoughts">
+                    <h2 class="section-title">Final Thoughts</h2>
+                    <p class="article-text">Backtesting takes time, and it can feel repetitive. But it's one of the best investments you can make as a trader.</p>
+                    <p class="article-text">Instead of risking money on a strategy you <em>hope</em> will work, you'll have real data to support your decisions.</p>
+                    <p class="article-text">Professional traders don't rely on luck. They rely on testing, statistics, and consistency. The more confidence you have in your strategy before going live, the easier it becomes to stick with it when the market gets challenging.</p>
                 </div>
                 <div class="takeaways" id="key-takeaways">
                     <h3 class="takeaways-title"><i class="fas fa-bullseye"></i> Key Takeaways</h3>
                     <ul class="takeaways-list">
-                        <li>Backtesting tests a strategy against historical data before any real money is at risk</li>
-                        <li>Define exact, unambiguous rules before starting the testing process</li>
-                        <li>Track win rate, average R multiple, expectancy, and max drawdown as core metrics</li>
-                        <li>Aim for at least 50-100 historical trade signals for statistically meaningful results</li>
-                        <li>Manual review, spreadsheets, and software tools all work, choose based on your skill level</li>
-                        <li>Follow a good backtest with forward testing before committing real capital</li>
-                        <li>Watch for hindsight bias and curve fitting, both can make a bad strategy look great on paper</li>
+                        <li>Backtesting lets you test a strategy using historical market data before risking real money</li>
+                        <li>Write clear and specific trading rules before you begin</li>
+                        <li>Track important statistics like win rate, expectancy, average R multiple, and maximum drawdown</li>
+                        <li>Test at least 50 to 100 historical trades for more reliable results</li>
+                        <li>You can backtest manually, with spreadsheets, or using specialised software</li>
+                        <li>Follow a successful backtest with forward testing before trading live</li>
+                        <li>Avoid hindsight bias, curve fitting, and ignoring trading costs</li>
                     </ul>
                 </div>
             </div>
