@@ -52,7 +52,7 @@ body { font-family: 'Inter', sans-serif; background: var(--light-bg-primary); co
     font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-    color: var(--text-primary);
+    color: #000000;
     text-decoration: none;
 }
 .grad-text {
